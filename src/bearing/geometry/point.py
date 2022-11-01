@@ -33,18 +33,6 @@ from math import sqrt
 # […]
 
 
-__author__ =        "Lars van Vianen and Sander Boer"
-__copyright__ =     "Copyright 2022, Starling Associates"
-__credits__ =       [
-                        "Lars van Vianen",
-                        "Sander Boer"
-                    ]
-__license__ =       "Creative Commons Attribution-ShareAlike 4.0 International License"
-__version__ =       "0.0.1"
-__maintainer__ =    "Starling Associates"
-__email__ =         "info@starling.associates"
-__status__ =        "Alpha"
-
 
 class Point(object):
     """
