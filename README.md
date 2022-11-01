@@ -66,7 +66,9 @@
 ```
 pip install bearing
 ```
-
+```
+pip install bearing==0.0.0
+```
 [PyPi](https://pypi.org/project/bearing/)
 
 ## Usage
