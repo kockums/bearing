@@ -24,20 +24,6 @@ as part of their own applications, and hence, no need to include them as part of
 the library code.
 
 
-### Rhino
-
-[Rhino](https://www.rhino3d.com/) is a 3D computer graphics and computer-aided design (CAD) application.
-
-
-
-### Grasshopper
-
-[Grasshopper](https://www.grasshopper3d.com/) is a graphical algorithm editor tightly integrated with Rhino 3D.
-
-#### Grasshopper Plugins
-
-- None
-
 
 ## Development Dependencies
 
