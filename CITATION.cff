@@ -1,10 +1,10 @@
 cff-version: 1.2.0
-title: Starling Egg
+title: Avian
 version: 0.0.1
 date-released: 2022-10-31
-url: "https://github.com/starling-associates/egg"
+url: "https://github.com/starling-cloud/avian"
 message: >-
-  If you use Starling Egg, please cite it using
+  If you use Avian, please cite it using
   the metadata from this file.
 type: software
 authors:
