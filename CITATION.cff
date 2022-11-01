@@ -1,10 +1,10 @@
 cff-version: 1.2.0
-title: Avian
-version: 0.0.1
-date-released: 2022-10-31
+title: Starling Bearing
+version: 0.0.0
+date-released: 2022-11-01
 url: "https://github.com/starling-cloud/bearing"
 message: >-
-  If you use Avian, please cite it using
+  If you use Starling Bearing, please cite it using
   the metadata from this file.
 type: software
 authors:
