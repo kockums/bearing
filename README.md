@@ -61,8 +61,13 @@
 
 ## Quick Start
 
-...
+### Installation
 
+```
+pip install bearing
+```
+
+[PyPi](https://pypi.org/project/bearing/)
 
 ## Usage
 
@@ -84,7 +89,7 @@ website: [www.starling.associates](https://www.starling.associates "Starling Ass
 
 ## License
 
-Except where otherwise noted, **Starling Bearing** is licensed under the terms of the [Creative Commons Attribution-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-sa/4.0/ "Creative Commons Attribution-ShareAlike 4.0 International License").
+Except where otherwise noted, **Starling Bearing** is licensed under the terms of the [MIT License](https://opensource.org/licenses/MIT "MIT License").
 
 
 ## Contributing
