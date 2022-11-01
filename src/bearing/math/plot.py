@@ -16,7 +16,6 @@ Attributes:
 Todo:
 
 Links:
-- https://stackoverflow.com/questions/3104781/inverse-distance-weighted-idw-interpolation-with-python
 
 
 """
