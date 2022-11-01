@@ -2,7 +2,7 @@
 <p align="center">
     <img src=".github/images/starling_bearing_logo.png" width="20%" height="20%" alt="Starling Bearing Logo">
 </p>
-<h1 align='center' style='border-bottom: none;'>Starling Bearing</h1>
+<h1 align='center' style='border-bottom: none;'>Bearing</h1>
 <h3 align='center'>Spatial Python Framework</h3>
 </header>
 
@@ -55,7 +55,7 @@
 ## About
 
 
-**Starling Bearing** is a Spatial Python Framework.
+**Bearing** is a Spatial Python Framework.
 
 
 
@@ -79,11 +79,9 @@ pip install bearing==0.0.0
 
 ## Authors
 
-**Starling Bearing** is an open-source project by [Starling Associates](https://www.starling.associates "Starling Associates website").
+**Bearing** is an open-source project by [Starling Associates](https://www.starling.associates "Starling Associates website").
 
 Starling is a spatial insight, strategy and design bureau that develops regenerative and lively environments with a net-positive impact on our future. We embrace the beautiful complexity of our planet’s ecosystems and use a systemic approach to sustainability, circularity and nature-inclusiveness. We go well beyond the life cycle of the places we design and aim to foster the cycle of life that flows through them. Therefore, we develop innovative instruments that are inspired by natural principles and allow us to generate a deep understanding of the environment. We utilise these constantly evolving insights to develop strategies and designs that serve people, society, economy and the ecologies in which they reside in harmony.
-
-website: [www.starling.associates](https://www.starling.associates "Starling Associates website")
 
 
 ## Roadmap
@@ -91,12 +89,12 @@ website: [www.starling.associates](https://www.starling.associates "Starling Ass
 
 ## License
 
-Except where otherwise noted, **Starling Bearing** is licensed under the terms of the [MIT License](https://opensource.org/licenses/MIT "MIT License").
+Except where otherwise noted, **Bearing** is licensed under the terms of the [MIT License](https://opensource.org/licenses/MIT "MIT License").
 
 
 ## Contributing
 
-We'd love for you to contribute and to make **Starling Bearing** even better than it is today!
+We'd love for you to contribute and to make **Bearing** even better than it is today!
 Please refer to the [contribution guidelines](CONTRIBUTING.md) for information.
 
 
