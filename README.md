@@ -24,7 +24,7 @@
 
 <div align="center">
 
-[![license](https://img.shields.io/github/license/starling-cloud/bearing?color=green&label=license&style=flat-square)](LICENSE.md)
+[![license](https://img.shields.io/github/license/starling-cloud/bearing?color=green&label=license&style=flat-square)](LICENSE.txt)
 [![website](https://img.shields.io/website?color=blue&down_color=red&down_message=offline&label=website&style=flat-square&up_color=green&up_message=online&url=https%3A%2F%2Fwww.starling.associates)](https://www.starling.associates)
 
 ![stars](https://img.shields.io/github/stars/starling-cloud/bearing?color=blue&label=stars&style=flat-square)
