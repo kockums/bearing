@@ -99,7 +99,10 @@ class Vector(object):
         z: float = 0.0,
         **kwargs
         ) -> None:
-        """Constructor of the Vector object."""
+        """
+        Constructor of the Vector object.
+
+        """
         super(Vector, self).__init__(**kwargs)
         self.x = x
         self.y = y
@@ -116,18 +119,53 @@ class Vector(object):
 
     @property
     def x(self) -> float:
-        """Getter decorator method for x parameter."""
+        """
+        Getter decorator method for x parameter.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        x : float
+            The x parameter.
+
+        """
         return self._x
 
     @x.setter
     def x(self, x: int | float):
-        """Setter decorator method for x parameter."""
-        assert isinstance(x, (int, float), msg = "x must be int or float")
+        """
+        Setter decorator method for x parameter.
+
+        Parameters
+        ----------
+        x : int | float
+            The x parameter.
+
+        Returns
+        -------
+        None
+
+        """
+        assert isinstance(x, (int, float), msg = "x parameter must be int or float")
         self._x = float(x)
 
     @x.deleter
     def x(self):
-        """Deleter decorator method for x parameter."""
+        """
+        Deleter decorator method for x parameter.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        None
+
+        """
         del self._x
 
 
@@ -136,13 +174,37 @@ class Vector(object):
 
     @property
     def y (self) -> float:
-        """Getter decorator method for y parameter."""
+        """
+        Getter decorator method for y parameter.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        y : float
+            The y parameter.
+
+        """
         return self._y
 
     @y.setter
     def y (self, y: int | float):
-        """Setter decorator method for y parameter."""
-        assert isinstance(y, (int, float), msg = "y must be int or float")
+        """
+        Setter decorator method for y parameter.
+
+        Parameters
+        ----------
+        y : int | float
+            The y parameter.
+
+        Returns
+        -------
+        None
+
+        """
+        assert isinstance(y, (int, float), msg = "y parameter must be int or float")
         self._y = float(y)
 
     @y.deleter
@@ -156,18 +218,53 @@ class Vector(object):
 
     @property
     def z (self) -> float:
-        """Getter decorator method for z parameter."""
+        """
+        Getter decorator method for z parameter.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        z : float
+            The z parameter.
+
+        """
         return self._z
 
     @z.setter
     def z (self, z: int | float):
-        """Setter decorator method for z parameter."""
-        assert isinstance(z, (int, float), msg = "z must be int or float")
+        """
+        Setter decorator method for z parameter.
+
+        Parameters
+        ----------
+        z : int | float
+            The z parameter.
+
+        Returns
+        -------
+        None
+
+        """
+        assert isinstance(z, (int, float), msg = "z parameter must be int or float")
         self._z = float(z)
 
     @z.deleter
     def z (self):
-        """Deleter decorator method for z parameter."""
+        """
+        Deleter decorator method for z parameter.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        None
+
+        """
         del self._z
 
 
@@ -185,27 +282,28 @@ class Vector(object):
     # =========================================================================
 
     # overload []
-    def __getitem__(self, index):
+    def __getitem__(self, index : int) -> float:
         """
         Returns the ith Cartesian coordinate of self.
+
+        Parameters
+        ----------
+        index : int
+            The ith Cartesian coordinate index of self.
+
+        Returns
+        -------
+        result : float
+            The ith Cartesian coordinate of self.
+
         """
-
         data = [self.x, self.y, self.z]
-        return data[index]
-
-
-
-    # overload set []
-    def __setitem__(self, key, item):
-        if (key == 0):
-            self.x = item
-        elif (key == 1):
-            self.y = item
-        elif (key == 2):
-            self.z = item
-        #TODO: Default should throw excetion
+        result = data[index]
+        return result
 
     def __getitem__(self, key):
+        """
+        """
         if isinstance(key, slice):
             return [self[i] for i in range(*key.indices(len(self)))]
         i = key % 3
@@ -217,7 +315,25 @@ class Vector(object):
             return self.z
         raise KeyError
 
+
+    # overload set []
+    def __setitem__(self, key, item):
+        """
+
+        """
+        if (key == 0):
+            self.x = item
+        elif (key == 1):
+            self.y = item
+        elif (key == 2):
+            self.z = item
+        #TODO: Default should throw excetion
+
+
     def __setitem__(self, key, value):
+        """
+        """
+
         i = key % 3
         if i == 0:
             self.x = value
@@ -231,40 +347,58 @@ class Vector(object):
         raise KeyError
 
 
-    # Return a string representation of self.
-    def __str__(self):
+
+
+
+
+    def __str__(self) -> str:
+        """
+        Return a string representation of self.
+        """
         return str(self._coords)
 
 
-    def __repr__(self):
-        return str(self.values)
-
-    def __repr__(self):
+    def __repr__(self) -> str:
+        """
+        """
+        # return str(self.values)
         return "Vector({0:.{3}f}, {1:.{3}f}, {2:.{3}f})".format(self.x, self.y, self.z, PRECISION[:1])
+
 
 
     # Methods | Magic | Basic
     # -------------------------------------------------------------------------
 
-
-    # Return the dimension of self.
-    def __len__(self):
-        return self._n
-
-    def __len__(self):
-        return len(self.values)
-
-
-    def __len__(self):
+    def __len__(self) -> int:
         """
+        Return the dimension of self.
+
         """
+        # return self._n
+        # return len(self.values)
         return 3
 
 
 
 
-    def __iter__(self):
+    def __iter__(self) -> Iterator[float]:
+        """
+        iter() method in a class.
+
+        """
         return iter([self.x, self.y, self.z])
+
+
+    def __next__(self):
+        """
+        next() method in a class.
+
+        """
+        # if(self.num >= self.max):
+        #     raise StopIteration
+        # self.num += 1
+        # return self.num
+        pass
 
 
     def __eq__(self, other: Vector) -> bool:
@@ -293,16 +427,26 @@ class Vector(object):
     # Methods | Magic | Unary
     # -------------------------------------------------------------------------
 
-
+    def __pos__(self):
+        """
+        """
+        pass
 
     def __neg__(self):
         """
         """
         return self.scaled(-1.0)
 
-    # __abs__(self)
-    # __invert__(self)
-    # __pos__(self)
+    def __abs__(self):
+        """
+        """
+        pass
+
+    def __invert__(self):
+        """
+        """
+        pass
+
 
     # Methods | Magic | Additions
     # -------------------------------------------------------------------------
@@ -375,7 +519,10 @@ class Vector(object):
 
 
     def __radd__(self, other):
-        """ Called if 4 + self for instance """
+        """
+        Called if 4 + self for instance.
+
+        """
         return self.__add__(other)
 
 
@@ -667,6 +814,37 @@ class Vector(object):
     # Methods | Class
     # =========================================================================
 
+
+
+
+    # Methods | Class | IO
+    # -------------------------------------------------------------------------
+
+    @classmethod
+    def from_tuple(cls, t):
+        """
+        Class method to create Vector object by tuple.
+
+        """
+        assert t >= 2 and t <= 3
+        if len(t) == 2:
+            return cls(lat=t[0], lon=t[1])
+        elif len(t) == 3:
+            return cls(lat=t[0], lon=t[1], h=t[2])
+
+    def to_tuple(self):
+        """
+
+        """
+        result = (self._lat, self._lon, self._height)
+        return result
+
+
+
+
+
+    # Methods | Class | Unit Axis
+    # -------------------------------------------------------------------------
 
     @classmethod
     def unit_axis_x(cls):
@@ -974,7 +1152,8 @@ class Vector(object):
     # ==========================================================================
 
     def copy(self):
-        """Make a copy of this vector.
+        """
+        Make a copy of this vector.
 
         Returns
         -------
@@ -993,6 +1172,15 @@ class Vector(object):
         """
         cls = type(self)
         return cls(self.x, self.y, self.z)
+
+
+    def copy(self):
+        """
+        create a new instance of Vector,
+        with the same data as this instance.
+        """
+        return Vector(self.x, self.y)
+
 
     # ==========================================================================
     # methods
@@ -1087,6 +1275,8 @@ class Vector(object):
         0.0
 
         """
+        # self.invert()
+        # return self
         return self.scaled(-1.0)
 
     def scale(self, n):
@@ -1114,6 +1304,13 @@ class Vector(object):
         self.y *= n
         self.z *= n
 
+
+    def scale_vector(vector, scalar):
+        """This function creates (and returns) a new vector with components equal to the original vector scaled (i.e., multiplied) by the scalar argument.
+        For example, vector <1, 2, 3> scaled by 1.5 will result in vector <1.5, 3, 4.5>."""
+
+        new_vector = data.Vector(vector.x*scalar, vector.y*scalar, vector.z*scalar)
+        return new_vector
 
     # Return the product of self and numeric object alpha.
     def scale(self, alpha):
@@ -1178,6 +1375,17 @@ class Vector(object):
         return dot_vectors(self, other)
 
 
+
+    def dot_vector(vector1, vector2):
+        """
+        This function performs a type of multiplication (product) on vectors.
+        The dot product of two vectors is computed as follows.
+        <x1, y1, z1> * <x2, y2, z2> = x1 * x2 + y1 * y2 + z1 * z2.
+
+        """
+
+        dot_product = (vector1.x*vector2.x + vector1.y*vector2.y + vector1.z*vector2.z)
+        return dot_product
 
     # Return the inner product of self and Vector object other.
     def dot(self, other):
@@ -1249,11 +1457,48 @@ class Vector(object):
             return arg_in_deg
 
     def normalize(self):
-        """ Returns a normalized unit vector """
+        """
+        Returns a normalized unit vector.
+        """
         norm = self.norm()
         normed = tuple( x / norm for x in self )
         return self.__class__(*normed)
 
+
+    def normalize_vector(vector):
+        """
+        The function creates (and returns) a new vector by normalizing the input vector.
+        This means that the resulting vector has the same direction but a magnitude of 1.
+        In short, the new vector is the original vector scaled by its length.
+
+        """
+
+        length = length_vector(vector)
+        normal = data.Vector(vector.x/length, vector.y/length, vector.z/length)
+        return normal
+
+
+    def normalized(self):
+        """
+        return a new instance of Vector,
+        with the same angle as this instance,
+        but with length 1.
+        """
+        ret = self.copy()
+        ret.x /= self.magnitude()
+        ret.y /= self.magnitude()
+        return ret
+
+
+    def length_vector(vector):
+        """The length of a vector (i.e., its magnitude) is computed from its components using the Pythagorean theorem."""
+
+        length = math.sqrt(vector.x**2 + vector.y**2 + vector.z**2)
+        return
+
+
+    def magnitude(self):
+        return math.hypot(self.x, self.y)
 
 
     def angle(self, other):
@@ -1392,8 +1637,9 @@ class Vector(object):
     def rotate(self, theta):
         """
         Rotate this vector. If passed a number, assumes this is a
-            2D vector and rotates by the passed value in degrees.  Otherwise,
-            assumes the passed value is a list acting as a matrix which rotates the vector.
+        2D vector and rotates by the passed value in degrees.  Otherwise,
+        assumes the passed value is a list acting as a matrix which rotates the vector.
+
         """
         if isinstance(theta, (int, float)):
             # So, if rotate is passed an int or a float...
@@ -1408,9 +1654,11 @@ class Vector(object):
 
 
     def _rotate2D(self, theta):
-        """ Rotate this vector by theta in degrees.
+        """
+        Rotate this vector by theta in degrees.
 
-            Returns a new vector.
+        Returns a new vector.
+
         """
         theta = math.radians(theta)
         # Just applying the 2D rotation matrix
@@ -1421,11 +1669,12 @@ class Vector(object):
 
 
     def matrix_mult(self, matrix):
-        """ Multiply this vector by a matrix.  Assuming matrix is a list of lists.
+        """
+        Multiply this vector by a matrix.  Assuming matrix is a list of lists.
 
-            Example:
-            mat = [[1,2,3],[-1,0,1],[3,4,5]]
-            Vector(1,2,3).matrix_mult(mat) ->  (14, 2, 26)
+        Example:
+        mat = [[1,2,3],[-1,0,1],[3,4,5]]
+        Vector(1,2,3).matrix_mult(mat) ->  (14, 2, 26)
 
         """
         if not all(len(row) == len(self) for row in matrix):
@@ -1438,6 +1687,42 @@ class Vector(object):
         return self.__class__(*product)
 
 
+    def difference_point(point1, point2):
+        """
+        This function creates (and returns) a new vector obtained by subtracting from point point1 the point point2 (i.e., point1 - point2). This is computed by subtracting the corresponding x-, y-, and z-components. This gives a vector, conceptually, pointing from point2 to point1.
+
+        """
+
+        difference_point = data.Vector(point1.x - point2.x, point1.y - point2.y, point1.z - point2.z)
+        return difference_point
+
+    def difference_vector(vector1, vector2):
+        """
+        This functions creates (and returns) a new vector obtained by subtracting from vector vector1 the vector vector2 (i.e., vector1 - vector2). This is computed by subtracting the corresponding x-, y-, and z-components. (Yes, this is very similar to the previous function; the types, however, are conceptually different.)
+
+        """
+
+        difference_vector = data.Vector(vector1.x - vector2.x, vector1.y - vector2.y, vector1.z - vector2.z)
+        return difference_vector
+
+    def translate_point(point, vector):
+        """
+        This function creates (and returns) a new point created by translating (i.e., moving) the argument point in the direction of and by the magnitude of the argument vector. You can think of this as the argument vector directing the new point where and how far to go from the argument point.
+        For example, translating point <9, 0, 1> along vector <1, 2, 3> will result in point <10, 2, 4>.
+
+        """
+
+        translation = data.Point(point.x + vector.x, point.y + vector.y, point.z + vector.z)
+        return translation
+
+    def vector_from_to(from_point, to_point):
+        """
+        This function is simply added to improve readability (and, thereby, to reduce confusion in later assignments). A vector in the direction from one point (from_point) to another (to_point) can be found by subtracting (i.e., point difference) from_point from to_point (i.e., to_point - from_point).
+
+        """
+
+        travel = data.Vector(to_point.x - from_point.x, to_point.y - from_point.y, to_point.z - from_point.z)
+        return travel
 
     # =========================================================================
     # Methods | Test
