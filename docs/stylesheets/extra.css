@@ -1,0 +1,16 @@
+@font-face {
+    font-family: "manrope";
+    src: "fonts/manrope/manrope-regular.woff2";
+}
+  
+:root {
+    --md-text-font: "manrope"; 
+}
+.md-footer__inner {
+    display: none;
+}
+[data-md-color-scheme="starling"] {
+    --md-primary-fg-color:        rgb(0, 140, 190);
+    --md-primary-fg-color--light: #ffffff;
+    --md-primary-fg-color--dark:  #001025;
+}
