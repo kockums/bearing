@@ -1,0 +1,31 @@
+site_name: Starling Bearing Docs
+
+dev_addr: 127.0.0.1:8888
+
+theme:
+  name: material
+  locale: en
+  palette:
+    scheme: starling
+    # primary: light blue
+  logo: assets/logo.png
+  favicon: images/favicon.png
+  # features:
+  #   - navigation.tabs
+
+extra_css:
+  - stylesheets/extra.css
+
+extra:
+  generator: false
+  # analytics:
+  #   provider: google
+  #   property: G-XXXXXXXXXX
+  social:
+    - icon: fontawesome/brands/github 
+      link: https://github.com/starling-cloud
+
+copyright: Copyright &copy; 2022 Starling Associates
+
+hide:
+  - footer
