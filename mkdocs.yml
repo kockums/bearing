@@ -1,8 +1,7 @@
 site_name: Starling Bearing
 site_url: https://www.bearing.tools/
-site_description:
-site_author:
-copyright:
+site_description: Spatial Python Framework
+site_author: Starling Associates
 lang: en
 
 repo_name: 'GitHub'
@@ -18,9 +17,9 @@ theme:
     scheme: starling
     # primary: light blue
   logo: assets/image/logo_light.png
-  favicon: assets/favicon/favicon.png
-  features:
-    - navigation.tabs
+  favicon: assets/favicon/favicon.ico
+  # features:
+  #   - navigation.tabs
 
 extra_css:
   - assets/style/extra.css
