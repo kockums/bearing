@@ -10,7 +10,7 @@
     display: none;
 }
 [data-md-color-scheme="starling"] {
-    --md-primary-fg-color:        rgb(0, 140, 190);
+    --md-primary-fg-color:        rgb(0, 145, 190);
     --md-primary-fg-color--light: #ffffff;
     --md-primary-fg-color--dark:  #001025;
 }
