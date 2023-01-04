@@ -28,4 +28,4 @@ extra:
 copyright: Copyright &copy; 2022 Starling Associates
 
 hide:
-  - footer
+  # - footer
