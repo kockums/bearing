@@ -8,20 +8,6 @@
 
 <br/>
 
-<details open="open">
-<summary>Table of Contents</summary>
-
-- [About](#about)
-- [Quick Start](#quick-start)
-- [Usage](#usage)
-- [Authors](#authors)
-- [Roadmap](#roadmap)
-- [License](#license)
-- [Contributing](#contributing)
-- [Disclaimer](#disclaimer)
-
-</details>
-
 
 ## About
 
