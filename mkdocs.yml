@@ -39,7 +39,7 @@ copyright: Copyright &copy; 2023 Starling Associates
 hide:
   - footer
 
-pages:
+nav:
 - Getting Started:
     - 'Introduction': 'index.md'
 - Glossary: 'glossary.md'
