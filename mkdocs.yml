@@ -1,4 +1,13 @@
-site_name: Starling Bearing Docs
+site_name: Starling Bearing
+site_url: https://www.bearing.tools/
+site_description:
+site_author:
+copyright:
+lang: en
+
+repo_name: 'GitHub'
+repo_url: https://github.com/starling-cloud/bearing/
+edit_uri_template: 'docs/{path}'
 
 dev_addr: 127.0.0.1:8888
 
@@ -8,13 +17,16 @@ theme:
   palette:
     scheme: starling
     # primary: light blue
-  logo: assets/logo.png
-  favicon: assets/images/favicon.png
-  # features:
-  #   - navigation.tabs
+  logo: assets/image/logo_light.png
+  favicon: assets/favicon/favicon.png
+  features:
+    - navigation.tabs
 
 extra_css:
-  - stylesheets/extra.css
+  - assets/style/extra.css
+extra_javascript:
+  - assets/script/extra.js
+extra_templates:
 
 extra:
   generator: false
@@ -25,7 +37,7 @@ extra:
     - icon: fontawesome/solid/globe 
       link: https://www.starling.associates
     - icon: fontawesome/brands/github 
-      link: https://github.com/starling-cloud
+      link: https://github.com/starling-cloud/
     - icon: fontawesome/brands/linkedin 
       link: https://www.linkedin.com/company/starling-associates/
     - icon: fontawesome/brands/instagram 
