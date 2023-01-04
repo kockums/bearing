@@ -22,10 +22,27 @@ extra:
   #   provider: google
   #   property: G-XXXXXXXXXX
   social:
+    - icon: fontawesome/solid/globe 
+      link: https://www.starling.associates
     - icon: fontawesome/brands/github 
       link: https://github.com/starling-cloud
+    - icon: fontawesome/brands/linkedin 
+      link: https://www.linkedin.com/company/starling-associates/
+    - icon: fontawesome/brands/instagram 
+      link: https://instagram.com/starling.cloud/
+    - icon: fontawesome/brands/facebook 
+      link: https://www.facebook.com/starlingclouds/
 
-copyright: Copyright &copy; 2022 Starling Associates
+
+copyright: Copyright &copy; 2023 Starling Associates
 
 hide:
   - footer
+
+pages:
+- Getting Started:
+    - 'Introduction': 'index.md'
+- Glossary: 'glossary.md'
+- License: 'license.md'
+- Privacy Policy: 'privacy.md'
+
