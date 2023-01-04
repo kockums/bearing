@@ -1,10 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope&display=swap');
 @font-face {
-    font-family: "manrope";
+    font-family: "Manrope";
     src: "fonts/manrope/manrope-regular.woff2";
 }
-  
 :root {
-    --md-text-font: "manrope"; 
+    --md-text-font: "Manrope"; 
 }
 .md-footer__inner {
     display: none;
