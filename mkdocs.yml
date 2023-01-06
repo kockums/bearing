@@ -15,7 +15,6 @@ theme:
   locale: en
   palette:
     scheme: starling
-    # primary: light blue
   logo: assets/image/logo_light.png
   favicon: assets/favicon/favicon.ico
   # features:
@@ -29,9 +28,9 @@ extra_templates:
 
 extra:
   generator: false
-  # analytics:
-  #   provider: google
-  #   property: G-XXXXXXXXXX
+  analytics:
+    provider: google
+    property: G-QF552XF9WM
   social:
     - icon: fontawesome/solid/globe 
       link: https://www.starling.associates
