@@ -50,9 +50,14 @@ hide:
   - footer
 
 nav:
-- Getting Started:
+  - Getting Started:
     - 'Introduction': 'index.md'
-- Glossary: 'glossary.md'
-- License: 'license.md'
-- Privacy Policy: 'privacy.md'
-
+  - Resources:
+      - 'Glossary': 'resources/glossary.md'
+      - 'Links': 'resources/links.md'
+  - About:
+      - 'Authors': 'about/authors.md'
+  - Legal Information:
+      - 'License': 'legal/license.md'
+      - 'Privacy Policy': 'legal/privacy_policy.md'
+      - 'Disclaimer': 'legal/disclaimer.md'

@@ -1,4 +1,9 @@
-# MIT License
+# License
+
+Except where otherwise noted, **Bearing** is licensed under the terms of the [MIT License](https://opensource.org/licenses/MIT "MIT License").
+
+
+## MIT License
 
 **Copyright (c) 2023 Starling Associates BV**
 
