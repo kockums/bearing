@@ -4,7 +4,7 @@ version: 0.0.0
 date-released: 2022-11-01
 url: "https://github.com/starling-cloud/bearing"
 message: >-
-  If you use Starling Bearing, please cite it using
+  If you use Bearing, please cite it using
   the metadata from this file.
 type: software
 authors:
