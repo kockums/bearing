@@ -25,11 +25,15 @@
 <div align="center">
 
 [![license](https://img.shields.io/github/license/starling-cloud/bearing?color=green&label=license&style=flat-square)](LICENSE.txt)
-[![website](https://img.shields.io/website?color=blue&down_color=red&down_message=offline&label=website&style=flat-square&up_color=green&up_message=online&url=https%3A%2F%2Fwww.starling.associates)](https://www.starling.associates)
+[![website](https://img.shields.io/website?color=blue&down_color=red&down_message=offline&label=website&style=flat-square&up_color=green&up_message=online&url=https%3A%2F%2Fwww.bearing.tools)](https://www.bearing.tools)
+
+![python](https://img.shields.io/pypi/pyversions/bearing?color=blue&label=python&style=flat-square)
+![wheel](https://img.shields.io/pypi/wheel/bearing?color=green&label=wheel&style=flat-square)
 
 ![stars](https://img.shields.io/github/stars/starling-cloud/bearing?color=blue&label=stars&style=flat-square)
 ![forks](https://img.shields.io/github/forks/starling-cloud/bearing?color=blue&label=forks&style=flat-square)
 ![downloads](https://img.shields.io/github/downloads/starling-cloud/bearing/total?color=blue&label=downloads&style=flat-square)
+![issues](https://img.shields.io/github/issues/starling-cloud/bearing?label=issues&style=flat-square)
 ![sponsors](https://img.shields.io/github/sponsors/starling-cloud?color=blue&label=sponsors&style=flat-square)
 ![contributors](https://img.shields.io/github/contributors/starling-cloud/bearing?color=blue&label=contributors&style=flat-square)
 
