@@ -58,8 +58,11 @@
 ## About
 
 
-**Bearing** is a Spatial Python Framework.
+**Bearing** is a Python Framework for geospatial processing. The collection of modules and tools provides functionality for the manipulation, analysis, and visualization of geographical data, such as vectors and rasters. They may also provide tools for spatial analysis, data conversion, and map projection. The library can be used for a wide range of applications, including remote sensing, location-based services, spatial analysis, data conversion, map projection and automated mapping. 
 
+### Alternatives
+
+Some other popular geospatial libraries in Python include GeoPandas, Fiona, Rasterio, and Shapely. 
 
 
 ## Quick Start
