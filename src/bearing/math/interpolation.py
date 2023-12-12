@@ -1,9 +1,13 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 
+# =============================================================================
+# Docstring
+# =============================================================================
+
 """
 Provides Math Utils
+===================
 
 ...
 
@@ -21,26 +25,19 @@ Links:
 """
 
 
-# Import | Futures
-# […]
-
 # Import | Standard Library
 import math
-# […]
 
 # Import | Libraries
 import numpy
-from scipy.interpolate import Rbf
-
-# […]
+# from scipy.interpolate import Rbf
 
 # Import | Local Modules
-# […]
 
 
 class InterpolateIWD:
-    """"""
-
+    """
+    """
 
     # Static Methods
 
@@ -75,13 +72,11 @@ class InterpolateIWD:
         zi =  numpy.dot(dist.T, weights)
         return zi
 
-
     @staticmethod
     def scipy_idw(x, y, z, xi, yi):
         """ """
         interp = Rbf(x, y, z, function='linear')
         return interp(xi, yi)
-
 
     @staticmethod
     def distance_matrix(x0, y0, x1, y1):
@@ -97,7 +92,6 @@ class InterpolateIWD:
 
         return numpy.hypot(d0, d1)
 
-
     # Methods | test
 
     def test_something(self):
@@ -106,12 +100,16 @@ class InterpolateIWD:
 
 
 def test():
-    """Test Function"""
+    """
+    Test Function
+    """
     pass
 
 
 if __name__ == '__main__':
-    """Main"""
+    """
+    Main
+    """
     import doctest
     doctest.testmod()
     test()

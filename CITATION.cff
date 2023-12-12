@@ -1,8 +1,8 @@
 cff-version: 1.2.0
-title: Starling Bearing
+title: Kockums Bearing
 version: 0.0.0
-date-released: 2022-11-01
-url: "https://github.com/starling-cloud/bearing"
+date-released: 2023-11-01
+url: "https://github.com/kockums/bearing"
 message: >-
   If you use Bearing, please cite it using
   the metadata from this file.
@@ -10,10 +10,7 @@ type: software
 authors:
   - given-names: Lars Bastiaan
     family-names: van Vianen
-    email: lars@starling.associates
-    affiliation: Starling Associates
+    email: lars@kockums.io
+    affiliation: Kockums
     orcid: 'https://orcid.org/0000-0002-8790-8630'
-  - given-names: Sander Martijn
-    family-names: Boer
-    email: sander@starling.associates
-    affiliation: Starling Associates
+

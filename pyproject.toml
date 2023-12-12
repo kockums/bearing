@@ -1,7 +1,26 @@
 # pyproject.toml file specified at the root of the directory
 
+[tool.poetry]
+name = "bearing"
+version = "0.1.0"
+description = "Bearing"
+authors = ["Lars van Vianen <lars@vianen.com>"]
+license = "MIT"
+readme = "README.md"
+
+
+[tool.poetry.dependencies]
+python = "^3.11"
+pillow = "^10.0.0"
+gdal = "^3.7.1.1"
+rite = "^0.0.0"
+
 
 [build-system]
-requires = ["setuptools>=42", "wheel"]   # PEP 508 specifications.
-build-backend = "setuptools.build_meta"
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
 
+
+# [build-system]
+# requires = ["setuptools>=42", "wheel"]   # PEP 508 specifications.
+# build-backend = "setuptools.build_meta"

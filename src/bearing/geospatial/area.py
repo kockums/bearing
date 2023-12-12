@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 
@@ -33,7 +32,6 @@ from bearing.geospatial.coordinate import GeographicCoordinate
 # […]
 
 
-
 class GeographicArea(object):
     """
     A class used to represent a Geographic Area
@@ -54,9 +52,9 @@ class GeographicArea(object):
 
     def __init__(
         self,
-        lowerleft =     None,
-        upperright =    None,
-        size =    None,
+        lowerleft = None,
+        upperright = None,
+        size = None,
         ):
         """Constructor of the object."""
 

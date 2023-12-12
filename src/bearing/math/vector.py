@@ -1,39 +1,41 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 
+# =============================================================================
+# Docstring
+# =============================================================================
+
 """
 Provides Vector Class
-
-...
+=====================
 
 Todo:
+-----
 
 Links:
-
+------
 
 """
 
+# =============================================================================
+# Import
+# =============================================================================
 
 # Import | Futures
-from __future__ import annotations
-# […]
+# from __future__ import annotations
 
 # Import | Standard Library
+from typing import Any, Dict, List, Iterator, Tuple
 import math
-# […]
 
 # Import | Libraries
-# import numpy
-# import matplotlib.pyplot as pyplot
-# from scipy.interpolate import Rbf
-# […]
 
 # Import | Local Modules
-# from bearing.geometry.point import Point
-# […]
 
 
+# =============================================================================
+# Classes
+# =============================================================================
 
 class Vector(object):
     """
@@ -89,7 +91,8 @@ class Vector(object):
     # Methods | Constructors
     # =========================================================================
 
-    __slots__ = ["_x", "_y", "_z"]
+    # __slots__ = ["_x", "_y", "_z"]
+    __slots__ = ["_components"]
 
     def __init__(
         self,
@@ -97,21 +100,62 @@ class Vector(object):
         y: float = 0.0,
         z: float = 0.0,
         **kwargs
-        ) -> None:
+    ) -> None:
         """
         Constructor of the Vector object.
 
         """
         super(Vector, self).__init__(**kwargs)
-        self.x = x
-        self.y = y
-        self.z = z
-
+        # self.x = x
+        # self.y = y
+        # self.z = z
+        self._components = [x, y, z]
 
     # =========================================================================
     # Methods | Properties
     # =========================================================================
 
+    # Methods | Properties | components parameter
+    # -------------------------------------------------------------------------
+
+    @property
+    def components(
+        self
+    ) -> Tuple[float, float, float]:
+        """
+        Getter decorator method for x parameter.
+        Gets the components of the vector as a tuple.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        components : Tuple[float, float, float]
+            A tuple representing the x, y, and z components of the vector.
+
+        """
+
+        components = tuple(self._components)
+        return components
+
+    @components.setter
+    def components(self, values: Tuple[float, float, float]) -> None:
+        """Sets the components of the vector."""
+        if len(values) != 3:
+            raise ValueError(
+                "Components must be a tuple of three float values."
+        )
+        self._components = list(values)
+
+    @components.deleter
+    def components(self) -> None:
+        """
+        Resets the components of the vector to zero.
+
+        """
+        self._components = [0.0, 0.0, 0.0]
 
     # Methods | Properties | x parameter
     # -------------------------------------------------------------------------
@@ -120,6 +164,7 @@ class Vector(object):
     def x(self) -> float:
         """
         Getter decorator method for x parameter.
+        Gets the x-component of the vector.
 
         Parameters
         ----------
@@ -131,7 +176,10 @@ class Vector(object):
             The x parameter.
 
         """
-        return self._x
+        # return self._x
+        x = self._components[0]
+        return x
+
 
     @x.setter
     def x(self, x: int | float):
@@ -148,7 +196,11 @@ class Vector(object):
         None
 
         """
-        assert isinstance(x, (int, float), msg = "x parameter must be int or float")
+        assert isinstance(
+            x,
+            (int, float),
+            msg = "x parameter must be int or float"
+        )
         self._x = float(x)
 
     @x.deleter
@@ -167,12 +219,11 @@ class Vector(object):
         """
         del self._x
 
-
     # Methods | Properties | y parameter
     # -------------------------------------------------------------------------
 
     @property
-    def y (self) -> float:
+    def y(self) -> float:
         """
         Getter decorator method for y parameter.
 
@@ -189,7 +240,7 @@ class Vector(object):
         return self._y
 
     @y.setter
-    def y (self, y: int | float):
+    def y(self, y: int | float):
         """
         Setter decorator method for y parameter.
 
@@ -207,16 +258,17 @@ class Vector(object):
         self._y = float(y)
 
     @y.deleter
-    def y (self):
-        """Deleter decorator method for y parameter."""
+    def y(self):
+        """
+        Deleter decorator method for y parameter.
+        """
         del self._y
-
 
     # Methods | Properties | z parameter
     # -------------------------------------------------------------------------
 
     @property
-    def z (self) -> float:
+    def z(self) -> float:
         """
         Getter decorator method for z parameter.
 
@@ -233,7 +285,7 @@ class Vector(object):
         return self._z
 
     @z.setter
-    def z (self, z: int | float):
+    def z(self, z: int | float):
         """
         Setter decorator method for z parameter.
 
@@ -251,7 +303,7 @@ class Vector(object):
         self._z = float(z)
 
     @z.deleter
-    def z (self):
+    def z(self):
         """
         Deleter decorator method for z parameter.
 
@@ -450,6 +502,19 @@ class Vector(object):
     # Methods | Magic | Additions
     # -------------------------------------------------------------------------
 
+    def __add__(self, other: Self) -> Self:
+        """
+        Vector addition.
+        Returns a new Vector that is the sum of this vector and another.
+        """
+        add = Vector(
+            self.components[0] + other.components[0],
+            self.components[1] + other.components[1],
+            self.components[2] + other.components[2]
+        )
+        return add
+
+
     def __add__(self, other: Vector | int | float | tuple | list) -> Vector:
         """
         Returns the vector addition of self and other
@@ -466,8 +531,16 @@ class Vector(object):
             The resulting vector.
 
         """
-        error_message = "Addition with type {} not supported".format(type(other))
-        assert isinstance(other, (Vector, int, float, tuple, list), msg = error_message)
+        error_message = "Addition with type {} not supported".format(
+            type(other)
+        )
+
+        assert isinstance(
+            other,
+            (Vector, int, float, tuple, list),
+            msg = error_message
+        )
+
         if isinstance(other, Vector):
             x = self.x + other.x
             y = self.y + other.y
@@ -482,6 +555,7 @@ class Vector(object):
             z = self.z + other[2]
         else:
             raise ValueError(error_message)
+
         return Vector(x, y, z)
 
     def __iadd__(self, other: Vector | int | float | tuple | list) -> None:
@@ -594,7 +668,7 @@ class Vector(object):
     # Methods | Magic | Multiplications
     # -------------------------------------------------------------------------
 
-    def __mul__ (self, other: Vector | int | float | tuple | list) -> Vector:
+    def __mul__(self, other: Vector | int | float | tuple | list) -> Vector:
         """
         Return a vector that is the scaled version of this vector.
 
@@ -669,7 +743,7 @@ class Vector(object):
     # -------------------------------------------------------------------------
 
 
-    def __truediv__ (self, other: Vector | int | float | tuple | list) -> Vector:
+    def __truediv__(self, other: Vector | int | float | tuple | list) -> Vector:
         """
         Return a vector that is the scaled version of this vector.
 
@@ -740,7 +814,7 @@ class Vector(object):
     # -------------------------------------------------------------------------
 
 
-    def __pow__ (self, other: Vector | int | float | tuple | list) -> Vector:
+    def __pow__(self, other: Vector | int | float | tuple | list) -> Vector:
         """
         Create a vector from the components of the current vector raised
         to the given power.
@@ -835,7 +909,7 @@ class Vector(object):
         """
 
         """
-        result = (self._lat, self._lon, self._height)
+        result =(self._lat, self._lon, self._height)
         return result
 
 
@@ -1688,7 +1762,9 @@ class Vector(object):
 
     def difference_point(point1, point2):
         """
-        This function creates (and returns) a new vector obtained by subtracting from point point1 the point point2 (i.e., point1 - point2). This is computed by subtracting the corresponding x-, y-, and z-components. This gives a vector, conceptually, pointing from point2 to point1.
+        This function creates (and returns) a new vector obtained by
+        subtracting from point point1 the point point2 (i.e., point1 - point2).
+        This is computed by subtracting the corresponding x-, y-, and z-components. This gives a vector, conceptually, pointing from point2 to point1.
 
         """
 

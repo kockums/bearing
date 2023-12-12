@@ -2,19 +2,19 @@
 site_name: Bearing
 site_url: https://www.bearing.tools/
 site_description: Spatial Python Framework
-site_author: Starling Associates
+site_author: Kockums
 lang: en
 
 # Repository
 repo_name: 'GitHub'
-repo_url: https://github.com/starling-cloud/bearing/
+repo_url: https://github.com/kockums/bearing/
 edit_uri_template: 'docs/{path}'
 
 dev_addr: 127.0.0.1:8888
 
 # Copyright
 copyright: >
-  Copyright &copy; 2023 <a href="https://www.starling.associates">Starling Associates</a>. All Rights Reserved.
+  Copyright &copy; 2024 <a href="https://www.kockums.io">Kockums</a>. All Rights Reserved.
 
 
 # hide:
