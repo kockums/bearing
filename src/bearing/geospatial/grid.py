@@ -1,6 +1,10 @@
 # -*- coding: utf-8 -*-
 
 
+# =============================================================================
+# Docstring
+# =============================================================================
+
 """
 Provides Geospatial Grid Class
 
@@ -17,22 +21,23 @@ Todo:
 """
 
 
-# Import | Futures
-# […]
+# =============================================================================
+# Import
+# =============================================================================
 
 # Import | Standard Library
 from array import *
-# […]
+
 
 # Import | Libraries
 import geojson
 import numpy
-# […]
+
 
 # Import | Local Modules
 from bearing.geospatial.coordinate import GeographicCoordinate
 from bearing.geospatial.area import GeographicArea
-# […]
+
 
 
 

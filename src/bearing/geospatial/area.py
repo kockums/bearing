@@ -1,10 +1,14 @@
 # -*- coding: utf-8 -*-
 
 
+# =============================================================================
+# Docstring
+# =============================================================================
+
 """
 Provides Geospatial Area Class
+==============================
 
-...
 
 Examples:
     ...
@@ -16,24 +20,26 @@ Todo:
 
 """
 
-
-# Import | Futures
-# […]
+# =============================================================================
+# Import
+# =============================================================================
 
 # Import | Standard Library
-# […]
 
 # Import | Libraries
 import geojson
-# […]
 
 # Import | Local Modules
 from bearing.geospatial.coordinate import GeographicCoordinate
-# […]
 
+
+# =============================================================================
+# Classes
+# =============================================================================
 
 class GeographicArea(object):
     """
+
     A class used to represent a Geographic Area
 
     ...
@@ -97,6 +103,7 @@ class GeographicArea(object):
 
 
     # Class Methods
+    # =========================================================================
 
     @classmethod
     def from_tuple(cls, t):
@@ -275,21 +282,3 @@ class GeographicArea(object):
             ])
         return geojson_data
 
-
-    # Methods | test
-
-    def test_something(self):
-        """Test Method"""
-        pass
-
-
-def test():
-    """Test Function"""
-    pass
-
-
-if __name__ == '__main__':
-    """Main"""
-    import doctest
-    doctest.testmod()
-    test()

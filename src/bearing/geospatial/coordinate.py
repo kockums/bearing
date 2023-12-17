@@ -1,6 +1,10 @@
 # -*- coding: utf-8 -*-
 
 
+# =============================================================================
+# Docstring
+# =============================================================================
+
 """
 Provides Geospatial Coordinate Class
 
@@ -17,21 +21,23 @@ Todo:
 """
 
 
-# Import | Futures
-# […]
+# =============================================================================
+# Import
+# =============================================================================
 
 # Import | Standard Library
 import math
-# […]
 
 # Import | Libraries
 from pyproj import Proj, Transformer
 import geojson
-# […]
 
 # Import | Local Modules
-# […]
 
+
+# =============================================================================
+# Classes
+# =============================================================================
 
 class GeographicCoordinate(object):
     """
@@ -51,8 +57,7 @@ class GeographicCoordinate(object):
 
     Methods
     -------
-    test()
-        test method
+
     """
 
     # Magic Methods
@@ -201,34 +206,22 @@ class GeographicCoordinate(object):
 
     @property
     def geojson_data(self):
-        """Getter decorator method for geojson_data parameter."""
+        """
+        Getter decorator method for geojson_data parameter.
+        """
         return self._geojson_data
 
     @geojson_data.setter
     def geojson_data(self, geojson_data):
-        """Setter decorator method for geojson parameter."""
+        """
+        Setter decorator method for geojson parameter.
+        """
         assert isinstance(geojson_data, geojson.Point)
         self._geojson_data = geojson_data
 
     def load_geojson(self):
-        """Loader method for geojson_data parameter."""
+        """
+        Loader method for geojson_data parameter.
+        """
         geojson_data = geojson.Point((self.lat, self.lon))
         return geojson_data
-
-    # Methods | test
-
-    def test_something(self):
-        """Test Method"""
-        pass
-
-
-def test():
-    """Test Function"""
-    pass
-
-
-if __name__ == '__main__':
-    """Main"""
-    import doctest
-    doctest.testmod()
-    test()

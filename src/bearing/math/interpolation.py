@@ -24,9 +24,11 @@ Links:
 
 """
 
+# =============================================================================
+# Import
+# =============================================================================
 
-# Import | Standard Library
-import math
+# Import | Standard Libraryimport math
 
 # Import | Libraries
 import numpy

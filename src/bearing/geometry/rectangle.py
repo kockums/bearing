@@ -1,8 +1,13 @@
 # -*- coding: utf-8 -*-
 
 
+# =============================================================================
+# Docstring
+# =============================================================================
+
 """
 Provides Rectangle Class
+========================
 
 ...
 
@@ -16,28 +21,29 @@ Todo:
 
 """
 
-
-# Import | Futures
-# […]
+# =============================================================================
+# Import
+# =============================================================================
 
 # Import | Standard Library
-# […]
 
 # Import | Libraries
-# […]
 
 # Import | Local Modules
 from bearing.geometry.point import Point
-# […]
 
 
-
+# =============================================================================
+# Classes
+# =============================================================================
 
 class Rectangle(object):
     """
+    Rectangle Class
+    ===============
+
     A class used to represent a Rectangle
 
-    ...
 
     Attributes
     ----------
@@ -49,13 +55,13 @@ class Rectangle(object):
         test method
     """
 
-
     def __init__(
         self,
         pt_ll,
         pt_ur
-        ):
-        """"""
+    ):
+        """
+        """
         assert isinstance(pt_ll, Point)
         assert isinstance(pt_ur, Point)
         self._ll = pt_ll
@@ -66,7 +72,6 @@ class Rectangle(object):
     def __str__(self):
         """"""
         return "Rectangle(({0} {1}, {2} {3}, {4} {5}, {6} {7}, {8} {9}))".format(self.ll.x, self.ll.y, self.ur.x, self.ur.y, self.ur.x, self.ur.y, self.ll.x, self.ur.y, self.ll.x, self.ll.y)
-
 
     def size_x(self):
         """"""
@@ -81,22 +86,3 @@ class Rectangle(object):
             return float(self.ll.y - self.ur.y)
         else:
             return float(self.ur.y - self.ll.y)
-
-
-    # Methods | test
-
-    def test_something(self):
-        """Test Method"""
-        pass
-
-
-def test():
-    """Test Function"""
-    pass
-
-
-if __name__ == '__main__':
-    """Main"""
-    import doctest
-    doctest.testmod()
-    test()

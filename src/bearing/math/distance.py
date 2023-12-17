@@ -21,23 +21,24 @@ Links:
 """
 
 
-# Import | Futures
-# […]
+# =============================================================================
+# Import
+# =============================================================================
 
 # Import | Standard Library
 import math
-# […]
+
 
 # Import | Libraries
 import numpy
 import matplotlib.pyplot as pyplot
 from scipy.interpolate import Rbf
-# […]
+
 
 # Import | Local Modules
 from bearing.geometry.point import Point
 from bearing.math.vector import Vector
-# […]
+
 
 
 

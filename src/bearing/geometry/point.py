@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
-# flake8: noqa
 
+
+# =============================================================================
+# Docstring
+# =============================================================================
 
 """
 Provides Point Class
@@ -17,21 +20,21 @@ Todo:
 
 """
 
-
-# Import | Futures
-# […]
+# =============================================================================
+# Import
+# =============================================================================
 
 # Import | Standard Library
 from math import sqrt
-# […]
 
 # Import | Libraries
-# […]
 
 # Import | Local Modules
-# […]
 
 
+# =============================================================================
+# Classes
+# =============================================================================
 
 class Point(object):
     """
@@ -136,31 +139,3 @@ class Point(object):
         dy = self.y - other.y
         dz = self.z - other.z
         return sqrt(dx**2 + dy**2 + dz**2)
-
-
-    # Methods | test
-
-    def test_something(self):
-        """Test Method"""
-        pass
-
-
-
-
-
-
-def test():
-    p1 = Point(1, 1, 1)
-    p2 = Point(2, 3, 4)
-
-    print(p1.x, p1.y, p1.z, p2.x, p2.y, p2.z)
-    print(p1.distance(p2))
-
-    p2.translate(5,6,7)
-
-    print(p2)
-
-if __name__ == '__main__':
-    import doctest
-    doctest.testmod()
-    test()
