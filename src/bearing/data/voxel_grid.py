@@ -18,20 +18,20 @@ Todo:
 
 
 # Import | Futures
-# […]
+
 
 # Import | Standard Library
-# […]
+
 
 # Import | Libraries
-# […]
+
 
 # Import | Local Modules
 from starling.geometry.point import Point
 from starling.geometry.rectangle import Rectangle
 from starling.geospatial.utils import coord_offset
 from starling.math.utils import distance_1d
-# […]
+
 
 
 class Voxel_grid():

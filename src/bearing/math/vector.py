@@ -36,9 +36,19 @@ import math
 
 class Vector(object):
     """
-    A vector is defined by XYZ components and a homogenisation factor.
 
-    Parameters
+    Vector Class
+    ============
+    
+    Represents a three-dimensional vector used for mathematical operations in
+    3D space.
+
+    The Vector class provides functionalities for various vector operations
+    such as addition, subtraction, dot product, cross product, and more, 
+    making it suitable for use in fields such as physics, engineering, computer
+    graphics, and data analysis.
+
+    Attributes
     ----------
     x : float
         The X component of the vector.
@@ -47,48 +57,64 @@ class Vector(object):
     z : float
         The Z component of the vector.
 
-    Attributes
-    ----------
-    x : float
-        The X coordinate of the point.
-    y : float
-        The Y coordinate of the point.
-    z : float
-        The Z coordinate of the point.
-    length : float, read-only
-        The length of this vector.
+    Methods
+    -------
+    __init__(x=0.0, y=0.0, z=0.0)
+        Initializes a new Vector with the given x, y, and z components.
+    dot(other)
+        Returns the dot product of this vector with another vector.
+    cross(other)
+        Returns the cross product of this vector with another vector.
+    length()
+        Returns the magnitude (length) of the vector.
+    normalize()
+        Normalizes the vector, making it a unit vector.
+    to_tuple()
+        Converts the vector to a tuple of its components.
+
+    Class Methods
+    -------------
+    from_polar(magnitude, angle_degrees)
+        Creates a vector from polar coordinates.
+    from_start_end(start, end)
+        Constructs a vector from start and end points.
+
+    Static Methods
+    --------------
+    dot_vectors(left, right)
+        Computes the dot product for pairs of vectors from two lists.
+    sum(vectors)
+        Calculates the sum of a sequence of vectors.
+    length(vector)
+        Calculates the length (magnitude) of a given vector.
 
     Examples
     --------
-    >>> u = Vector(1, 0, 0)
-    >>> v = Vector(0, 1, 0)
-    >>> u
-    Vector(1.000, 0.000, 0.000)
-    >>> v
-    Vector(0.000, 1.000, 0.000)
-    >>> u.x
-    1.0
-    >>> u[0]
-    1.0
-    >>> u.length
-    1.0
-    >>> u + v
-    Vector(1.000, 1.000, 0.000)
-    >>> u + [0.0, 1.0, 0.0]
-    Vector(1.000, 1.000, 0.000)
-    >>> u * 2
-    Vector(2.000, 0.000, 0.000)
-    >>> u.dot(v)
+    Creating a new Vector:
+    >>> v = Vector(1, 2, 3)
+
+    Adding two vectors:
+    >>> v1 = Vector(1, 0, 0)
+    >>> v2 = Vector(0, 1, 0)
+    >>> v1 + v2
+    Vector(1, 1, 0)
+
+    Calculating the dot product:
+    >>> v1.dot(v2)
     0.0
-    >>> u.cross(v)
-    Vector(0.000, 0.000, 1.000)
+
+    Note
+    ----
+    This class represents vectors in 3D space and is not optimized for
+    high-performance computations typically required in numerical simulations
+    or machine learning applications.
+
     """
 
     # =========================================================================
     # Methods | Constructors
     # =========================================================================
 
-    # __slots__ = ["_x", "_y", "_z"]
     __slots__ = ["_components"]
 
     def __init__(
@@ -1208,7 +1234,7 @@ class Vector(object):
         side of the '/' operator.
 
         This method allows division of a scalar or another vector by this
-        vector. 
+        vector.
         Note: Division by a vector is not a standard vector operation and is
         provided for completeness.
 
@@ -1297,7 +1323,8 @@ class Vector(object):
             )
         else:
             raise TypeError(
-                f"Exponent must be a Vector, int, float, tuple, or list, not {type(other).__name__}.")  # noqa E501
+                f"Exponent must be a Vector, int, float, tuple, or list, not {type(other).__name__}."  # noqa E501
+            )
 
     def __ipow__(
         self,
@@ -1492,7 +1519,8 @@ class Vector(object):
         magnitude : float
             The magnitude (or length) of the vector.
         angle_degrees : float
-            The angle in degrees, measured counterclockwise from the positive X-axis.
+            The angle in degrees, measured counterclockwise from the positive
+            X-axis.
 
         Returns
         -------
@@ -1520,12 +1548,52 @@ class Vector(object):
     # -------------------------------------------------------------------------
 
     @classmethod
+    def copy(cls, vector) -> "Vector":
+        """
+        Creates a copy of an existing vector.
+
+        This method generates a new Vector instance with the same components
+        as the provided vector. It's useful when you need a duplicate of a
+        vector without affecting the original one.
+
+        Parameters
+        ----------
+        vector : Vector
+            The vector to copy.
+
+        Returns
+        -------
+        Vector
+            A new Vector instance with the same components as the input vector.
+
+        Raises
+        ------
+        TypeError
+            If the input is not an instance of Vector.
+
+        Examples
+        --------
+        >>> original_vector = Vector(1, 2, 3)
+        >>> copied_vector = Vector.copy(original_vector)
+        >>> copied_vector
+        Vector(1, 2, 3)
+
+        The copied vector can be modified independently of the original, making
+        this method suitable for operations that require non-destructive
+        modifications or duplications of vector data.
+        """
+        if not isinstance(vector, Vector):
+            raise TypeError("The input must be an instance of Vector.")
+
+        return cls(vector.x, vector.y, vector.z)
+
+    @classmethod
     def zero(cls) -> "Vector":
         """
         Creates and returns a Zero Vector.
 
-        A Zero Vector is a vector in which all the components are zero. 
-        This is equivalent to the origin in a coordinate system, and it 
+        A Zero Vector is a vector in which all the components are zero.
+        This is equivalent to the origin in a coordinate system, and it
         often serves as an initial or default state in many vector operations.
 
         In 3D space, this vector is represented as (0.0, 0.0, 0.0).
@@ -1680,3 +1748,273 @@ class Vector(object):
         or in physics for specifying directional forces.
         """
         return cls(0.0, 0.0, 1.0)
+
+    @staticmethod
+    def to_vector(
+        obj: "Vector" | tuple | list,
+    ) -> "Vector":
+        """
+        Converts an object to a Vector instance.
+
+        This method is used to convert a given object into a Vector. The
+        object can be an existing Vector instance, or a tuple/list of three
+        numeric components (x, y, z).
+
+        Parameters
+        ----------
+        obj : Vector or sequence of float
+            The object to be converted to a Vector. This can be an instance of
+            Vector, or a sequence (tuple/list) containing three numeric
+            components.
+
+        Returns
+        -------
+        Vector
+            The object converted to a Vector instance.
+
+        Raises
+        ------
+        ValueError
+            If the object is neither a Vector nor a sequence of three numeric
+            components.
+
+        Examples
+        --------
+        >>> Vector.to_vector([1.0, 2.0, 3.0])
+        Vector(1.0, 2.0, 3.0)
+
+        >>> v = Vector(4.0, 5.0, 6.0)
+        >>> Vector.to_vector(v)
+        Vector(4.0, 5.0, 6.0)
+
+        This method facilitates the flexible handling of vectorial data,
+        allowing for easy conversion between common vector representations.
+        """
+        if isinstance(obj, Vector):
+            return obj
+        elif isinstance(obj, (tuple, list)) and len(obj) == 3:
+            return Vector(*obj)
+        else:
+            raise ValueError(
+                "Object must be a Vector or a sequence of three numeric "
+                "components."
+            )
+
+    @staticmethod
+    def sum(vectors) -> "Vector":
+        """
+        Calculates the sum of a sequence of vectors.
+
+        This method takes an iterable of vectors and returns their cumulative
+        sum. It's equivalent to adding each vector in the iterable
+        sequentially.
+
+        Parameters
+        ----------
+        vectors : iterable of Vector
+            An iterable (like a list or tuple) of Vector instances to be
+            summed.
+
+        Returns
+        -------
+        Vector
+            A new Vector instance representing the sum of the vectors.
+
+        Raises
+        ------
+        TypeError
+            If 'vectors' is not an iterable of Vector instances.
+
+        Examples
+        --------
+        >>> v1 = Vector(1, 2, 3)
+        >>> v2 = Vector(4, 5, 6)
+        >>> v3 = Vector(7, 8, 9)
+        >>> Vector.sum([v1, v2, v3])
+        Vector(12, 15, 18)
+
+        Note: This method is useful for combining forces, displacements, or
+        any other quantities that are represented as vectors, especially when
+        dealing with a large number of vectors.
+        """
+        total_x, total_y, total_z = 0, 0, 0
+        for v in vectors:
+            if not isinstance(v, Vector):
+                raise TypeError(
+                    "All elements in 'vectors' must be instances of Vector."
+                )
+            total_x += v.x
+            total_y += v.y
+            total_z += v.z
+        return Vector(total_x, total_y, total_z)
+
+    @staticmethod
+    def dot(
+        vector1: "Vector",
+        vector2: "Vector",
+    ) -> float:
+        """
+        Calculates the dot product of two vectors.
+
+        The dot product is a scalar value obtained by summing the products of
+        corresponding components of the two vectors.
+
+        Parameters
+        ----------
+        vector1 : Vector
+            The first vector in the dot product operation.
+        vector2 : Vector
+            The second vector in the dot product operation.
+
+        Returns
+        -------
+        float
+            The dot product of the two vectors.
+
+        Raises
+        ------
+        TypeError
+            If either 'vector1' or 'vector2' is not an instance of Vector.
+
+        Examples
+        --------
+        >>> v1 = Vector(1, 2, 3)
+        >>> v2 = Vector(4, 5, 6)
+        >>> Vector.dot(v1, v2)
+        32
+
+        The dot product is important in various applications, such as finding
+        the angle between vectors in space, in physics for calculating work
+        done, and in machine learning algorithms.
+        """
+        if not isinstance(vector1, Vector) or not isinstance(vector2, Vector):
+            raise TypeError(
+                "Both arguments must be instances of Vector."
+            )
+
+        return vector1.x * vector2.x + vector1.y * vector2.y + vector1.z * vector2.z  # noqa E501
+
+    @staticmethod
+    def dot_vectors(left, right):
+        """
+        Computes the dot product for pairs of vectors from two lists.
+
+        This method calculates the dot product for each corresponding pair of
+        vectors in the 'left' and 'right' lists. It supports inputs as either
+        instances of the Vector class or as sequences (tuples/lists) of three
+        numeric components (x, y, z).
+
+        If a sequence is provided, it is automatically converted to a Vector
+        instance before calculating the dot product.
+
+        Parameters
+        ----------
+        left : list[Vector or sequence of float]
+            A list of vectors, each either an instance of Vector or a sequence
+            of three numeric components.
+        right : list[Vector or sequence of float]
+            A list of vectors, in the same format as 'left'.
+
+        Returns
+        -------
+        list[float]
+            A list containing the dot product of each pair of vectors.
+
+        Raises
+        ------
+        ValueError
+            If 'left' and 'right' lists are of different lengths, or if any
+            element cannot be interpreted as a vector.
+
+        Examples
+        --------
+        >>> Vector.dot_vectors([(1.0, 0.0, 0.0), (2.0, 0.0, 0.0)],
+                               [(1.0, 0.0, 0.0), (2.0, 0.0, 0.0)])
+        [1.0, 4.0]
+
+        This method is particularly useful in scenarios requiring batch
+        processing of vector dot products, such as in physics simulations,
+        geometric computations, or data analysis.
+        """
+        if len(left) != len(right):
+            raise ValueError(
+                "The 'left' and 'right' lists must be of the same length."
+            )
+
+        return [
+            Vector.to_vector(u).dot(Vector.to_vector(v)) for u, v in zip(left, right)  # noqa E501
+        ]
+
+    def cross(self, other: "Vector") -> "Vector":
+        if not isinstance(other, Vector):
+            raise TypeError("Operand must be a Vector.")
+        return Vector(
+            self.y * other.z - self.z * other.y,
+            self.z * other.x - self.x * other.z,
+            self.x * other.y - self.y * other.x
+        )
+
+    @staticmethod
+    def length_vector(vector) -> float:
+        """
+        Calculates the length (norm / magnitude) of a vector.
+
+        The length of a vector is computed as the square root of the sum of
+        the squares of its components, which is derived from the Pythagorean
+        theorem.
+
+        Parameters
+        ----------
+        vector : Vector
+            The vector whose length is to be calculated.
+
+        Returns
+        -------
+        float
+            The length (magnitude) of the vector.
+
+        Raises
+        ------
+        TypeError
+            If the input is not an instance of Vector.
+
+        Examples
+        --------
+        >>> v = Vector(3, 4, 0)
+        >>> Vector.length(v)
+        5.0
+
+        This method is essential in vector algebra for operations like
+        normalization, where understanding the magnitude of a vector is
+        crucial.
+        """
+        if not isinstance(vector, Vector):
+            raise TypeError("The input must be an instance of Vector.")
+
+        length = math.sqrt(vector.x**2 + vector.y**2 + vector.z**2)
+
+        return length
+        #  return math.hypot(self.x, self.y)
+
+    @staticmethod
+    def length_vectors(vectors):
+        """
+        Compute the length of multiple vectors.
+
+        Parameters
+        ----------
+        vectors : list[[float, float, float] | :class:`~bearing.math.Vector`]
+            A list of vectors.
+
+        Returns
+        -------
+        list[float]
+            A list of lengths.
+
+        Examples
+        --------
+        >>> Vector.length_vectors([[1.0, 0.0, 0.0], [2.0, 0.0, 0.0]])
+        [1.0, 2.0]
+
+        """
+        return [Vector.length_vector(vector) for vector in vectors]

@@ -162,92 +162,8 @@ class Vector:
         Vector.transform_collection(vectors, X)
         return vectors
 
-    @staticmethod
-    def length_vectors(vectors):
-        """
-        Compute the length of multiple vectors.
-
-        Parameters
-        ----------
-        vectors : list[[float, float, float] | :class:`~bearing.math.Vector`]
-            A list of vectors.
-
-        Returns
-        -------
-        list[float]
-            A list of lengths.
-
-        Examples
-        --------
-        >>> Vector.length_vectors([[1.0, 0.0, 0.0], [2.0, 0.0, 0.0]])
-        [1.0, 2.0]
-
-        """
-        return [length_vector(vector) for vector in vectors]
-
-    @staticmethod
-    def sum_vectors(vectors):
-        """
-        Compute the sum of multiple vectors.
-
-        Parameters
-        ----------
-        vectors : list[[float, float, float] | :class:`~bearing.math.Vector`]
-            A list of vectors.
-
-        Returns
-        -------
-        :class:`~bearing.math.Vector`
-            A vector that is the sum of the vectors.
-
-        Examples
-        --------
-        >>> Vector.sum_vectors([[1.0, 0.0, 0.0], [2.0, 0.0, 0.0]])
-        Vector(3.000, 0.000, 0.000)
-
-        """
-        return Vector(*[sum(axis) for axis in zip(*vectors)])
 
 
-    def dot(self, other: "Vector") -> float:
-        if not isinstance(other, Vector):
-            raise TypeError("Operand must be a Vector.")
-        return self.x * other.x + self.y * other.y + self.z * other.z
-
-    def cross(self, other: "Vector") -> "Vector":
-        if not isinstance(other, Vector):
-            raise TypeError("Operand must be a Vector.")
-        return Vector(
-            self.y * other.z - self.z * other.y,
-            self.z * other.x - self.x * other.z,
-            self.x * other.y - self.y * other.x
-        )
-
-
-    @staticmethod
-    def dot_vectors(left, right):
-        """
-        Compute the dot product of two lists of vectors.
-
-        Parameters
-        ----------
-        left : list[[float, float, float] | :class:`~bearing.math.Vector`]
-            A list of vectors.
-        right : list[[float, float, float] | :class:`~bearing.math.Vector`]
-            A list of vectors.
-
-        Returns
-        -------
-        list[float]
-            A list of dot products.
-
-        Examples
-        --------
-        >>> Vector.dot_vectors([[1.0, 0.0, 0.0], [2.0, 0.0, 0.0]], [[1.0, 0.0, 0.0], [2.0, 0.0, 0.0]])
-        [1.0, 4.0]
-
-        """
-        return [Vector.dot(u, v) for u, v in zip(left, right)]
 
     @staticmethod
     def cross_vectors(left, right):
@@ -330,36 +246,6 @@ class Vector:
     # ==========================================================================
     # helpers
     # ==========================================================================
-
-    def copy(self):
-        """
-        Make a copy of this vector.
-
-        Returns
-        -------
-        :class:`~bearing.math.Vector`
-            The copy.
-
-        Examples
-        --------
-        >>> u = Vector(0.0, 0.0, 0.0)
-        >>> v = u.copy()
-        >>> u == v
-        True
-        >>> u is v
-        False
-
-        """
-        cls = type(self)
-        return cls(self.x, self.y, self.z)
-
-
-    def copy(self):
-        """
-        create a new instance of Vector,
-        with the same data as this instance.
-        """
-        return Vector(self.x, self.y)
 
 
     # ==========================================================================
@@ -530,60 +416,6 @@ class Vector:
 
 
 
-    def dot(self, other):
-        """
-        The dot product of this vector and another vector.
-
-        Parameters
-        ----------
-        other : [float, float, float] | :class:`~bearing.math.Vector`
-            The other vector.
-
-        Returns
-        -------
-        float
-            The dot product.
-
-        Examples
-        --------
-        >>> u = Vector(1.0, 0.0, 0.0)
-        >>> v = Vector(0.0, 1.0, 0.0)
-        >>> u.dot(v)
-        0.0
-
-        """
-        return dot_vectors(self, other)
-
-
-
-    def dot_vector(vector1, vector2):
-        """
-        This function performs a type of multiplication (product) on vectors.
-        The dot product of two vectors is computed as follows.
-        <x1, y1, z1> * <x2, y2, z2> = x1 * x2 + y1 * y2 + z1 * z2.
-
-        """
-
-        dot_product = (vector1.x*vector2.x + vector1.y*vector2.y + vector1.z*vector2.z)
-        return dot_product
-
-    # Return the inner product of self and Vector object other.
-    def dot(self, other):
-        result = 0
-        for i in range(self._n):
-            result += self._coords[i] * other._coords[i]
-        return result
-
-
-    def inner(self, vector):
-        """
-        Returns the dot product (inner product) of self and another vector
-        """
-        if not isinstance(vector, Vector):
-            raise ValueError('The dot product requires another vector')
-        return sum(a * b for a, b in zip(self, vector))
-
-
 
 
     def cross(self, other):
@@ -616,11 +448,6 @@ class Vector:
         return self.scale(1.0 / abs(self))
 
 
-    def norm(self):
-        """
-        Returns the norm (length, magnitude) of the vector
-        """
-        return math.sqrt(sum( x*x for x in self ))
 
     def argument(self, radians=False):
         """
@@ -670,15 +497,7 @@ class Vector:
         return ret
 
 
-    def length_vector(vector):
-        """The length of a vector (i.e., its magnitude) is computed from its components using the Pythagorean theorem."""
 
-        length = math.sqrt(vector.x**2 + vector.y**2 + vector.z**2)
-        return
-
-
-    def magnitude(self):
-        return math.hypot(self.x, self.y)
 
 
     def angle(self, other):
@@ -867,16 +686,7 @@ class Vector:
         return self.__class__(*product)
 
 
-    def difference_point(point1, point2):
-        """
-        This function creates (and returns) a new vector obtained by
-        subtracting from point point1 the point point2 (i.e., point1 - point2).
-        This is computed by subtracting the corresponding x-, y-, and z-components. This gives a vector, conceptually, pointing from point2 to point1.
 
-        """
-
-        difference_point = data.Vector(point1.x - point2.x, point1.y - point2.y, point1.z - point2.z)
-        return difference_point
 
     def difference_vector(vector1, vector2):
         """
@@ -906,62 +716,3 @@ class Vector:
         travel = data.Vector(to_point.x - from_point.x, to_point.y - from_point.y, to_point.z - from_point.z)
         return travel
 
-    # =========================================================================
-    # Methods | Test
-    # =========================================================================
-
-    def test_something(self):
-        """Test Method"""
-        pass
-
-
-
-
-
-
-
-
-
-
-
-
-def test():
-    """Test Function"""
-    pass
-
-def main():
-
-    """Main"""
-    import doctest
-    doctest.testmod()
-    test()
-
-if __name__ == '__main__':
-    main()
-
-
-# def AutoFloatProperties(*props):
-#     '''metaclass'''
-#     class _AutoFloatProperties(type):
-#         # Inspired by autoprop (http://www.python.org/download/releases/2.2.3/descrintro/#metaclass_examples)
-#         def __init__(cls, name, bases, cdict):
-#             super(_AutoFloatProperties, cls).__init__(name, bases, cdict)
-#             for attr in props:
-#                 def fget(self, _attr='_'+attr): return getattr(self, _attr)
-#                 def fset(self, value, _attr='_'+attr): setattr(self, _attr, float(value))
-#                 setattr(cls, attr, property(fget, fset))
-#     return _AutoFloatProperties
-
-# class Vector(object, metaclass = AutoFloatProperties):
-#     '''Creates a Maya vector/triple, having x, y and z coordinates as float values'''
-#     __metaclass__ = AutoFloatProperties('x','y','z')
-#     def __init__(self, x=0, y=0, z=0):
-#         self.x, self.y, self.z = x, y, z # values converted to float via properties
-
-# if __name__=='__main__':
-#     v=Vector(1,2,3)
-#     print(v.x)
-#     # 1.0
-#     v.x=4
-#     print(v.x)
-#     # 4.0

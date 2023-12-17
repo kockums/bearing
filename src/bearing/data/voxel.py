@@ -18,17 +18,17 @@ Todo:
 
 
 # Import | Futures
-# […]
+
 
 # Import | Standard Library
-# […]
+
 
 # Import | Libraries
-# […]
+
 
 # Import | Local Modules
 from starling.geometry.point import Point
-# […]
+
 
 
 class Voxel(object):

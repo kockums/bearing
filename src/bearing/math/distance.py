@@ -74,21 +74,3 @@ class Distance(Vector):
         result = math.sqrt(xd * xd + yd * yd + zd * zd)
         return result
 
-
-    # Methods | test
-
-    def test_something(self):
-        """Test Method"""
-        pass
-
-
-def test():
-    """Test Function"""
-    pass
-
-
-if __name__ == '__main__':
-    """Main"""
-    import doctest
-    doctest.testmod()
-    test()
