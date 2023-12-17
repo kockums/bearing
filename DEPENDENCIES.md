@@ -23,8 +23,6 @@ Usually peer dependencies are packages that would-be users would already have or
 as part of their own applications, and hence, no need to include them as part of
 the library code.
 
-
-
 ## Development Dependencies
 
 Development dependencies are package dependencies used while developing library code

@@ -21,9 +21,6 @@ Links:
 # Import
 # =============================================================================
 
-# Import | Futures
-# from __future__ import annotations
-
 # Import | Standard Library
 from typing import Any, Dict, List, Iterator, Tuple
 import math
@@ -142,19 +139,41 @@ class Vector(object):
 
     @components.setter
     def components(self, values: Tuple[float, float, float]) -> None:
-        """Sets the components of the vector."""
+
+        """
+        Setter decorator method for x parameter.
+        Sets the components of the vector.
+
+        Parameters
+        ----------
+
+        Returns
+        -------
+        None
+
+        """
         if len(values) != 3:
             raise ValueError(
                 "Components must be a tuple of three float values."
-        )
+            )
         self._components = list(values)
 
     @components.deleter
     def components(self) -> None:
         """
+        Deleter decorator method for x parameter.
         Resets the components of the vector to zero.
 
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        None
+
         """
+
         self._components = [0.0, 0.0, 0.0]
 
     # Methods | Properties | x parameter
@@ -180,11 +199,11 @@ class Vector(object):
         x = self._components[0]
         return x
 
-
     @x.setter
     def x(self, x: int | float):
         """
         Setter decorator method for x parameter.
+        Sets the x-component of the vector.
 
         Parameters
         ----------
@@ -201,12 +220,13 @@ class Vector(object):
             (int, float),
             msg = "x parameter must be int or float"
         )
-        self._x = float(x)
+        self._components[0] = float(x)
 
     @x.deleter
     def x(self):
         """
         Deleter decorator method for x parameter.
+        Resets the x-component of the vector to zero.
 
         Parameters
         ----------
@@ -217,7 +237,7 @@ class Vector(object):
         None
 
         """
-        del self._x
+        self._components[0] = 0.0
 
     # Methods | Properties | y parameter
     # -------------------------------------------------------------------------
@@ -226,6 +246,7 @@ class Vector(object):
     def y(self) -> float:
         """
         Getter decorator method for y parameter.
+        Gets the y-component of the vector.
 
         Parameters
         ----------
@@ -237,12 +258,14 @@ class Vector(object):
             The y parameter.
 
         """
-        return self._y
+        y = self._components[1]
+        return y
 
     @y.setter
     def y(self, y: int | float):
         """
         Setter decorator method for y parameter.
+        Sets the y-component of the vector.
 
         Parameters
         ----------
@@ -254,15 +277,29 @@ class Vector(object):
         None
 
         """
-        assert isinstance(y, (int, float), msg = "y parameter must be int or float")
-        self._y = float(y)
+        assert isinstance(
+            y,
+            (int, float),
+            msg = "y parameter must be int or float"
+        )
+        self._components[1] = float(y)
 
     @y.deleter
     def y(self):
         """
         Deleter decorator method for y parameter.
+        Resets the y-component of the vector to zero.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        None
+
         """
-        del self._y
+        self._components[1] = 0.0
 
     # Methods | Properties | z parameter
     # -------------------------------------------------------------------------
@@ -271,6 +308,7 @@ class Vector(object):
     def z(self) -> float:
         """
         Getter decorator method for z parameter.
+        Gets the z-component of the vector.
 
         Parameters
         ----------
@@ -282,12 +320,15 @@ class Vector(object):
             The z parameter.
 
         """
-        return self._z
+        # return self._z
+        z = self._components[2]
+        return z
 
     @z.setter
     def z(self, z: int | float):
         """
         Setter decorator method for z parameter.
+        Sets the z-component of the vector.
 
         Parameters
         ----------
@@ -299,13 +340,18 @@ class Vector(object):
         None
 
         """
-        assert isinstance(z, (int, float), msg = "z parameter must be int or float")
-        self._z = float(z)
+        assert isinstance(
+            z,
+            (int, float),
+            msg = "z parameter must be int or float"
+        )
+        self._components[2] = float(z)
 
     @z.deleter
     def z(self):
         """
         Deleter decorator method for z parameter.
+        Resets the z-component of the vector to zero.
 
         Parameters
         ----------
@@ -316,264 +362,314 @@ class Vector(object):
         None
 
         """
-        del self._z
-
+        self._components[2] = 0.0
 
     # Methods | Properties | length parameter
     # -------------------------------------------------------------------------
 
     @property
     def length(self) -> float:
-        return length_vector(self)
-
-
+        x, y, z = self._components
+        return math.sqrt(x**2 + y**2 + z**2)
 
     # =========================================================================
     # Methods | Magic
     # =========================================================================
 
-    # overload []
-    def __getitem__(self, index : int) -> float:
+    def __repr__(self) -> str:
         """
-        Returns the ith Cartesian coordinate of self.
+        Returns an unambiguous string representation of the Vector object.
+
+        This representation includes the class name and the values of the
+        vector's components with a fixed precision.
+
+        Returns
+        -------
+        str
+            A string representing the Vector object.
+        """
+        # Can be adjusted or made a class attribute for flexibility
+        precision = 3
+        return f"Vector({self.x:.{precision}f}, {self.y:.{precision}f}, {self.z:.{precision}f})"  # noqa E501
+
+    def __str__(self) -> str:
+        """
+        Returns a human-readable string representation of the Vector object.
+
+        This representation is more concise and omits the class name, focusing
+        on the values of the vector's components.
+
+        Returns
+        -------
+        str
+            A string representation of the Vector object.
+        """
+        return f"({self.x}, {self.y}, {self.z})"
+
+    def __getitem__(self, index: int) -> float:
+        """
+        Retrieves the value of the vector at the specified index.
 
         Parameters
         ----------
         index : int
-            The ith Cartesian coordinate index of self.
+            The index of the vector component to retrieve.
+            Must be 0 for x, 1 for y, or 2 for z.
 
         Returns
         -------
-        result : float
-            The ith Cartesian coordinate of self.
+        float
+            The value of the vector component at the specified index.
 
+        Raises
+        ------
+        IndexError
+            If the index is not 0, 1, or 2.
         """
-        data = [self.x, self.y, self.z]
-        result = data[index]
-        return result
+        try:
+            return self._components[index]
+        except IndexError:
+            raise IndexError("Index must be 0 (x), 1 (y), or 2 (z).")
 
-    def __getitem__(self, key):
+    def __setitem__(self, index: int, value: float) -> None:
         """
+        Sets the value of the vector at the specified index.
+
+        Parameters
+        ----------
+        index : int
+            The index of the vector component to set.
+            Must be 0 for x, 1 for y, or 2 for z.
+        value : float
+            The new value for the specified component.
+
+        Raises
+        ------
+        IndexError
+            If the index is not 0, 1, or 2.
+        TypeError
+            If the value is not a numeric type (int or float).
         """
-        if isinstance(key, slice):
-            return [self[i] for i in range(*key.indices(len(self)))]
-        i = key % 3
-        if i == 0:
-            return self.x
-        if i == 1:
-            return self.y
-        if i == 2:
-            return self.z
-        raise KeyError
-
-
-    # overload set []
-    def __setitem__(self, key, item):
-        """
-
-        """
-        if (key == 0):
-            self.x = item
-        elif (key == 1):
-            self.y = item
-        elif (key == 2):
-            self.z = item
-        #TODO: Default should throw excetion
-
-
-    def __setitem__(self, key, value):
-        """
-        """
-
-        i = key % 3
-        if i == 0:
-            self.x = value
-            return
-        if i == 1:
-            self.y = value
-            return
-        if i == 2:
-            self.z = value
-            return
-        raise KeyError
-
-
-
-
-
-
-    def __str__(self) -> str:
-        """
-        Return a string representation of self.
-        """
-        return str(self._coords)
-
-
-    def __repr__(self) -> str:
-        """
-        """
-        # return str(self.values)
-        return "Vector({0:.{3}f}, {1:.{3}f}, {2:.{3}f})".format(self.x, self.y, self.z, PRECISION[:1])
-
-
+        if index not in [0, 1, 2]:
+            raise IndexError("Index must be 0 (x), 1 (y), or 2 (z).")
+        if not isinstance(value, (int, float)):
+            raise TypeError("Value must be a numeric type (int or float).")
+        self._components[index] = float(value)
 
     # Methods | Magic | Basic
     # -------------------------------------------------------------------------
 
     def __len__(self) -> int:
         """
-        Return the dimension of self.
+        Returns the number of components in the vector.
 
+        Returns
+        -------
+        int
+            The number of components in the vector.
         """
-        # return self._n
-        # return len(self.values)
-        return 3
-
-
-
+        return len(self._components)
 
     def __iter__(self) -> Iterator[float]:
         """
-        iter() method in a class.
+        Returns an iterator for the vector components.
 
+        This method utilizes Python's built-in iter function to create an
+        iterator over a list that contains the x, y, and z components of the
+        vector.
+
+        Returns
+        -------
+        Iterator[float]
+            An iterator over the vector components (x, y, z).
         """
-        return iter([self.x, self.y, self.z])
+        return iter(self._components)
 
+    # def __next__(self):
+    #     """
+    #     next() method in a class.
 
-    def __next__(self):
+    #     """
+    #     pass
+
+    def __eq__(self, other: "Vector") -> bool:
         """
-        next() method in a class.
+        Checks if this vector is equal to another object.
 
-        """
-        # if(self.num >= self.max):
-        #     raise StopIteration
-        # self.num += 1
-        # return self.num
-        pass
-
-
-    def __eq__(self, other: Vector) -> bool:
-        """
-        Is this vector equal to the other vector?
-
-        Two vectors are considered equal if their XYZ components are identical.
+        Equality is determined based on the similarity of components. Due to
+        the nature of floating-point arithmetic, a tolerance is used to
+        determine if components are 'close enough' to be considered equal.
 
         Parameters
         ----------
-        other : [float, float, float] | :class:`~bearing.math.Vector`
-            The vector to compare.
+        other : object
+            Another object to compare against, ideally another Vector.
 
         Returns
         -------
         bool
-            True if the vectors are equal.
-            False otherwise.
+            True if the other object is a Vector and all corresponding
+            components are close enough within a tolerance, False otherwise.
 
+        Notes
+        -----
+        The `isclose` method from the math module is used to compare
+        floating-point values with a relative tolerance. This accounts for
+        minor differences in floating-point arithmetic.
         """
-        assert isinstance(other, Vector, msg = "other must be of type: Vector")
-        _ = self.x == other.x and self.y == other.y and self.z == other.z
-        return _
+        if not isinstance(
+            other,
+            Vector,
+            msg = "other must be of type: Vector"
+        ):
+            return NotImplemented
 
+        return all(
+            math.isclose(a, b) for a, b in zip(
+                self._components,
+                other._components
+            )
+        )
 
     # Methods | Magic | Unary
     # -------------------------------------------------------------------------
 
-    def __pos__(self):
+    def __pos__(self) -> "Vector":
         """
-        """
-        pass
+        Returns a new vector that is the positive of this vector.
 
-    def __neg__(self):
+        Returns
+        -------
+        Vector
+            A new vector with the same components as this vector.
         """
-        """
-        return self.scaled(-1.0)
+        return Vector(*self._components)
 
-    def __abs__(self):
+    def __neg__(self) -> "Vector":
         """
-        """
-        pass
+        Returns a new vector that is the negation of this vector.
 
-    def __invert__(self):
+        Returns
+        -------
+        Vector
+            A new vector with each component negated.
         """
-        """
-        pass
+        return Vector(*[-x for x in self._components])
+        # return self.scaled(-1.0)
 
+    def __abs__(self) -> "Vector":
+        """
+        Returns a new vector with the absolute values of this vector's
+        components.
+
+        Returns
+        -------
+        Vector
+            A new vector with the absolute values of each component.
+        """
+        return Vector(*[abs(x) for x in self._components])
+
+    def __invert__(self) -> "Vector":
+        """
+        Returns a new vector that is the bitwise inverse of this vector.
+
+        Note
+        ----
+        This method treats the vector's components as integers for the purpose
+        of bitwise inversion. It is mainly for demonstration and may not have
+        a practical application in most vector-based computations.
+
+        Returns
+        -------
+        Vector
+            A new vector with each component bitwise-inverted.
+        """
+        return Vector(*[~int(x) for x in self._components])
 
     # Methods | Magic | Additions
     # -------------------------------------------------------------------------
 
-    def __add__(self, other: Self) -> Self:
+    def __add__(
+        self,
+        other: "Vector" | int | float | tuple | list
+    ) -> "Vector":
         """
-        Vector addition.
-        Returns a new Vector that is the sum of this vector and another.
-        """
-        add = Vector(
-            self.components[0] + other.components[0],
-            self.components[1] + other.components[1],
-            self.components[2] + other.components[2]
-        )
-        return add
-
-
-    def __add__(self, other: Vector | int | float | tuple | list) -> Vector:
-        """
-        Returns the vector addition of self and other
-        Return a vector that is the the sum of this vector and another vector.
+        Adds another vector, a scalar, or an iterable with three numeric
+        elements to this vector.
 
         Parameters
         ----------
-        other : [float, float, float] | :class:`~bearing.math.Vector`
-            The other to add to self.
+        other : Vector, int, float, tuple, or list
+            The other vector, scalar, or an iterable of three numeric elements
+            to add.
 
         Returns
         -------
-        :class:`~bearing.math.Vector`
-            The resulting vector.
+        Vector
+            A new vector that is the sum of this vector and the other vector,
+            scalar, or iterable.
 
+        Raises
+        ------
+        TypeError
+            If the other object is not a Vector, int, float, tuple, or list.
+        ValueError
+            If the iterable does not contain exactly three elements.
         """
-        error_message = "Addition with type {} not supported".format(
-            type(other)
-        )
-
-        assert isinstance(
-            other,
-            (Vector, int, float, tuple, list),
-            msg = error_message
-        )
-
         if isinstance(other, Vector):
-            x = self.x + other.x
-            y = self.y + other.y
-            z = self.z + other.z
+            return Vector(
+                self.x + other.x,
+                self.y + other.y,
+                self.z + other.z,
+            )
         elif isinstance(other, (int, float)):
-            x = self.x + other
-            y = self.y + other
-            z = self.z + other
+            return Vector(
+                self.x + other,
+                self.y + other,
+                self.z + other,
+            )
         elif isinstance(other, (tuple, list)):
-            x = self.x + other[0]
-            y = self.y + other[1]
-            z = self.z + other[2]
+            if len(other) != 3:
+                raise ValueError(
+                    "The iterable must contain exactly three elements."
+                )
+            return Vector(
+                self.x + other[0],
+                self.y + other[1],
+                self.z + other[2],
+            )
         else:
-            raise ValueError(error_message)
+            raise TypeError(
+                f"Addition with type {type(other).__name__} not supported. "
+                "Operand must be a Vector, int, float, tuple, or list."
+            )
 
-        return Vector(x, y, z)
-
-    def __iadd__(self, other: Vector | int | float | tuple | list) -> None:
+    def __iadd__(
+        self,
+        other: "Vector" | int | float | tuple | list
+    ) -> "Vector":
         """
-        Add the components of the other vector from this vector.
+        Performs in-place addition of another vector, a scalar, or an iterable
+        with three numeric elements.
 
         Parameters
         ----------
-        other : [float, float, float] | :class:`~bearing.math.Vector`
-            The other to add to self.
+        other : Vector, int, float, tuple, or list
+            The other vector, scalar, or an iterable of three numeric elements
+            to add.
 
         Returns
         -------
-        None
+        Vector
+            The modified vector after in-place addition.
 
+        Raises
+        ------
+        TypeError
+            If the other object is not a Vector, int, float, tuple, or list.
+        ValueError
+            If the iterable does not contain exactly three elements.
         """
-        error_message = "Addition with type {} not supported".format(type(other))
-        assert isinstance(other, (Vector, int, float, tuple, list), msg = error_message)
         if isinstance(other, Vector):
             self.x += other.x
             self.y += other.y
@@ -583,66 +679,161 @@ class Vector(object):
             self.y += other
             self.z += other
         elif isinstance(other, (tuple, list)):
+            if len(other) != 3:
+                raise ValueError(
+                    "The iterable must contain exactly three elements."
+                )
             self.x += other[0]
             self.y += other[1]
             self.z += other[2]
         else:
-            raise ValueError(error_message)
+            raise TypeError(
+                f"Addition with type {type(other).__name__} not supported. "
+                "Operand must be a Vector, int, float, tuple, or list."
+            )
         return self
 
-
-    def __radd__(self, other):
+    def __radd__(
+        self,
+        other: "Vector" | int | float | tuple | list
+    ) -> "Vector":
         """
-        Called if 4 + self for instance.
+        Handles addition where the vector is on the right-hand side of the '+'
+        operator.
 
+        Parameters
+        ----------
+        other : Vector, int, float, tuple, or list
+            The operand on the left side of the '+' operator.
+
+        Returns
+        -------
+        Vector
+            A new vector that is the sum of this vector and the 'other'
+            operand.
+
+        Raises
+        ------
+        TypeError
+            If the 'other' object is not a Vector, int, float, tuple, or list.
+        ValueError
+            If 'other' is an iterable and does not contain exactly three
+            elements.
         """
-        return self.__add__(other)
-
-
+        if isinstance(other, Vector):
+            return Vector(
+                other.x + self.x,
+                other.y + self.y,
+                other.z + self.z,
+            )
+        elif isinstance(other, (int, float)):
+            return Vector(
+                other + self.x,
+                other + self.y,
+                other + self.z,
+            )
+        elif isinstance(other, (tuple, list)):
+            if len(other) != 3:
+                raise ValueError(
+                    "The iterable must contain exactly three elements."
+                )
+            return Vector(
+                other[0] + self.x,
+                other[1] + self.y,
+                other[2] + self.z,
+            )
+        else:
+            raise TypeError(
+                f"Addition with type {type(other).__name__} not supported. "
+                "Operand must be a Vector, int, float, tuple, or list."
+            )
 
     # Methods | Magic | Subtractions
     # -------------------------------------------------------------------------
 
-    def __sub__(self, other: Vector | int | float | tuple | list) -> Vector:
+    def __sub__(
+        self,
+        other: "Vector" | int | float | tuple | list
+    ) -> "Vector":
         """
-        Returns a Vector that is the the difference between this Vector and another Vector.
-
-
-        """
-        error_message = "Subtraction with type {} not supported".format(type(other))
-        assert isinstance(other, (Vector, int, float, tuple, list), msg = error_message)
-        if isinstance(other, Vector):
-            x = self.x - other.x
-            y = self.y - other.y
-            z = self.z - other.z
-        elif isinstance(other, (int, float)):
-            x = self.x - other
-            y = self.y - other
-            z = self.z - other
-        elif isinstance(other, (tuple, list)):
-            x = self.x - other[0]
-            y = self.y - other[1]
-            z = self.z - other[2]
-        else:
-            raise ValueError(error_message)
-        return Vector(x, y, z)
-
-    def __isub__(self, other: Vector | int | float | tuple | list) -> None:
-        """
-        Subtract the components of the other vector from this vector.
+        Subtracts another vector, a scalar, or an iterable with three numeric
+        elements from this vector.
 
         Parameters
         ----------
-        other : [float, float, float] | :class:`~bearing.math.Vector`
-            The vector to subtract.
+        other : Vector, int, float, tuple, or list
+            The other vector, scalar, or an iterable of three numeric elements
+            to subtract.
 
         Returns
         -------
-        None
+        Vector
+            A new vector that is the result of subtracting 'other' from this
+            vector.
 
+        Raises
+        ------
+        TypeError
+            If the 'other' object is not a Vector, int, float, tuple, or list.
+        ValueError
+            If 'other' is an iterable and does not contain exactly three
+            elements.
         """
-        error_message = "Subtraction with type {} not supported".format(type(other))
-        assert isinstance(other, (Vector, int, float, tuple, list), msg = error_message)
+        if isinstance(other, Vector):
+            return Vector(
+                self.x - other.x,
+                self.y - other.y,
+                self.z - other.z,
+            )
+        elif isinstance(other, (int, float)):
+            return Vector(
+                self.x - other,
+                self.y - other,
+                self.z - other,
+            )
+        elif isinstance(other, (tuple, list)):
+            if len(other) != 3:
+                raise ValueError(
+                    "The iterable must contain exactly three elements."
+                )
+            return Vector(
+                self.x - other[0],
+                self.y - other[1],
+                self.z - other[2],
+            )
+        else:
+            raise TypeError(
+                f"Subtraction with type {type(other).__name__} not supported. "
+                "Operand must be a Vector, int, float, tuple, or list."
+            )
+
+    def __isub__(
+        self,
+        other: "Vector" | int | float | tuple | list
+    ) -> "Vector":
+        """
+        Performs in-place subtraction of another vector, a scalar, or an
+        iterable with three numeric elements from this vector.
+
+        Parameters
+        ----------
+        other : Vector, int, float, tuple, or list
+            The other vector, scalar, or an iterable of three numeric elements
+            to subtract.
+
+        Returns
+        -------
+        Vector
+            The modified vector after in-place subtraction.
+
+        Raises
+        ------
+        TypeError
+            If the 'other' object is not a Vector, int, float, tuple, or list.
+        ValueError
+            If 'other' is an iterable and does not contain exactly three
+            elements.
+        """
         if isinstance(other, Vector):
             self.x -= other.x
             self.y -= other.y
@@ -652,219 +843,489 @@ class Vector(object):
             self.y -= other
             self.z -= other
         elif isinstance(other, (tuple, list)):
+            if len(other) != 3:
+                raise ValueError(
+                    "The iterable must contain exactly three elements."
+                )
             self.x -= other[0]
             self.y -= other[1]
             self.z -= other[2]
         else:
-            raise ValueError(error_message)
+            raise TypeError(
+                f"Subtraction with type {type(other).__name__} not supported. "
+                "Operand must be a Vector, int, float, tuple, or list."
+            )
+
         return self
 
+    def __rsub__(
+        self,
+        other: "Vector" | int | float | tuple | list
+    ) -> "Vector":
+        """
+        Handles reverse subtraction where the vector is on the right-hand side
+        of the '-' operator.
 
-    def __rsub__(self, other):
-        """ Called if 4 - self for instance """
-        return self.__sub__(other)
+        Parameters
+        ----------
+        other : Vector, int, float, tuple, or list
+            The operand on the left side of the '-' operator.
 
+        Returns
+        -------
+        Vector
+            A new vector that is the result of subtracting this vector from
+            'other'.
+
+        Raises
+        ------
+        TypeError
+            If the 'other' object is not a Vector, int, float, tuple, or list.
+        ValueError
+            If 'other' is an iterable and does not contain exactly three
+            elements.
+        """
+        if isinstance(other, Vector):
+            return Vector(
+                other.x - self.x,
+                other.y - self.y,
+                other.z - self.z,
+            )
+        elif isinstance(other, (int, float)):
+            return Vector(
+                other - self.x,
+                other - self.y,
+                other - self.z,
+            )
+        elif isinstance(other, (tuple, list)):
+            if len(other) != 3:
+                raise ValueError(
+                    "The iterable must contain exactly three elements."
+                )
+            return Vector(
+                other[0] - self.x,
+                other[1] - self.y,
+                other[2] - self.z,
+            )
+        else:
+            raise TypeError(
+                f"Subtraction with type {type(other).__name__} not supported. "
+                "Operand must be a Vector, int, float, tuple, or list."
+            )
 
     # Methods | Magic | Multiplications
     # -------------------------------------------------------------------------
 
-    def __mul__(self, other: Vector | int | float | tuple | list) -> Vector:
+    def __mul__(
+        self,
+        other: "Vector" | int | float | tuple | list
+    ) -> "Vector":
         """
-        Return a vector that is the scaled version of this vector.
+        Multiplies this vector by a scalar or performs element-wise
+        multiplication with another vector.
 
         Parameters
         ----------
-        n : float
-            The scaling factor.
+        other : Vector, int, float, tuple, or list
+            The scalar or another vector to multiply with this vector.
 
         Returns
         -------
-        :class:`~bearing.math.Vector`
-            The resulting new vector.
+        Vector
+            A new vector that is the result of the multiplication.
 
+        Raises
+        ------
+        TypeError
+            If 'other' is not a Vector, int, float, tuple, or list.
         """
-        error_message = "Multiplication with type {} not supported".format(type(other))
-        assert isinstance(other, (Vector, int, float, tuple, list), msg = error_message)
         if isinstance(other, Vector):
-            x = self.x * other.x
-            y = self.y * other.y
-            z = self.z * other.z
+            # Element-wise multiplication
+            return Vector(
+                self.x * other.x,
+                self.y * other.y,
+                self.z * other.z,
+            )
         elif isinstance(other, (int, float)):
-            x = self.x * other
-            y = self.y * other
-            z = self.z * other
+            # Scalar multiplication
+            return Vector(
+                self.x * other,
+                self.y * other,
+                self.z * other,
+            )
         elif isinstance(other, (tuple, list)):
-            x = self.x * other[0]
-            y = self.y * other[1]
-            z = self.z * other[2]
+            if len(other) != 3:
+                raise ValueError(
+                    "The iterable must contain exactly three elements."
+                )
+            return Vector(
+                self.x * other[0],
+                self.y * other[1],
+                self.z * other[2],
+            )
         else:
-            raise ValueError(error_message)
-        return Vector(x, y, z)
+            raise TypeError(
+                f"Multiplication with type {type(other).__name__} not "
+                "supported. Operand must be a Vector, int, or float."
+            )
 
-    def __imul__(self, other: Vector | int | float | tuple | list) -> None:
+    def __imul__(
+        self,
+        other: "Vector" | int | float | tuple | list
+    ) -> "Vector":
         """
-        Multiply the components of this vector by the given factor.
+        Performs in-place multiplication of this vector by a scalar or
+        element-wise multiplication with another vector.
 
         Parameters
         ----------
-        n : float
-            The multiplication factor.
+        other : Vector, int, or float
+            The scalar or another vector to multiply with this vector in place.
 
         Returns
         -------
-        None
+        Vector
+            The modified vector after in-place multiplication.
 
+        Raises
+        ------
+        TypeError
+            If 'other' is not a Vector, int, float, tuple, or list.
         """
-        error_message = "Multiplication with type {} not supported".format(type(other))
-        assert isinstance(other, (Vector, int, float, tuple, list), msg = error_message)
         if isinstance(other, Vector):
+            # Element-wise multiplication
             self.x *= other.x
             self.y *= other.y
             self.z *= other.z
         elif isinstance(other, (int, float)):
+            # Scalar multiplication
             self.x *= other
             self.y *= other
             self.z *= other
         elif isinstance(other, (tuple, list)):
+            if len(other) != 3:
+                raise ValueError(
+                    "The iterable must contain exactly three elements."
+                )
             self.x *= other[0]
             self.y *= other[1]
             self.z *= other[2]
         else:
-            raise ValueError(error_message)
+            raise TypeError(
+                f"In-place multiplication with type {type(other).__name__} "
+                "not supported. "
+                "Operand must be a Vector, int, float, tuple, list."
+            )
         return self
 
+    def __rmul__(
+        self,
+        other: "Vector" | int | float | tuple | list
+    ) -> "Vector":
+        """
+        Handles reverse multiplication where the vector is on the right-hand
+        side of the '*' operator.
 
-    def __rmul__(self, other):
-        """ Called if 4 * self for instance """
-        return self.__mul__(other)
+        Parameters
+        ----------
+        other : Vector, int, float, tuple, or list
+            The operand on the left side of the '*' operator.
 
+        Returns
+        -------
+        Vector
+            A new vector that is the result of multiplying 'other' with this
+            vector.
+
+        Raises
+        ------
+        TypeError
+            If 'other' is not a Vector, int, float, tuple, or list.
+        """
+        if isinstance(other, (int, float)):
+            # Scalar multiplication
+            return Vector(
+                other * self.x,
+                other * self.y,
+                other * self.z,
+            )
+        elif isinstance(other, Vector):
+            # Element-wise multiplication
+            return Vector(
+                other.x * self.x,
+                other.y * self.y,
+                other.z * self.z,
+            )
+        elif isinstance(other, (tuple, list)):
+            if len(other) != 3:
+                raise ValueError(
+                    "The iterable must contain exactly three elements."
+                )
+            self.x * other[0]
+            self.y * other[1]
+            self.z * other[2]
+        else:
+            raise TypeError(
+                f"In-place multiplication with type {type(other).__name__} "
+                "not supported. "
+                "Operand must be a Vector, int, float, tuple, list."
+            )
 
     # Methods | Magic | Subdivisions
     # -------------------------------------------------------------------------
 
-
-    def __truediv__(self, other: Vector | int | float | tuple | list) -> Vector:
+    def __truediv__(
+        self,
+        other: "Vector" | int | float | tuple | list
+    ) -> "Vector":
         """
-        Return a vector that is the scaled version of this vector.
+        Divides this vector by a scalar, or performs element-wise division
+        with another vector or iterable.
 
         Parameters
         ----------
-        n : float
-            The scaling factor.
+        other : Vector, int, float, tuple, or list
+            The scalar, vector, or iterable to divide this vector by.
 
         Returns
         -------
-        :class:`~bearing.math.Vector`
-            The resulting new vector.
+        Vector
+            A new vector resulting from the division.
 
+        Raises
+        ------
+        TypeError
+            If 'other' is not a Vector, int, float, tuple, or list.
+        ZeroDivisionError
+            If any component of 'other' is zero during element-wise division.
         """
-        error_message = "Multiplication with type {} not supported".format(type(other))
-        assert isinstance(other, (Vector, int, float, tuple, list), msg = error_message)
         if isinstance(other, Vector):
-            x = self.x / other.x
-            y = self.y / other.y
-            z = self.z / other.z
+            if 0 in [other.x, other.y, other.z]:
+                raise ZeroDivisionError(
+                    "Division by zero in element-wise division with a Vector."
+                )
+            return Vector(
+                self.x / other.x,
+                self.y / other.y,
+                self.z / other.z,
+            )
         elif isinstance(other, (int, float)):
-            x = self.x / other
-            y = self.y / other
-            z = self.z / other
+            if other == 0:
+                raise ZeroDivisionError(
+                    "Division by zero is not allowed."
+                )
+            return Vector(
+                self.x / other,
+                self.y / other,
+                self.z / other,
+            )
         elif isinstance(other, (tuple, list)):
-            x = self.x / other[0]
-            y = self.y / other[1]
-            z = self.z / other[2]
+            if len(other) != 3:
+                raise ValueError(
+                    "The iterable must contain exactly three elements."
+                )
+            if 0 in other:
+                raise ZeroDivisionError(
+                    "Division by zero in element-wise division with an "
+                    "iterable."
+                )
+            return Vector(
+                self.x / other[0],
+                self.y / other[1],
+                self.z / other[2],
+            )
         else:
-            raise ValueError(error_message)
-        return Vector(x, y, z)
+            raise TypeError(
+                f"Division with type {type(other).__name__} not supported. "
+                "Operand must be a Vector, int, float, tuple, or list."
+            )
 
-    def __itruediv__(self, other: Vector | int | float | tuple | list) -> None:
+    def __itruediv__(
+        self,
+        other: "Vector" | int | float | tuple | list
+    ) -> "Vector":
         """
-        Divide the components of this vector by the given factor.
+        Performs in-place true division of this vector by a scalar, or
+        element-wise division with another vector or iterable.
 
         Parameters
         ----------
-        n : float
-            The scaling factor.
+        other : Vector, int, float, tuple, or list
+            The scalar, vector, or iterable to divide this vector by in place.
 
         Returns
         -------
-        None
+        Vector
+            The modified vector after in-place division.
 
+        Raises
+        ------
+        TypeError
+            If 'other' is not a Vector, int, float, tuple, or list.
+        ZeroDivisionError
+            If any component of 'other' is zero during element-wise division.
         """
-        error_message = "Multiplication with type {} not supported".format(type(other))
-        assert isinstance(other, (Vector, int, float, tuple, list), msg = error_message)
         if isinstance(other, Vector):
+            if 0 in [other.x, other.y, other.z]:
+                raise ZeroDivisionError(
+                    "Division by zero in element-wise division with a Vector."
+                )
             self.x /= other.x
             self.y /= other.y
             self.z /= other.z
         elif isinstance(other, (int, float)):
+            if other == 0:
+                raise ZeroDivisionError(
+                    "Division by zero is not allowed."
+                )
             self.x /= other
             self.y /= other
             self.z /= other
         elif isinstance(other, (tuple, list)):
+            if len(other) != 3:
+                raise ValueError(
+                    "The iterable must contain exactly three elements."
+                )
+            if 0 in other:
+                raise ZeroDivisionError(
+                    "Division by zero in element-wise division with an "
+                    "iterable."
+                )
             self.x /= other[0]
             self.y /= other[1]
             self.z /= other[2]
         else:
-            raise ValueError(error_message)
+            raise TypeError(
+                f"In-place division with type {type(other).__name__} not "
+                "supported. "
+                "Operand must be a Vector, int, float, tuple, or list."
+            )
         return self
 
+    def __rtruediv__(self, other) -> "Vector":
+        """
+        Handles reverse true division where the vector is on the right-hand
+        side of the '/' operator.
 
+        This method allows division of a scalar or another vector by this
+        vector. 
+        Note: Division by a vector is not a standard vector operation and is
+        provided for completeness.
+
+        Parameters
+        ----------
+        other : int, float, or Vector
+            The operand on the left side of the '/' operator.
+
+        Returns
+        -------
+        Vector
+            A new vector that is the result of dividing 'other' by this vector.
+
+        Raises
+        ------
+        TypeError
+            If 'other' is not an int, float, or Vector.
+        ZeroDivisionError
+            If any component of this vector is zero.
+        """
+        if 0 in [self.x, self.y, self.z]:
+            raise ZeroDivisionError(
+                "Division by zero in vector components is not allowed."
+            )
+
+        if isinstance(other, (int, float)):
+            return Vector(other / self.x, other / self.y, other / self.z)
+        elif isinstance(other, Vector):
+            return Vector(other.x / self.x, other.y / self.y, other.z / self.z)
+        else:
+            raise TypeError(
+                f"Division with type {type(other).__name__} not supported. "
+                "Operand must be an int, float, or Vector.")
 
     # Methods | Magic | Powers
     # -------------------------------------------------------------------------
 
-
-    def __pow__(self, other: Vector | int | float | tuple | list) -> Vector:
+    def __pow__(
+        self,
+        other: "Vector" | int | float | tuple | list
+    ) -> "Vector":
         """
-        Create a vector from the components of the current vector raised
-        to the given power.
+        Raises each component of the vector to the power of 'other', which can
+        be a scalar, another vector, or an iterable.
 
         Parameters
         ----------
-        n : float
-            The power.
+        other : Vector, int, float, tuple, or list
+            The exponent to raise each component of the vector to. If 'other'
+            is a Vector or iterable, the operation is element-wise.
 
         Returns
         -------
-        :class:`~bearing.math.Vector`
-            A new point with raised coordinates.
+        Vector
+            A new vector with each component raised to the given power.
 
+        Raises
+        ------
+        TypeError
+            If 'other' is not a Vector, int, float, tuple, or list.
+        ValueError
+            If 'other' is an iterable and does not contain exactly three
+            elements.
         """
-        error_message = "Multiplication with type {} not supported".format(type(other))
-        assert isinstance(other, (Vector, int, float, tuple, list), msg = error_message)
         if isinstance(other, Vector):
-            x = self.x ** other.x
-            y = self.y ** other.y
-            z = self.z ** other.z
+            return Vector(
+                self.x ** other.x,
+                self.y ** other.y,
+                self.z ** other.z,
+            )
         elif isinstance(other, (int, float)):
-            x = self.x ** other
-            y = self.y ** other
-            z = self.z ** other
+            return Vector(
+                self.x ** other,
+                self.y ** other,
+                self.z ** other,
+            )
         elif isinstance(other, (tuple, list)):
-            x = self.x ** other[0]
-            y = self.y ** other[1]
-            z = self.z ** other[2]
+            if len(other) != 3:
+                raise ValueError(
+                    "The iterable must contain exactly three elements."
+                )
+            return Vector(
+                self.x ** other[0],
+                self.y ** other[1],
+                self.z ** other[2],
+            )
         else:
-            raise ValueError(error_message)
-        return Vector(x, y, z)
+            raise TypeError(
+                f"Exponent must be a Vector, int, float, tuple, or list, not {type(other).__name__}.")  # noqa E501
 
-
-    def __ipow__(self, other: Vector | int | float | tuple | list) -> None:
+    def __ipow__(
+        self,
+        other: "Vector" | int | float | tuple | list
+    ) -> "Vector":
         """
-        Raise the components of this vector to the given power.
+        Performs in-place exponentiation of this vector by a scalar, or
+        element-wise exponentiation with another vector or iterable.
 
         Parameters
         ----------
-        n : float
-            The power.
+        other : int, float, Vector, tuple, or list
+            The exponent to raise each component of this vector to. If 'other'
+            is a Vector or iterable, the operation is element-wise.
 
         Returns
         -------
-        None
+        Vector
+            The modified vector after in-place exponentiation.
 
+        Raises
+        ------
+        TypeError
+            If 'other' is not an int, float, Vector, tuple, or list.
+        ValueError
+            If 'other' is an iterable and does not contain exactly three
+            elements.
         """
-        error_message = "Multiplication with type {} not supported".format(type(other))
-        assert isinstance(other, (Vector, int, float, tuple, list), msg = error_message)
         if isinstance(other, Vector):
             self.x **= other.x
             self.y **= other.y
@@ -874,987 +1335,348 @@ class Vector(object):
             self.y **= other
             self.z **= other
         elif isinstance(other, (tuple, list)):
+            if len(other) != 3:
+                raise ValueError(
+                    "The iterable must contain exactly three elements."
+                )
             self.x **= other[0]
             self.y **= other[1]
             self.z **= other[2]
         else:
-            raise ValueError(error_message)
+            raise TypeError(
+                f"In-place exponentiation with type {type(other).__name__} "
+                "not supported. "
+                "Operand must be an int, float, Vector, tuple, or list."
+            )
+
         return self
 
+    def __rpow__(
+        self,
+        other: "Vector" | int | float | tuple | list
+    ) -> "Vector":
+        """
+        Handles reverse exponentiation where the vector is on the right-hand
+        side of the '**' operator.
 
+        This method allows exponentiation of a scalar or another vector to the
+        power of this vector.
+        Note: This is an unconventional operation for vectors and is provided
+        for completeness.
+
+        Parameters
+        ----------
+        other : int, float, or Vector
+            The base of the exponentiation.
+
+        Returns
+        -------
+        Vector
+            A new vector resulting from raising 'other' to the power of this
+            vector.
+
+        Raises
+        ------
+        TypeError
+            If 'other' is not an int, float, or Vector.
+        """
+        if isinstance(other, (int, float)):
+            return Vector(
+                other ** self.x, other ** self.y, other ** self.z)
+        elif isinstance(other, Vector):
+            return Vector(
+                other.x ** self.x, other.y ** self.y, other.z ** self.z)
+        else:
+            raise TypeError(
+                f"Exponentiation with type {type(other).__name__} not "
+                "supported. "
+                "Base must be an int, float, or Vector."
+            )
 
     # =========================================================================
     # Methods | Class
     # =========================================================================
 
-
-
-
     # Methods | Class | IO
     # -------------------------------------------------------------------------
 
     @classmethod
-    def from_tuple(cls, t):
+    def from_tuple(cls, tuple_data) -> "Vector":
         """
-        Class method to create Vector object by tuple.
+        Constructs a vector from a tuple.
 
+        This method allows for the conversion of a tuple of coordinates into a
+        Vector object. The tuple can have two or three numeric elements. If it
+        has two elements, the z-component is assumed to be zero, making it
+        suitable for 2D scenarios.
+
+        Parameters
+        ----------
+        tuple_data : tuple
+            A tuple of two or three numeric elements representing the x, y
+            (and optionally z) components of the vector.
+
+        Returns
+        -------
+        Vector
+            A new instance of Vector created from the given tuple.
+
+        Raises
+        ------
+        TypeError
+            If the input is not a tuple.
+        ValueError
+            If the tuple does not contain two or three elements.
+
+        Examples
+        --------
+        >>> Vector.from_tuple((1, 2))
+        Vector(1.0, 2.0, 0.0)
+
+        >>> Vector.from_tuple((1, 2, 3))
+        Vector(1.0, 2.0, 3.0)
+
+        This method is useful for converting tuple data into Vector objects,
+        particularly in scenarios like data processing or interfacing with
+        systems where tuples are used to represent coordinate data.
         """
-        assert t >= 2 and t <= 3
-        if len(t) == 2:
-            return cls(lat=t[0], lon=t[1])
-        elif len(t) == 3:
-            return cls(lat=t[0], lon=t[1], h=t[2])
+        if not isinstance(tuple_data, tuple):
+            raise TypeError("Input must be a tuple.")
 
-    def to_tuple(self):
+        if len(tuple_data) == 2:
+            return cls(tuple_data[0], tuple_data[1], 0.0)
+        elif len(tuple_data) == 3:
+            return cls(*tuple_data)
+        else:
+            raise ValueError(
+                "Tuple must contain either two or three elements."
+            )
+
+    def to_tuple(self) -> tuple:
         """
+        Converts this vector into a tuple.
 
+        This method provides a convenient way to convert a Vector instance
+        into a tuple of its components (x, y, z). This can be useful for
+        serialization, logging, or interfacing with systems that use tuples
+        for coordinate representation.
+
+        Returns
+        -------
+        tuple
+            A tuple representation of the vector (x, y, z).
+
+        Examples
+        --------
+        >>> v = Vector(1, 2, 3)
+        >>> v.to_tuple()
+        (1, 2, 3)
+
+        The returned tuple contains the x, y, and z components of the vector
+        in that order.
         """
-        result =(self._lat, self._lon, self._height)
-        return result
+        return (self.x, self.y, self.z)
 
+    @classmethod
+    def from_polar(cls, magnitude, angle_degrees) -> "Vector":
+        """
+        Constructs a 2D vector from polar coordinates.
 
+        This method converts polar coordinates (magnitude and angle) into a
+        Cartesian vector. The angle is given in degrees and is measured from
+        the positive X-axis in a counterclockwise direction. The resulting
+        vector is a 2D vector (z=0) in Cartesian coordinates.
 
+        Parameters
+        ----------
+        magnitude : float
+            The magnitude (or length) of the vector.
+        angle_degrees : float
+            The angle in degrees, measured counterclockwise from the positive X-axis.
 
+        Returns
+        -------
+        Vector
+            A new instance of Vector representing the 2D vector in Cartesian
+            coordinates.
+
+        Examples
+        --------
+        >>> Vector.from_polar(5, 45)
+        Vector(3.5355, 3.5355, 0)
+
+        The method is particularly useful in scenarios involving rotations,
+        circular motion, or when dealing with systems that primarily use polar
+        coordinates.
+        """
+        angle_radians = math.radians(angle_degrees)
+        return cls(
+            magnitude * math.cos(angle_radians),
+            magnitude * math.sin(angle_radians),
+            0
+        )
 
     # Methods | Class | Unit Axis
     # -------------------------------------------------------------------------
 
     @classmethod
-    def unit_axis_x(cls):
+    def zero(cls) -> "Vector":
         """
-        Construct a unit vector along the X axis.
+        Creates and returns a Zero Vector.
+
+        A Zero Vector is a vector in which all the components are zero. 
+        This is equivalent to the origin in a coordinate system, and it 
+        often serves as an initial or default state in many vector operations.
+
+        In 3D space, this vector is represented as (0.0, 0.0, 0.0).
 
         Returns
         -------
-        :class:`~bearing.math.Vector`
-            A vector with components ``x = 1.0, y = 0.0, z = 0.0``.
+        Vector
+            A new instance of Vector with all components set to zero.
 
         Examples
         --------
-        >>> Vector.Xaxis()
-        Vector(1.000, 0.000, 0.000)
+        >>> Vector.zero()
+        Vector(0.0, 0.0, 0.0)
 
+        This method is useful when a neutral or starting vector is needed,
+        especially in calculations where the addition or subtraction of other
+        vectors from a neutral base is required.
+
+        It can also represent the absence of movement or direction in physical
+        simulations or graphical representations.
+        """
+        return cls(0.0, 0.0, 0.0)
+
+    @classmethod
+    def unit_axis(cls, axis) -> "Vector":
+        """
+        Creates and returns a unit vector along the specified axis.
+
+        A unit vector is a vector that has a magnitude of 1. In Cartesian
+        coordinates, it points in the direction of one of the axes and has all
+        other components as zero. This method creates a unit vector along the
+        specified 'x', 'y', or 'z' axis.
+
+        Parameters
+        ----------
+        axis : str
+            The axis along which the unit vector should be aligned.
+            Valid options are 'x', 'y', or 'z'.
+
+        Returns
+        -------
+        Vector
+            A new instance of Vector representing the unit vector along the
+            specified axis.
+
+        Raises
+        ------
+        ValueError
+            If the specified axis is not 'x', 'y', or 'z'.
+
+        Examples
+        --------
+        >>> Vector.unit_vector('x')
+        Vector(1, 0, 0)
+
+        >>> Vector.unit_vector('y')
+        Vector(0, 1, 0)
+
+        >>> Vector.unit_vector('z')
+        Vector(0, 0, 1)
+
+        Unit vectors are fundamental in vector operations, often used to
+        represent vector directions. They are crucial in 3D graphics, physics
+        simulations, and various fields of engineering and mathematics.
+        """
+        if axis == 'x':
+            return cls(1.0, 0.0, 0.0)
+        elif axis == 'y':
+            return cls(0.0, 1.0, 0.0)
+        elif axis == 'z':
+            return cls(0.0, 0.0, 1.0)
+        else:
+            raise ValueError("Axis must be 'x', 'y', or 'z'.")
+
+    @classmethod
+    def unit_axis_x(cls) -> "Vector":
+        """
+        Constructs a unit vector along the X-axis.
+
+        A unit vector along the X-axis has a length of 1 and points in the
+        positive direction of the X-axis. In Cartesian coordinates, this
+        vector is represented as (1.0, 0.0, 0.0), indicating a unit distance
+        along the X-axis and zero distance along the Y and Z axes.
+
+        Returns
+        -------
+        Vector
+            A new instance of Vector representing the unit vector along the
+            X-axis.
+
+        Examples
+        --------
+        >>> Vector.unit_axis_x()
+        Vector(1.0, 0.0, 0.0)
+
+        This method is useful in scenarios where a directional vector along
+        the X-axis is needed, such as in 3D graphics for defining orientations,
+        or in physics for specifying directional forces.
         """
         return cls(1.0, 0.0, 0.0)
 
     @classmethod
-    def unit_axis_y(cls):
+    def unit_axis_y(cls) -> "Vector":
         """
-        Construct a unit vector along the Y axis.
+        Constructs a unit vector along the Y-axis.
+
+        A unit vector along the Y-axis has a length of 1 and points in the
+        positive direction of the Y-axis. In Cartesian coordinates, this
+        vector is represented as (0.0, 1.0, 0.0), indicating a unit distance
+        along the Y-axis and zero distance along the X and Z axes.
 
         Returns
         -------
-        :class:`~bearing.math.Vector`
-            A vector with components ``x = 0.0, y = 1.0, z = 0.0``.
+        Vector
+            A new instance of Vector representing the unit vector along the
+            Y-axis.
 
         Examples
         --------
-        >>> Vector.Yaxis()
-        Vector(0.000, 1.000, 0.000)
+        >>> Vector.unit_axis_y()
+        Vector(0.0, 1.0, 0.0)
 
+        This method is useful in scenarios where a directional vector along
+        the Y-axis is needed, such as in 3D graphics for defining orientations,
+        or in physics for specifying directional forces.
         """
         return cls(0.0, 1.0, 0.0)
 
     @classmethod
-    def unit_axis_z(cls):
+    def unit_axis_z(cls) -> "Vector":
         """
-        Construct a unit vector along the Z axis.
+        Constructs a unit vector along the Z-axis.
+
+        A unit vector along the Z-axis has a length of 1 and points in the
+        positive direction of the Z-axis. In Cartesian coordinates, this
+        vector is represented as (0.0, 0.0, 1.0), indicating a unit distance
+        along the Z-axis and zero distance along the X and Y axes.
 
         Returns
         -------
-        :class:`~bearing.math.Vector`
-            A vector with components ``x = 0.0, y = 0.0, z = 1.0``.
+        Vector
+            A new instance of Vector representing the unit vector along the
+            Z-axis.
 
         Examples
         --------
-        >>> Vector.Zaxis()
-        Vector(0.000, 0.000, 1.000)
+        >>> Vector.unit_axis_z()
+        Vector(0.0, 0.0, 1.0)
 
+        This method is useful in scenarios where a directional vector along
+        the Z-axis is needed, such as in 3D graphics for defining orientations,
+        or in physics for specifying directional forces.
         """
         return cls(0.0, 0.0, 1.0)
-
-    @classmethod
-    def from_start_end(cls, start, end):
-        """
-        Construct a vector from start and end points.
-
-        Parameters
-        ----------
-        start : [float, float, float] | :class:`~bearing.math.Point`
-            The start point.
-        end : [float, float, float] | :class:`~bearing.math.Point`
-            The end point.
-
-        Returns
-        -------
-        :class:`~bearing.math.Vector`
-            The vector from start to end.
-
-        Examples
-        --------
-        >>> Vector.from_start_end([1.0, 0.0, 0.0], [1.0, 1.0, 0.0])
-        Vector(0.000, 1.000, 0.000)
-
-        """
-        v = subtract_vectors(end, start)
-        return cls(*v)
-
-
-    # =========================================================================
-    # Methods | Static
-    # =========================================================================
-
-    @staticmethod
-    def transform_collection(collection, X):
-        """
-        Transform a collection of vector objects.
-
-        Parameters
-        ----------
-        collection : list[[float, float, float] | :class:`~bearing.math.Vector`]
-            The collection of vectors.
-
-        Returns
-        -------
-        None
-
-        Examples
-        --------
-        >>> from bearing.math import Rotation
-        >>> R = Rotation.from_axis_and_angle(Vector.Zaxis(), math.radians(90))
-        >>> u = Vector(1.0, 0.0, 0.0)
-        >>> vectors = [u]
-        >>> Vector.transform_collection(vectors, R)
-        >>> v = vectors[0]
-        >>> v
-        Vector(0.000, 1.000, 0.000)
-        >>> u is v
-        True
-
-        """
-        data = transform_vectors(collection, X)
-        for vector, xyz in zip(collection, data):
-            vector.x = xyz[0]
-            vector.y = xyz[1]
-            vector.z = xyz[2]
-
-    @staticmethod
-    def transformed_collection(collection, X):
-        """
-        Create a collection of transformed vectors.
-
-        Parameters
-        ----------
-        collection : list[[float, float, float] | :class:`~bearing.math.Vector`]
-            The collection of vectors.
-
-        Returns
-        -------
-        list[:class:`~bearing.math.Vector`]
-            The transformed vectors.
-
-        Examples
-        --------
-        >>> from bearing.math import Rotation
-        >>> R = Rotation.from_axis_and_angle(Vector.Zaxis(), math.radians(90))
-        >>> u = Vector(1.0, 0.0, 0.0)
-        >>> vectors = [u]
-        >>> vectors = Vector.transformed_collection(vectors, R)
-        >>> v = vectors[0]
-        >>> v
-        Vector(0.000, 1.000, 0.000)
-        >>> u is v
-        False
-
-        """
-        vectors = [vector.copy() for vector in collection]
-        Vector.transform_collection(vectors, X)
-        return vectors
-
-    @staticmethod
-    def length_vectors(vectors):
-        """
-        Compute the length of multiple vectors.
-
-        Parameters
-        ----------
-        vectors : list[[float, float, float] | :class:`~bearing.math.Vector`]
-            A list of vectors.
-
-        Returns
-        -------
-        list[float]
-            A list of lengths.
-
-        Examples
-        --------
-        >>> Vector.length_vectors([[1.0, 0.0, 0.0], [2.0, 0.0, 0.0]])
-        [1.0, 2.0]
-
-        """
-        return [length_vector(vector) for vector in vectors]
-
-    @staticmethod
-    def sum_vectors(vectors):
-        """
-        Compute the sum of multiple vectors.
-
-        Parameters
-        ----------
-        vectors : list[[float, float, float] | :class:`~bearing.math.Vector`]
-            A list of vectors.
-
-        Returns
-        -------
-        :class:`~bearing.math.Vector`
-            A vector that is the sum of the vectors.
-
-        Examples
-        --------
-        >>> Vector.sum_vectors([[1.0, 0.0, 0.0], [2.0, 0.0, 0.0]])
-        Vector(3.000, 0.000, 0.000)
-
-        """
-        return Vector(*[sum(axis) for axis in zip(*vectors)])
-
-    @staticmethod
-    def dot_vectors(left, right):
-        """
-        Compute the dot product of two lists of vectors.
-
-        Parameters
-        ----------
-        left : list[[float, float, float] | :class:`~bearing.math.Vector`]
-            A list of vectors.
-        right : list[[float, float, float] | :class:`~bearing.math.Vector`]
-            A list of vectors.
-
-        Returns
-        -------
-        list[float]
-            A list of dot products.
-
-        Examples
-        --------
-        >>> Vector.dot_vectors([[1.0, 0.0, 0.0], [2.0, 0.0, 0.0]], [[1.0, 0.0, 0.0], [2.0, 0.0, 0.0]])
-        [1.0, 4.0]
-
-        """
-        return [Vector.dot(u, v) for u, v in zip(left, right)]
-
-    @staticmethod
-    def cross_vectors(left, right):
-        """
-        Compute the cross product of two lists of vectors.
-
-        Parameters
-        ----------
-        left : list[[float, float, float] | :class:`~bearing.math.Vector`]
-            A list of vectors.
-        right : list[[float, float, float] | :class:`~bearing.math.Vector`]
-            A list of vectors.
-
-        Returns
-        -------
-        list[:class:`~bearing.math.Vector`]
-            A list of cross products.
-
-        Examples
-        --------
-        >>> Vector.cross_vectors([[1.0, 0.0, 0.0], [2.0, 0.0, 0.0]], [[0.0, 1.0, 0.0], [0.0, 0.0, 2.0]])
-        [Vector(0.000, 0.000, 1.000), Vector(0.000, -4.000, 0.000)]
-
-        """
-        return [Vector.cross(u, v) for u, v in zip(left, right)]
-
-    @staticmethod
-    def angles_vectors(left, right):
-        """
-        Compute both angles between corresponding pairs of two lists of vectors.
-
-        Parameters
-        ----------
-        left : list[[float, float, float] | :class:`~bearing.math.Vector`]
-            A list of vectors.
-        right : list[[float, float, float] | :class:`~bearing.math.Vector`]
-            A list of vectors.
-
-        Returns
-        -------
-        list[float]
-            A list of angle pairs.
-
-        Examples
-        --------
-        >>> Vector.angles_vectors([[1.0, 0.0, 0.0], [2.0, 0.0, 0.0]], [[0.0, 1.0, 0.0], [0.0, 0.0, 2.0]])
-        [(1.5707963267948966, 4.71238898038469), (1.5707963267948966, 4.71238898038469)]
-
-        """
-        return [angles_vectors(u, v) for u, v in zip(left, right)]
-
-    @staticmethod
-    def angle_vectors(left, right):
-        """
-        Compute the smallest angle between corresponding pairs of two lists of vectors.
-
-        Parameters
-        ----------
-        left : list[[float, float, float] | :class:`~bearing.math.Vector`]
-            A list of vectors.
-        right : list[[float, float, float] | :class:`~bearing.math.Vector`]
-            A list of vectors.
-
-        Returns
-        -------
-        list[float]
-            A list of angles.
-
-        Examples
-        --------
-        >>> Vector.angle_vectors([[1.0, 0.0, 0.0], [2.0, 0.0, 0.0]], [[0.0, 1.0, 0.0], [0.0, 0.0, 2.0]])
-        [1.5707963267948966, 1.5707963267948966]
-
-        """
-        return [angle_vectors(u, v) for u, v in zip(left, right)]
-
-
-
-
-    # ==========================================================================
-    # helpers
-    # ==========================================================================
-
-    def copy(self):
-        """
-        Make a copy of this vector.
-
-        Returns
-        -------
-        :class:`~bearing.math.Vector`
-            The copy.
-
-        Examples
-        --------
-        >>> u = Vector(0.0, 0.0, 0.0)
-        >>> v = u.copy()
-        >>> u == v
-        True
-        >>> u is v
-        False
-
-        """
-        cls = type(self)
-        return cls(self.x, self.y, self.z)
-
-
-    def copy(self):
-        """
-        create a new instance of Vector,
-        with the same data as this instance.
-        """
-        return Vector(self.x, self.y)
-
-
-    # ==========================================================================
-    # methods
-    # ==========================================================================
-
-    def unitize(self):
-        """
-        Scale this vector to unit length.
-
-        Returns
-        -------
-        None
-
-        Examples
-        --------
-        >>> u = Vector(1.0, 2.0, 3.0)
-        >>> u.unitize()
-        >>> u.length
-        1.0
-
-        """
-        length = self.length
-        self.x = self.x / length
-        self.y = self.y / length
-        self.z = self.z / length
-
-    def unitized(self):
-        """
-        Returns a unitized copy of this vector.
-
-        Returns
-        -------
-        :class:`~bearing.math.Vector`
-            A unitized copy of the vector.
-
-        Examples
-        --------
-        >>> u = Vector(1.0, 2.0, 3.0)
-        >>> v = u.unitized()
-        >>> u.length == 1.0
-        False
-        >>> v.length == 1.0
-        True
-
-        """
-        v = self.copy()
-        v.unitize()
-        return v
-
-    def invert(self):
-        """
-        Invert the direction of this vector
-
-        Returns
-        -------
-        None
-
-        Notes
-        -----
-        a negation of a vector is similar to inverting a vector
-
-        Examples
-        --------
-        >>> u = Vector(1.0, 0.0, 0.0)
-        >>> v = u.copy()
-        >>> u.invert()
-        >>> u == v
-        False
-        >>> u.invert()
-        >>> u == v
-        True
-        >>> v == --v
-        True
-
-        """
-        self.scale(-1.0)
-
-    def inverted(self):
-        """
-        Returns a inverted copy of this vector
-
-        Returns
-        -------
-        :class:`~bearing.math.Vector`
-
-        Examples
-        --------
-        >>> u = Vector(1.0, 0.0, 0.0)
-        >>> v = u.inverted()
-        >>> w = u + v
-        >>> w.length
-        0.0
-
-        """
-        # self.invert()
-        # return self
-        return self.scaled(-1.0)
-
-    def scale(self, n):
-        """
-        Scale this vector by a factor n.
-
-        Parameters
-        ----------
-        n : float
-            The scaling factor.
-
-        Returns
-        -------
-        None
-
-        Examples
-        --------
-        >>> u = Vector(1.0, 0.0, 0.0)
-        >>> u.scale(3.0)
-        >>> u.length
-        3.0
-
-        """
-        self.x *= n
-        self.y *= n
-        self.z *= n
-
-
-    def scale_vector(vector, scalar):
-        """This function creates (and returns) a new vector with components equal to the original vector scaled (i.e., multiplied) by the scalar argument.
-        For example, vector <1, 2, 3> scaled by 1.5 will result in vector <1.5, 3, 4.5>."""
-
-        new_vector = data.Vector(vector.x*scalar, vector.y*scalar, vector.z*scalar)
-        return new_vector
-
-    # Return the product of self and numeric object alpha.
-    def scale(self, alpha):
-        result = stdarray.create1D(self._n, 0)
-        for i in range(self._n):
-            result[i] = alpha * self._coords[i]
-        return Vector(result)
-
-
-    def scaled(self, n):
-        """
-        Returns a scaled copy of this vector.
-
-        Parameters
-        ----------
-        n : float
-            The scaling factor.
-
-        Returns
-        -------
-        :class:`~bearing.math.Vector`
-            A scaled copy of the vector.
-
-        Examples
-        --------
-        >>> u = Vector(1.0, 0.0, 0.0)
-        >>> v = u.scaled(3.0)
-        >>> u.length
-        1.0
-        >>> v.length
-        3.0
-
-        """
-        v = self.copy()
-        v.scale(n)
-        return v
-
-
-
-    def dot(self, other):
-        """
-        The dot product of this vector and another vector.
-
-        Parameters
-        ----------
-        other : [float, float, float] | :class:`~bearing.math.Vector`
-            The other vector.
-
-        Returns
-        -------
-        float
-            The dot product.
-
-        Examples
-        --------
-        >>> u = Vector(1.0, 0.0, 0.0)
-        >>> v = Vector(0.0, 1.0, 0.0)
-        >>> u.dot(v)
-        0.0
-
-        """
-        return dot_vectors(self, other)
-
-
-
-    def dot_vector(vector1, vector2):
-        """
-        This function performs a type of multiplication (product) on vectors.
-        The dot product of two vectors is computed as follows.
-        <x1, y1, z1> * <x2, y2, z2> = x1 * x2 + y1 * y2 + z1 * z2.
-
-        """
-
-        dot_product = (vector1.x*vector2.x + vector1.y*vector2.y + vector1.z*vector2.z)
-        return dot_product
-
-    # Return the inner product of self and Vector object other.
-    def dot(self, other):
-        result = 0
-        for i in range(self._n):
-            result += self._coords[i] * other._coords[i]
-        return result
-
-
-    def inner(self, vector):
-        """
-        Returns the dot product (inner product) of self and another vector
-        """
-        if not isinstance(vector, Vector):
-            raise ValueError('The dot product requires another vector')
-        return sum(a * b for a, b in zip(self, vector))
-
-
-
-
-    def cross(self, other):
-        """
-        The cross product of this vector and another vector.
-
-        Parameters
-        ----------
-        other : [float, float, float] | :class:`~bearing.math.Vector`
-            The other vector.
-
-        Returns
-        -------
-        :class:`~bearing.math.Vector`
-            The cross product.
-
-        Examples
-        --------
-        >>> u = Vector(1.0, 0.0, 0.0)
-        >>> v = Vector(0.0, 1.0, 0.0)
-        >>> u.cross(v)
-        Vector(0.000, 0.000, 1.000)
-
-        """
-        return Vector(*cross_vectors(self, other))
-
-
-    # Return the unit vector of self.
-    def direction(self):
-        return self.scale(1.0 / abs(self))
-
-
-    def norm(self):
-        """
-        Returns the norm (length, magnitude) of the vector
-        """
-        return math.sqrt(sum( x*x for x in self ))
-
-    def argument(self, radians=False):
-        """
-        Returns the argument of the vector, the angle clockwise from +y. In degress by default,
-        set radians=True to get the result in radians. This only works for 2D vectors.
-        """
-        arg_in_rad = math.acos(Vector(0, 1)*self/self.norm())
-        if radians:
-            return arg_in_rad
-        arg_in_deg = math.degrees(arg_in_rad)
-        if self.values[0] < 0:
-            return 360 - arg_in_deg
-        else:
-            return arg_in_deg
-
-    def normalize(self):
-        """
-        Returns a normalized unit vector.
-        """
-        norm = self.norm()
-        normed = tuple( x / norm for x in self )
-        return self.__class__(*normed)
-
-
-    def normalize_vector(vector):
-        """
-        The function creates (and returns) a new vector by normalizing the input vector.
-        This means that the resulting vector has the same direction but a magnitude of 1.
-        In short, the new vector is the original vector scaled by its length.
-
-        """
-
-        length = length_vector(vector)
-        normal = data.Vector(vector.x/length, vector.y/length, vector.z/length)
-        return normal
-
-
-    def normalized(self):
-        """
-        return a new instance of Vector,
-        with the same angle as this instance,
-        but with length 1.
-        """
-        ret = self.copy()
-        ret.x /= self.magnitude()
-        ret.y /= self.magnitude()
-        return ret
-
-
-    def length_vector(vector):
-        """The length of a vector (i.e., its magnitude) is computed from its components using the Pythagorean theorem."""
-
-        length = math.sqrt(vector.x**2 + vector.y**2 + vector.z**2)
-        return
-
-
-    def magnitude(self):
-        return math.hypot(self.x, self.y)
-
-
-    def angle(self, other):
-        """
-        Compute the smallest angle between this vector and another vector.
-
-        Parameters
-        ----------
-        other : [float, float, float] | :class:`~bearing.math.Vector`
-            The other vector.
-
-        Returns
-        -------
-        float
-            The smallest angle between the two vectors.
-
-        Examples
-        --------
-        >>> u = Vector(1.0, 0.0, 0.0)
-        >>> v = Vector(0.0, 1.0, 0.0)
-        >>> u.angle(v) == 0.5 * math.pi
-        True
-
-        """
-        return angle_vectors(self, other)
-
-    def angle_signed(self, other, normal):
-        """
-        Compute the signed angle between this vector and another vector.
-
-        Parameters
-        ----------
-        other : [float, float, float] | :class:`~bearing.math.Vector`
-            The other vector.
-        normal : [float, float, float] | :class:`~bearing.math.Vector`
-            The plane's normal spanned by this and the other vector.
-
-        Returns
-        -------
-        float
-            The signed angle between the two vectors.
-
-        Examples
-        --------
-        >>> u = Vector(1.0, 0.0, 0.0)
-        >>> v = Vector(0.0, 1.0, 0.0)
-        >>> u.angle_signed(v, Vector(0.0, 0.0, 1.0)) == 0.5 * math.pi
-        True
-        >>> u.angle_signed(v, Vector(0.0, 0.0, -1.0)) == -0.5 * math.pi
-        True
-
-        """
-        return angle_vectors_signed(self, other, normal)
-
-    def angles(self, other):
-        """
-        Compute both angles between this vector and another vector.
-
-        Parameters
-        ----------
-        other : [float, float, float] | :class:`~bearing.math.Vector`
-            The other vector.
-
-        Returns
-        -------
-        tuple[float, float]
-            The angles between the two vectors, with the smallest angle first.
-
-        Examples
-        --------
-        >>> u = Vector(1.0, 0.0, 0.0)
-        >>> v = Vector(0.0, 1.0, 0.0)
-        >>> u.angles(v)[0] == 0.5 * math.pi
-        True
-
-        """
-        return angles_vectors(self, other)
-
-    def transform(self, T):
-        """
-        Transform this vector.
-
-        Parameters
-        ----------
-        T : :class:`~bearing.math.Transformation` | list[list[float]]
-            The transformation.
-
-        Returns
-        -------
-        None
-
-        Examples
-        --------
-        >>> from bearing.math import Rotation
-        >>> u = Vector(1.0, 0.0, 0.0)
-        >>> R = Rotation.from_axis_and_angle([0.0, 0.0, 1.0], math.radians(90))
-        >>> u.transform(R)
-        >>> u
-        Vector(0.000, 1.000, 0.000)
-
-        """
-        point = transform_vectors([self], T)[0]
-        self.x = point[0]
-        self.y = point[1]
-        self.z = point[2]
-
-    def transformed(self, T):
-        """
-        Return a transformed copy of this vector.
-
-        Parameters
-        ----------
-        T : :class:`~bearing.math.Transformation` | list[list[float]]
-            The transformation.
-
-        Returns
-        -------
-        :class:`~bearing.math.Vector`
-            The transformed copy.
-
-        Examples
-        --------
-        >>> from bearing.math import Rotation
-        >>> u = Vector(1.0, 0.0, 0.0)
-        >>> R = Rotation.from_axis_and_angle([0.0, 0.0, 1.0], math.radians(90))
-        >>> v = u.transformed(R)
-        >>> v
-        Vector(0.000, 1.000, 0.000)
-
-        """
-        vector = self.copy()
-        vector.transform(T)
-        return vector
-
-
-    def rotate(self, theta):
-        """
-        Rotate this vector. If passed a number, assumes this is a
-        2D vector and rotates by the passed value in degrees.  Otherwise,
-        assumes the passed value is a list acting as a matrix which rotates the vector.
-
-        """
-        if isinstance(theta, (int, float)):
-            # So, if rotate is passed an int or a float...
-            if len(self) != 2:
-                raise ValueError("Rotation axis not defined for greater than 2D vector")
-            return self._rotate2D(theta)
-
-        matrix = theta
-        if not all(len(row) == len(self) for row in matrix) or not len(matrix)==len(self):
-            raise ValueError("Rotation matrix must be square and same dimensions as vector")
-        return self.matrix_mult(matrix)
-
-
-    def _rotate2D(self, theta):
-        """
-        Rotate this vector by theta in degrees.
-
-        Returns a new vector.
-
-        """
-        theta = math.radians(theta)
-        # Just applying the 2D rotation matrix
-        dc, ds = math.cos(theta), math.sin(theta)
-        x, y = self.values
-        x, y = dc*x - ds*y, ds*x + dc*y
-        return self.__class__(x, y)
-
-
-    def matrix_mult(self, matrix):
-        """
-        Multiply this vector by a matrix.  Assuming matrix is a list of lists.
-
-        Example:
-        mat = [[1,2,3],[-1,0,1],[3,4,5]]
-        Vector(1,2,3).matrix_mult(mat) ->  (14, 2, 26)
-
-        """
-        if not all(len(row) == len(self) for row in matrix):
-            raise ValueError('Matrix must match vector dimensions')
-
-        # Grab a row from the matrix, make it a Vector, take the dot product,
-        # and store it as the first component
-        product = tuple(Vector(*row)*self for row in matrix)
-
-        return self.__class__(*product)
-
-
-    def difference_point(point1, point2):
-        """
-        This function creates (and returns) a new vector obtained by
-        subtracting from point point1 the point point2 (i.e., point1 - point2).
-        This is computed by subtracting the corresponding x-, y-, and z-components. This gives a vector, conceptually, pointing from point2 to point1.
-
-        """
-
-        difference_point = data.Vector(point1.x - point2.x, point1.y - point2.y, point1.z - point2.z)
-        return difference_point
-
-    def difference_vector(vector1, vector2):
-        """
-        This functions creates (and returns) a new vector obtained by subtracting from vector vector1 the vector vector2 (i.e., vector1 - vector2). This is computed by subtracting the corresponding x-, y-, and z-components. (Yes, this is very similar to the previous function; the types, however, are conceptually different.)
-
-        """
-
-        difference_vector = data.Vector(vector1.x - vector2.x, vector1.y - vector2.y, vector1.z - vector2.z)
-        return difference_vector
-
-    def translate_point(point, vector):
-        """
-        This function creates (and returns) a new point created by translating (i.e., moving) the argument point in the direction of and by the magnitude of the argument vector. You can think of this as the argument vector directing the new point where and how far to go from the argument point.
-        For example, translating point <9, 0, 1> along vector <1, 2, 3> will result in point <10, 2, 4>.
-
-        """
-
-        translation = data.Point(point.x + vector.x, point.y + vector.y, point.z + vector.z)
-        return translation
-
-    def vector_from_to(from_point, to_point):
-        """
-        This function is simply added to improve readability (and, thereby, to reduce confusion in later assignments). A vector in the direction from one point (from_point) to another (to_point) can be found by subtracting (i.e., point difference) from_point from to_point (i.e., to_point - from_point).
-
-        """
-
-        travel = data.Vector(to_point.x - from_point.x, to_point.y - from_point.y, to_point.z - from_point.z)
-        return travel
-
-    # =========================================================================
-    # Methods | Test
-    # =========================================================================
-
-    def test_something(self):
-        """Test Method"""
-        pass
-
-
-
-
-
-
-
-
-
-
-
-
-def test():
-    """Test Function"""
-    pass
-
-def main():
-
-    """Main"""
-    import doctest
-    doctest.testmod()
-    test()
-
-if __name__ == '__main__':
-    main()
-
-
-# def AutoFloatProperties(*props):
-#     '''metaclass'''
-#     class _AutoFloatProperties(type):
-#         # Inspired by autoprop (http://www.python.org/download/releases/2.2.3/descrintro/#metaclass_examples)
-#         def __init__(cls, name, bases, cdict):
-#             super(_AutoFloatProperties, cls).__init__(name, bases, cdict)
-#             for attr in props:
-#                 def fget(self, _attr='_'+attr): return getattr(self, _attr)
-#                 def fset(self, value, _attr='_'+attr): setattr(self, _attr, float(value))
-#                 setattr(cls, attr, property(fget, fset))
-#     return _AutoFloatProperties
-
-# class Vector(object, metaclass = AutoFloatProperties):
-#     '''Creates a Maya vector/triple, having x, y and z coordinates as float values'''
-#     __metaclass__ = AutoFloatProperties('x','y','z')
-#     def __init__(self, x=0, y=0, z=0):
-#         self.x, self.y, self.z = x, y, z # values converted to float via properties
-
-# if __name__=='__main__':
-#     v=Vector(1,2,3)
-#     print(v.x)
-#     # 1.0
-#     v.x=4
-#     print(v.x)
-#     # 4.0
