@@ -7,6 +7,7 @@
 
 """
 Provides Coordinate Class
+=========================
 
 ...
 
@@ -38,6 +39,9 @@ Todo:
 
 class Coordinate(object):
     """
+    Coordinate Class
+    ================
+
     A class used to represent a Coordinate
 
     ...
@@ -57,7 +61,7 @@ class Coordinate(object):
         x,
         y,
         z
-        ):
+    ):
         """ """
         self._x = x
         self._y = y
@@ -105,21 +109,3 @@ class Coordinate(object):
     def z(self, z):
         self._z = z
 
-
-    # Methods | test
-
-    def test_something(self):
-        """Test Method"""
-        pass
-
-
-def test():
-    """Test Function"""
-    pass
-
-
-if __name__ == '__main__':
-    """Main"""
-    import doctest
-    doctest.testmod()
-    test()
