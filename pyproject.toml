@@ -1,4 +1,9 @@
-# pyproject.toml file specified at the root of the directory
+# -*- coding: utf-8 -*-
+
+
+# =============================================================================
+# Project Configuration
+# =============================================================================
 
 [tool.poetry]
 name = "bearing"
@@ -9,6 +14,10 @@ license = "MIT"
 readme = "README.md"
 
 
+# =============================================================================
+# Dependencies
+# =============================================================================
+
 [tool.poetry.dependencies]
 python = "^3.11"
 pillow = "^10.0.0"
@@ -16,10 +25,27 @@ gdal = "^3.7.1.1"
 rite = "^0.0.0"
 
 
+# =============================================================================
+# Development Dependencies
+# =============================================================================
+
+[tool.poetry.dev-dependencies]
+pytest = "^8.3.2"
+pytest-cov = "^5.0.0" # Code coverage for tests
+black = "^24.8.0" # Code formatter
+flake8 = "^7.1.0" # Linter for code quality
+mypy = "^1.11.1" # Static type checker
+sphinx = "^8.0.2" # Documentation generator
+isort = "^5.10.1"
+
+
+# =============================================================================
+# Build System
+# =============================================================================
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
-
 
 # [build-system]
 # requires = ["setuptools>=42", "wheel"]   # PEP 508 specifications.
