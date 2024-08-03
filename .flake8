@@ -1,4 +1,59 @@
+# -*- coding: utf-8 -*-
+
+# =============================================================================
+# Flake8 Configuration
+# =============================================================================
+
 [flake8]
-ignore = D203, D103, D100, D102, D400, D401
-exclude = .git,__pycache__
+# Ignore the following rules:
+# - E203: Whitespace before ':' (often conflicts with Black)
+# - E266: Too many leading '#' for block comments
+# - E501: Line too long (handled by Black)
+# - W503: Line break occurred before a binary operator (handled by Black)
+# - F401: Ignore unused imports in `__init__.py` files (often used for API exposure)
+ignore =
+    E203,
+    E266,
+    E501,
+    W503,
+    F401
+
+# Enable the following rules:
+# - E731: Do not assign a lambda expression, use a def
+# - F405: May be undefined, or defined from star imports
+enable-extensions =
+    E731,
+    F405
+
+# Maximum allowed McCabe complexity (useful to identify overly complex code)
 max-complexity = 10
+
+# Maximum line length allowed (often set to match Black's default)
+max-line-length = 79
+
+# Show the source code for each error
+show-source = True
+
+# Count the number of issues instead of printing them all
+statistics = True
+
+# Exclude these directories and files from being checked
+exclude =
+    .git,
+    __pycache__,
+    build,
+    dist,
+    .venv,
+    .eggs,
+    *.egg,
+    *.egg-info,
+    .tox,
+    .mypy_cache,
+    docs/conf.py
+
+# Specify the files to include (you can be specific or generic)
+# For example: include all Python files
+include = *.py
+
+# Set this to True if you want to allow `# noqa` comments to silence flake8 warnings
+enable-noqa = True
