@@ -1,0 +1,8 @@
+# Canonical
+Canonical: https://www.bearing.tools/security.txt
+
+# Contact
+Contact: mailto:info@starling.associates
+
+# Preferred-Languages
+Preferred-Languages: en
