@@ -5,6 +5,8 @@ site_description: Spatial Python Framework
 site_author: Kockums
 lang: en
 
+docs_dir: doc
+
 # Repository
 repo_name: 'GitHub'
 repo_url: https://github.com/kockums/bearing/
@@ -122,7 +124,6 @@ extra_css:
   - assets/style/extra.css
 extra_javascript:
   - assets/script/extra.js
-extra_templates:
 
 
 # Extensions
