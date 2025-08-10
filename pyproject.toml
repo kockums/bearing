@@ -9,7 +9,7 @@
 name = "bearing"
 version = "0.1.0"
 description = "Bearing"
-authors = ["Lars van Vianen <lars@vianen.com>"]
+authors = ["Lars van Vianen <lars@kockums.io>"]
 license = "MIT"
 readme = "README.md"
 
@@ -22,7 +22,7 @@ readme = "README.md"
 python = "^3.11"
 pillow = "^11.0.0"
 gdal = "^3.7.1.1"
-rite = "^0.0.0"
+rite = "^0.0.4"
 
 
 # =============================================================================
@@ -30,15 +30,15 @@ rite = "^0.0.0"
 # =============================================================================
 
 [tool.poetry.group.dev.dependencies]
-pytest = "^8.3.4"           # Framework for testing
-pytest-cov = "^6.1.1"       # Code coverage for tests
-black = "^24.8.0"           # Code formatter
-flake8 = "^7.2.0"           # Linter for code quality
-mypy = "^1.15.0"            # Static type checker
-sphinx = "^8.0.2"           # Documentation generator
-isort = "^5.10.1"           # Import sorter
-tox = "^4.4.6"              # Testing multiple environments
-pre-commit = "^4.0.1"       # Pre-commit hooks for linting and formatting
+pytest = "^8.3.4"     # Framework for testing
+pytest-cov = "^6.1.1" # Code coverage for tests
+black = "^24.8.0"     # Code formatter
+flake8 = "^7.2.0"     # Linter for code quality
+mypy = "^1.15.0"      # Static type checker
+sphinx = "^8.0.2"     # Documentation generator
+isort = "^5.10.1"     # Import sorter
+tox = "^4.4.6"        # Testing multiple environments
+pre-commit = "^4.0.1" # Pre-commit hooks for linting and formatting
 
 
 # =============================================================================
