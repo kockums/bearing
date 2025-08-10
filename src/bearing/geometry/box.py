@@ -6,7 +6,7 @@
 # =============================================================================
 
 """
-Provides Box Class
+Kockums Bearing - Box Class
 
 ...
 
@@ -31,7 +31,6 @@ Todo:
 
 # Import | Local Modules
 from bearing.geometry.point import Point
-
 
 # =============================================================================
 # Classes

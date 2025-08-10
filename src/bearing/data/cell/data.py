@@ -6,7 +6,7 @@
 # =============================================================================
 
 """
-Provides Data Class
+Kockums Bearing - Data Class
 ===================
 
 
@@ -17,11 +17,11 @@ Provides Data Class
 # Import
 # =============================================================================
 
-# Import | Standard Library
-from typing import Any, Callable, TypeVar, Generic
 import copy
 import json
 import logging
+# Import | Standard Library
+from typing import Any, Callable, Generic, TypeVar
 
 # Import | Libraries
 
@@ -64,7 +64,7 @@ class Data:
 
     Attributes
     ----------
-    _value (T): The encapsulated content or value, supporting diverse 
+    _value (T): The encapsulated content or value, supporting diverse
         data types.
     _immutable (bool): Flag indicating whether the Data instance is immutable.
     _logger (logging.Logger): Logger instance for logging data operations

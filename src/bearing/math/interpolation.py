@@ -6,7 +6,7 @@
 # =============================================================================
 
 """
-Provides Math Utils
+Kockums Bearing - Math Utils
 ===================
 
 ...
@@ -32,6 +32,7 @@ Links:
 
 # Import | Libraries
 import numpy
+
 # from scipy.interpolate import Rbf
 
 # Import | Local Modules

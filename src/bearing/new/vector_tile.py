@@ -6,7 +6,7 @@
 # =============================================================================
 
 """
-Provides Vector Tile Class
+Kockums Bearing - Vector Tile Class
 ==========================
 
 A class to handle vector tile generation for web mapping applications.
@@ -22,11 +22,10 @@ Links:
 # =============================================================================
 
 # Import | Standard Library
-from typing import Tuple, Optional, Any
+from typing import Any, Optional, Tuple
 
 # Import | Libraries
 import mercantile
-
 
 # =============================================================================
 # Classes

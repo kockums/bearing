@@ -2,21 +2,10 @@
 
 
 """
-Provides Math Utils
+Kockums Bearing - Math Utils
 ===================
 
-...
-
-Examples:
-    ...
-
-Attributes:
-    ...
-
-Todo:
-
-Links:
-
+Distance Calculation Utilities
 
 """
 
@@ -28,18 +17,14 @@ Links:
 # Import | Standard Library
 import math
 
-
+import matplotlib.pyplot as pyplot
 # Import | Libraries
 import numpy
-import matplotlib.pyplot as pyplot
 from scipy.interpolate import Rbf
-
 
 # Import | Local Modules
 from bearing.geometry.point import Point
 from bearing.math.vector import Vector
-
-
 
 
 class Distance(Vector):

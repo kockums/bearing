@@ -2,7 +2,7 @@
 
 
 """
-Provides Voxel Class
+Kockums Bearing - Voxel Class
 
 ...
 
@@ -28,7 +28,6 @@ Todo:
 
 # Import | Local Modules
 from starling.geometry.point import Point
-
 
 
 class Voxel(object):

@@ -6,7 +6,7 @@
 # =============================================================================
 
 """
-Provides Geospatial Area Class
+Kockums Bearing - Geospatial Area Class
 ==============================
 
 
@@ -31,7 +31,6 @@ import geojson
 
 # Import | Local Modules
 from bearing.geospatial.coordinate import GeographicCoordinate
-
 
 # =============================================================================
 # Classes

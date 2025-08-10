@@ -2,7 +2,7 @@
 
 
 """
-Provides Math Utils
+Kockums Bearing - Math Utils
 
 ...
 
@@ -27,10 +27,8 @@ Links:
 # Import | Standard Library
 import math
 
-
 # Import | Libraries
 import numpy
-
 
 # Import | Local Modules
 

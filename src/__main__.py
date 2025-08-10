@@ -6,7 +6,7 @@
 # =============================================================================
 
 """
-Provides Bearing Entry Point
+Kockums Bearing - Bearing Entry Point
 ============================
 
 """
@@ -20,6 +20,7 @@ Provides Bearing Entry Point
 
 # Import | Standard Library
 import platform
+
 try:
     import pkg_resources
 except ImportError:

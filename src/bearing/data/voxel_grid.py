@@ -2,7 +2,7 @@
 
 
 """
-Provides Base Layer Class
+Kockums Bearing - Base Layer Class
 
 ...
 
@@ -31,7 +31,6 @@ from starling.geometry.point import Point
 from starling.geometry.rectangle import Rectangle
 from starling.geospatial.utils import coord_offset
 from starling.math.utils import distance_1d
-
 
 
 class Voxel_grid():

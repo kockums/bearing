@@ -6,7 +6,7 @@
 # =============================================================================
 
 """
-Provides Grid Cell Class
+Kockums Bearing - Grid Cell Class
 ========================
 
 
@@ -17,17 +17,15 @@ Provides Grid Cell Class
 # Import
 # =============================================================================
 
+import copy
 # Import | Standard Library
 from typing import Any, Iterator, List, Optional, Tuple
-import copy
 
 # Import | Libraries
 import numpy as np
 
-
 # Import | Local Modules
 from .cell_base import Cell
-
 
 # =============================================================================
 # Classes

@@ -6,7 +6,7 @@
 # =============================================================================
 
 """
-Provides Geospatial Module
+Kockums Bearing - Geospatial Module
 ==========================
 
 

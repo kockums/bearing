@@ -6,7 +6,7 @@
 # =============================================================================
 
 """
-Provides Geospatial Grid Class
+Kockums Bearing - Geospatial Grid Class
 
 ...
 
@@ -28,18 +28,13 @@ Todo:
 # Import | Standard Library
 from array import *
 
-
 # Import | Libraries
 import geojson
 import numpy
 
-
+from bearing.geospatial.area import GeographicArea
 # Import | Local Modules
 from bearing.geospatial.coordinate import GeographicCoordinate
-from bearing.geospatial.area import GeographicArea
-
-
-
 
 
 class GeographicGrid(object):

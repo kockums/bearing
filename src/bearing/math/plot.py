@@ -6,7 +6,7 @@
 # =============================================================================
 
 """
-Provides Math Utils
+Kockums Bearing - Math Utils
 ===================
 
 ...
@@ -32,11 +32,9 @@ Links:
 # Import | Standard Library
 import math
 
-
+import matplotlib.pyplot as pyplot
 # Import | Libraries
 import numpy
-import matplotlib.pyplot as pyplot
-
 
 # Import | Local Modules
 

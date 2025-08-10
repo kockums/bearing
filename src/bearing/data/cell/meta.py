@@ -6,7 +6,7 @@
 # =============================================================================
 
 """
-Provides Metadata Class
+Kockums Bearing - Metadata Class
 =======================
 
 
@@ -17,15 +17,16 @@ Provides Metadata Class
 # Import
 # =============================================================================
 
-# Import | Standard Library
-from typing import Any, Dict, Callable
 import copy
 import json
-
-# Import | Libraries
+# Import | Standard Library
+from typing import Any, Callable, Dict
 
 # Import | Local Modules
 from .data import Data
+
+# Import | Libraries
+
 
 
 # =============================================================================

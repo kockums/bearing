@@ -6,7 +6,7 @@
 # =============================================================================
 
 """
-Provides Bearing Package Information
+Kockums Bearing - Bearing Package Information
 ====================================
 
 """

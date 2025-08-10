@@ -6,7 +6,7 @@
 # =============================================================================
 
 """
-Provides Grid Class
+Kockums Bearing - Grid Class
 
 ...
 
@@ -31,7 +31,6 @@ Todo:
 # Import | Local Modules
 from bearing.geometry.point import Point
 from bearing.geometry.rectangle import Rectangle
-
 
 # =============================================================================
 # Classes

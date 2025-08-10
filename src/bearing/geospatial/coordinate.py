@@ -6,7 +6,7 @@
 # =============================================================================
 
 """
-Provides Geospatial Coordinate Class
+Kockums Bearing - Geospatial Coordinate Class
 
 ...
 
@@ -28,9 +28,9 @@ Todo:
 # Import | Standard Library
 import math
 
+import geojson
 # Import | Libraries
 from pyproj import Proj, Transformer
-import geojson
 
 # Import | Local Modules
 

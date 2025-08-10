@@ -6,7 +6,7 @@
 # =============================================================================
 
 """
-Provides Vector Class
+Kockums Bearing - Vector Class
 =====================
 
 Todo:
@@ -21,9 +21,9 @@ Links:
 # Import
 # =============================================================================
 
-# Import | Standard Library
-from typing import Any, Dict, List, Iterator, Tuple
 import math
+# Import | Standard Library
+from typing import Any, Dict, Iterator, List, Tuple
 
 # Import | Libraries
 
@@ -39,12 +39,12 @@ class Vector(object):
 
     Vector Class
     ============
-    
+
     Represents a three-dimensional vector used for mathematical operations in
     3D space.
 
     The Vector class provides functionalities for various vector operations
-    such as addition, subtraction, dot product, cross product, and more, 
+    such as addition, subtraction, dot product, cross product, and more,
     making it suitable for use in fields such as physics, engineering, computer
     graphics, and data analysis.
 

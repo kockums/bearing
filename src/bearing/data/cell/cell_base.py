@@ -6,7 +6,7 @@
 # =============================================================================
 
 """
-Provides Cell Class
+Kockums Bearing - Cell Class
 ===================
 
 
@@ -17,17 +17,15 @@ Provides Cell Class
 # Import
 # =============================================================================
 
-# Import | Standard Library
-from typing import Any, Dict, List, Iterator, Optional, Tuple
 import copy
+# Import | Standard Library
+from typing import Any, Dict, Iterator, List, Optional, Tuple
 
 # Import | Libraries
 import numpy as np
-
 # Import | Local Modules
 from data import Data
 from meta import Metadata
-
 
 # =============================================================================
 # Classes
