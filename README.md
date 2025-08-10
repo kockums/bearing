@@ -2,7 +2,7 @@
     <img src=".github/images/starling_bearing_logo.png" width="20%" height="20%" alt="Bearing Logo">
 </p>
 <h1 align='center' style='border-bottom: none;'>Bearing</h1>
-<h3 align='center'>Spatial Python Framework</h3>
+<h3 align='center'>Spatial Computing Framework</h3>
 <br/>
 
 <div align="center">
