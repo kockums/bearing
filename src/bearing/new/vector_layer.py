@@ -6,7 +6,7 @@
 # =============================================================================
 
 """
-Kockums Bearing - Vector Layer Class
+Kockums Bearing - Vector Layer Module
 =====================================
 
 Class for representing vector layers in a map, typically used in web mapping

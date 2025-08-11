@@ -6,7 +6,7 @@
 # =============================================================================
 
 """
-Kockums Bearing - Grid Cell Class
+Kockums Bearing - Grid Cell Module
 ========================
 
 

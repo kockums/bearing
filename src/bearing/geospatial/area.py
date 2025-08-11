@@ -6,7 +6,7 @@
 # =============================================================================
 
 """
-Kockums Bearing - Geospatial Area Class
+Kockums Bearing - Geospatial Area Module
 ==============================
 
 

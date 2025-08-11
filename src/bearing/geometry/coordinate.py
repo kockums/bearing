@@ -6,7 +6,7 @@
 # =============================================================================
 
 """
-Kockums Bearing - Coordinate Class
+Kockums Bearing - Coordinate Module
 =========================
 
 ...

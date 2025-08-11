@@ -6,7 +6,7 @@
 # =============================================================================
 
 """
-Kockums Bearing - Metadata Class
+Kockums Bearing - Metadata Module
 =======================
 
 

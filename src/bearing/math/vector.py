@@ -6,7 +6,7 @@
 # =============================================================================
 
 """
-Kockums Bearing - Vector Class
+Kockums Bearing - Vector Module
 =====================
 
 Todo:

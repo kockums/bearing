@@ -6,7 +6,7 @@
 # =============================================================================
 
 """
-Kockums Bearing - Rectangle Class
+Kockums Bearing - Rectangle Module
 ========================
 
 ...

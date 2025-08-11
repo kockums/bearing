@@ -6,7 +6,7 @@
 # =============================================================================
 
 """
-Kockums Bearing - Vector Tile Class
+Kockums Bearing - Vector Tile Module
 ==========================
 
 A class to handle vector tile generation for web mapping applications.
