@@ -24,6 +24,10 @@ Todo:
 # Import
 # =============================================================================
 
+# Import | Future
+from __future__ import annotations
+
+
 # Import | Standard Library
 from math import sqrt
 

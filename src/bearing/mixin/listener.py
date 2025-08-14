@@ -10,7 +10,8 @@ class ListenerMixin:
     This mixin is designed to be used with other classes to provide a
     standardized approach to event handling and notifications.
 
-    Attributes:
+    Attributes
+    ----------
         _listeners (List[Callable]): A list of callback functions that are
             notified upon events.
     """

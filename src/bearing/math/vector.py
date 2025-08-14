@@ -21,6 +21,10 @@ Links:
 # Import
 # =============================================================================
 
+# Import | Future
+from __future__ import annotations
+
+
 import math
 # Import | Standard Library
 from typing import Any, Dict, Iterator, List, Tuple

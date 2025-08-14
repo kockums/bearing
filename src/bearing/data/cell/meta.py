@@ -17,6 +17,10 @@ Kockums Bearing - Metadata Module
 # Import
 # =============================================================================
 
+# Import | Future
+from __future__ import annotations
+
+
 import copy
 import json
 # Import | Standard Library

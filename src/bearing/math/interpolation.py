@@ -28,6 +28,10 @@ Links:
 # Import
 # =============================================================================
 
+# Import | Future
+from __future__ import annotations
+
+
 # Import | Standard Libraryimport math
 
 # Import | Libraries

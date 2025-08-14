@@ -11,8 +11,9 @@ Kockums Bearing - Vector Tile Module
 
 A class to handle vector tile generation for web mapping applications.
 
-Links:
-- https://github.com/submarcos/django-vectortiles/
+References
+----------
+-https://github.com/submarcos/django-vectortiles/
 
 """
 
@@ -20,6 +21,10 @@ Links:
 # =============================================================================
 # Import
 # =============================================================================
+
+# Import | Future
+from __future__ import annotations
+
 
 # Import | Standard Library
 from typing import Any, Optional, Tuple
@@ -39,7 +44,8 @@ class VectorTile(object):
     Base Mixin class to handle vector tile generation. This class can be
     extended to generate vector tiles with specific data and styles.
 
-    Attributes:
+    Attributes
+    ----------
         vector_tile_content_type (str): The MIME type for vector tiles.
         vector_tile_queryset (QuerySet): The queryset to be used for
             generating tiles.
@@ -88,7 +94,8 @@ class VectorTile(object):
             y (int): Tile Y coordinate (latitude).
             z (int): Tile zoom level.
 
-        Returns:
+        Returns
+        -------
             Tuple[float, float, float, float]: The tile bounds (xmin, ymin,
             xmax, ymax) in EPSG:3857.
         """
@@ -98,7 +105,8 @@ class VectorTile(object):
         """
         Get the feature queryset for the tile dynamically.
 
-        Returns:
+        Returns
+        -------
             QuerySet: The queryset used for generating the tile.
         """
         return self.vector_tile_queryset if self.vector_tile_queryset is not None else self.get_queryset()  # noqa E501
@@ -107,7 +115,8 @@ class VectorTile(object):
         """
         Get the feature limit per tile dynamically.
 
-        Returns:
+        Returns
+        -------
             Optional[int]: The feature limit per tile.
         """
         return self.vector_tile_queryset_limit
@@ -116,7 +125,8 @@ class VectorTile(object):
         """
         Get the layer name in the tile dynamically.
 
-        Returns:
+        Returns
+        -------
             Optional[str]: The layer name in the tile.
         """
         return self.vector_tile_layer_name
@@ -130,7 +140,8 @@ class VectorTile(object):
             y (int): Tile Y coordinate (latitude).
             z (int): Tile zoom level.
 
-        Returns:
+        Returns
+        -------
             bytearray: The generated mapbox vector tile.
 
         Raises:

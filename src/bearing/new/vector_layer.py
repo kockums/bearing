@@ -16,8 +16,9 @@ Todo:
 - Implement additional methods or attributes as needed.
 - Extend layer fields customization.
 
-Links:
-- https://github.com/submarcos/django-vectortiles/
+References
+----------
+-https://github.com/submarcos/django-vectortiles/
 
 """
 
@@ -25,6 +26,10 @@ Links:
 # =============================================================================
 # Import
 # =============================================================================
+
+# Import | Future
+from __future__ import annotations
+
 
 # Import | Standard Library
 
@@ -42,7 +47,8 @@ class VectorLayer(object):
 
     Represents a vector layer with its associated properties and metadata.
 
-    Attributes:
+    Attributes
+    ----------
         vector_tile_layer_id (str): Unique identifier for the vector layer.
         vector_tile_layer_description (str): Description of the vector layer.
         vector_tile_layer_min_zoom (int): Minimum zoom level at which the
@@ -81,7 +87,8 @@ class VectorLayer(object):
         """
         Retrieves the unique identifier of the vector layer.
 
-        Returns:
+        Returns
+        -------
             str: The unique identifier of the layer.
         """
         return self.vector_tile_layer_id
@@ -90,7 +97,8 @@ class VectorLayer(object):
         """
         Retrieves the description of the vector layer.
 
-        Returns:
+        Returns
+        -------
             str: The description of the layer.
         """
         return self.vector_tile_layer_description
@@ -99,7 +107,8 @@ class VectorLayer(object):
         """
         Retrieves the minimum zoom level at which the layer is visible.
 
-        Returns:
+        Returns
+        -------
             int: The minimum zoom level for the layer.
         """
         return self.vector_tile_layer_min_zoom
@@ -108,7 +117,8 @@ class VectorLayer(object):
         """
         Retrieves the maximum zoom level at which the layer is visible.
 
-        Returns:
+        Returns
+        -------
             int: The maximum zoom level for the layer.
         """
         return self.vector_tile_layer_max_zoom
@@ -117,7 +127,8 @@ class VectorLayer(object):
         """
         Constructs and returns a dictionary representing the vector layer.
 
-        Returns:
+        Returns
+        -------
             dict: A dictionary containing the layer's properties.
         """
         return {

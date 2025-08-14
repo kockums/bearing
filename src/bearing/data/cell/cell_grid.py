@@ -17,6 +17,10 @@ Kockums Bearing - Grid Cell Module
 # Import
 # =============================================================================
 
+# Import | Future
+from __future__ import annotations
+
+
 import copy
 # Import | Standard Library
 from typing import Any, Iterator, List, Optional, Tuple
