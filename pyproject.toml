@@ -37,7 +37,7 @@ flake8 = "^7.2.0"     # Linter for code quality
 mypy = "^1.15.0"      # Static type checker
 sphinx = "^8.0.2"     # Documentation generator
 isort = "^5.10.1"     # Import sorter
-tox = "^4.4.6"        # Testing multiple environments
+tox = "^4.30.3"        # Testing multiple environments
 pre-commit = "^4.0.1" # Pre-commit hooks for linting and formatting
 
 
