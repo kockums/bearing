@@ -148,7 +148,7 @@ class Vector(object):
     @property
     def components(
         self
-    ) -> Tuple[float, float, float]:
+    ) -> tuple[float, float, float]:
         """
         Getter decorator method for x parameter.
         Gets the components of the vector as a tuple.
@@ -159,7 +159,7 @@ class Vector(object):
 
         Returns
         -------
-        components : Tuple[float, float, float]
+        components : tuple[float, float, float]
             A tuple representing the x, y, and z components of the vector.
 
         """
@@ -168,7 +168,7 @@ class Vector(object):
         return components
 
     @components.setter
-    def components(self, values: Tuple[float, float, float]) -> None:
+    def components(self, values: tuple[float, float, float]) -> None:
 
         """
         Setter decorator method for x parameter.

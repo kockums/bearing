@@ -53,14 +53,14 @@ class Metadata(Data):
         content.
 
    Attributes:
-    _value (Dict[str, Any]): A dictionary to store metadata key-value pairs.
+    _value (dict[str, Any]): A dictionary to store metadata key-value pairs.
 
     """
 
     # Constructor
     # =========================================================================
 
-    def __init__(self, data: Dict[str, Any] = None, immutable: bool = False):
+    def __init__(self, data: dict[str, Any] = None, immutable: bool = False):
         """
         Initializes the Metadata instance with an optional dictionary of
         metadata.
@@ -141,7 +141,7 @@ class Metadata(Data):
     # Public Methods
     # =========================================================================
 
-    def update(self, updates: Dict[str, Any]):
+    def update(self, updates: dict[str, Any]):
         """
         Updates metadata with provided key-value pairs, adding new keys or
         overwriting existing ones.
@@ -157,7 +157,7 @@ class Metadata(Data):
             for key, value in updates.items():
                 self[key] = value  # Utilizes __setitem__
 
-    def validate(self, schema: Dict[str, Any]) -> bool:
+    def validate(self, schema: dict[str, Any]) -> bool:
         """
         Validates metadata against a specified schema. This method serves as a
         placeholder for actual validation logic.

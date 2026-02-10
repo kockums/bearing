@@ -638,7 +638,7 @@
     "python.analysis.displayEnglishDiagnostics": false,
     "python.analysis.enablePytestSupport": true,
     "python.analysis.enableSyncServer": false,
-    // "python.analysis.exclude": [""],
+    "python.analysis.exclude": ["**/typeshed-fallback/**", ".venv"],
     "python.analysis.extraCommitChars": false,
     // "python.analysis.extraPaths": [""],
     "python.analysis.fixAll": [
@@ -687,7 +687,7 @@
     "python.analysis.stubPath": "typings",
     "python.analysis.supportDocstringTemplate": true,
     "python.analysis.supportRestructuredText": false,
-    "python.analysis.typeCheckingMode": "off",
+    "python.analysis.typeCheckingMode": "standard",
     "python.analysis.typeEvaluation.analyzeUnannotatedFunctions": true,
     "python.analysis.typeEvaluation.deprecateTypingAliases": false,
     "python.analysis.typeEvaluation.disableBytesTypePromotions": false,
@@ -823,6 +823,7 @@
     // "tinymist.systemFonts": false,
     "tinymist.trace.server": "off",
     "tinymist.typingContinueCommentsOnNewline": true,
+    "cSpell.enabled": false,
     "cSpell.words": [
         "Buurten",
         "Buurtpanel",

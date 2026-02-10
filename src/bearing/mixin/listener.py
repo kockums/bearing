@@ -12,7 +12,7 @@ class ListenerMixin:
 
     Attributes
     ----------
-        _listeners (List[Callable]): A list of callback functions that are
+        _listeners (list[Callable]): A list of callback functions that are
             notified upon events.
     """
 
@@ -20,7 +20,7 @@ class ListenerMixin:
         """
         Initializes the mixin with an empty list of listeners.
         """
-        self._listeners: List[Callable] = []
+        self._listeners: list[Callable] = []
 
     def add_listener(self, listener: Callable[[Any], None]):
         """

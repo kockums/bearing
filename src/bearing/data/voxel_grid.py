@@ -119,7 +119,7 @@ class Voxel_grid():
 
     def test_something(self):
         """Test Method"""
-        pass
+        pass  # pylint: disable=unnecessary-pass
 
 
 def test():

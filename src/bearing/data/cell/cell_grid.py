@@ -55,7 +55,7 @@ class GridCell(Cell):
 
     Attributes
     ----------
-    _position (List[int]): The cell's coordinates within the grid.
+    _position (list[int]): The cell's coordinates within the grid.
 
     Methods
     -------
@@ -68,7 +68,7 @@ class GridCell(Cell):
 
     def __init__(
         self,
-        position: List[int],
+        position: list[int],
         data: Any = None,
         meta: dict = None
     ):
@@ -92,7 +92,7 @@ class GridCell(Cell):
     # =========================================================================
 
     @property
-    def position(self) -> Tuple[int]:
+    def position(self) -> tuple[int]:
         """
         Returns the cell's immutable position.
 
@@ -100,7 +100,7 @@ class GridCell(Cell):
         return self._position
 
     @position.setter
-    def position(self, new_position: List[int]) -> None:
+    def position(self, new_position: list[int]) -> None:
         """
         Sets the cell's position. Ensure new_position is a list of integers.
 
@@ -134,7 +134,7 @@ class GridCell(Cell):
 
     def get_neighbor_positions(
         self, include_diagonals=False
-    ) -> List[Tuple[int]]:
+    ) -> list[tuple[int]]:
         """
         Calculates the positions of adjacent neighbors in the grid.
 

@@ -74,7 +74,7 @@ class Cell:
     # Constructor
     # =========================================================================
 
-    def __init__(self, data: Any = None, meta: Dict[str, Any] = None):
+    def __init__(self, data: Any = None, meta: dict[str, Any] = None):
         """
         Initializes a new Cell instance with data and metadata.
 
@@ -128,7 +128,7 @@ class Cell:
         return self._meta
 
     @meta.setter
-    def meta(self, new_meta: Dict[str, Any]):
+    def meta(self, new_meta: dict[str, Any]):
         """
         Updates the cell's meta.
 

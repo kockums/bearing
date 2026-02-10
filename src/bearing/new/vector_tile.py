@@ -85,7 +85,7 @@ class VectorTile(object):
     @classmethod
     def get_bounds(
         cls, x: int, y: int, z: int
-    ) -> Tuple[float, float, float, float]:
+    ) -> tuple[float, float, float, float]:
         """
         Get extent from XYZ tile coordinates to EPSG:3857.
 
@@ -96,7 +96,7 @@ class VectorTile(object):
 
         Returns
         -------
-            Tuple[float, float, float, float]: The tile bounds (xmin, ymin,
+            tuple[float, float, float, float]: The tile bounds (xmin, ymin,
             xmax, ymax) in EPSG:3857.
         """
         return mercantile.xy_bounds(x, y, z)
