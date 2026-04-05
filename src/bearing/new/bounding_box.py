@@ -26,7 +26,7 @@ CRS_URN_REGEX = re.compile(
     re.IGNORECASE,
 )
 
-__all__ = [
+__all__: list[str] = [
     "BoundingBox",
 ]
 
