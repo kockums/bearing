@@ -16,10 +16,10 @@ jobs:
         python-version: ["3.12", "3.13"]
 
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v6
+        uses: actions/setup-python@v7
         with:
           python-version: ${{ matrix.python-version }}
 
@@ -45,7 +45,7 @@ jobs:
           }
 
       - name: Cache Poetry dependencies
-        uses: actions/cache@v5
+        uses: actions/cache@v6
         with:
           path: |
             .venv
@@ -68,7 +68,7 @@ jobs:
           poetry run pytest --cov=rite --cov-report=xml --cov-report=term-missing tst/
 
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v6
+        uses: codecov/codecov-action@v7
         with:
           files: ./coverage.xml
           flags: unittests
@@ -79,10 +79,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - name: Set up Python
-        uses: actions/setup-python@v6
+        uses: actions/setup-python@v7
         with:
           python-version: "3.12"
 
@@ -90,7 +90,7 @@ jobs:
         uses: snok/install-poetry@v1
 
       - name: Cache Poetry dependencies
-        uses: actions/cache@v5
+        uses: actions/cache@v6
         with:
           path: |
             .venv
@@ -113,10 +113,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - name: Set up Python
-        uses: actions/setup-python@v6
+        uses: actions/setup-python@v7
         with:
           python-version: "3.12"
 
@@ -124,7 +124,7 @@ jobs:
         uses: snok/install-poetry@v1
 
       - name: Cache Poetry dependencies
-        uses: actions/cache@v5
+        uses: actions/cache@v6
         with:
           path: |
             .venv
