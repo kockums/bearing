@@ -1,8 +1,90 @@
-# Set default behaviour, in case users don't have core.autocrlf set.
+# =============================================================================
+# Git Attributes Configuration
+# =============================================================================
+
+# Set default behaviour for all files
 * text=auto
 
-# Explicitly declare text files we want to always be normalized and converted
-# to native line endings on checkout.
-*.md text diff=markdown
+# Source code
+*.py text eol=lf diff=python
+*.pyx text eol=lf diff=python
+*.pyi text eol=lf diff=python
+
+# Configuration files
+*.ini text eol=lf
+*.cfg text eol=lf
+*.toml text eol=lf
+*.yaml text eol=lf
+*.yml text eol=lf
+*.json text eol=lf
+.editorconfig text eol=lf
+.gitattributes text eol=lf
+.gitignore text eol=lf
+
+# Documentation
+*.md text eol=lf diff=markdown
+*.rst text eol=lf
+*.txt text eol=lf
+LICENSE text eol=lf
+CHANGELOG* text eol=lf
+README* text eol=lf
+
+# Scripts
+*.sh text eol=lf
+*.bash text eol=lf
+Makefile text eol=lf
+Makefile.* text eol=lf
+
+# Windows scripts
+*.bat text eol=crlf
+*.cmd text eol=crlf
+*.ps1 text eol=lf
+
+# Docker
+Dockerfile text eol=lf
+*.dockerfile text eol=lf
+docker-compose*.yml text eol=lf
+
+# CI/CD
+.github/** text eol=lf
+.gitlab-ci.yml text eol=lf
+
+# Archives (binary)
+*.7z binary
+*.gz binary
+*.tar binary
+*.tgz binary
+*.zip binary
+
+# Python compiled files (binary)
+*.pyc binary
+*.pyo binary
+*.pyd binary
+
+# Wheel files
+*.whl binary
+
+# Images (binary)
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.svg binary
+
+# Fonts (binary)
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.eot binary
+*.otf binary
+
+# Git LFS (if used)
 *.json.br filter=lfs diff=lfs merge=lfs -text
 
+# Linguist overrides (for GitHub language detection)
+*.py linguist-language=Python
+*.pyi linguist-language=Python
+tst/** linguist-vendored=false
+doc/** linguist-documentation=true
+htmlcov/** linguist-generated=true

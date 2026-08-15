@@ -12,17 +12,22 @@ description = "Bearing"
 authors = ["Lars van Vianen <lars@kockums.io>"]
 license = "MIT"
 readme = "README.md"
+classifiers = [
+    "Private :: Do Not Upload",
+]
 
 
 # =============================================================================
 # Dependencies
 # =============================================================================
 
+# bearing is dependency-free by doctrine: generic geospatial Python with no
+# runtime requirements beyond the standard library. (pillow/gdal/rite were
+# declared here historically but nothing in src/ imports them — removed
+# 2026-07-22; the residual in-code offenders are ledgered in
+# DEPENDENCIES.md.) The caret range stays open through Python 3.15.
 [tool.poetry.dependencies]
 python = "^3.11"
-pillow = "^11.0.0"
-gdal = "^3.7.1.1"
-rite = ">=0.2.4"
 
 
 # =============================================================================
@@ -32,6 +37,8 @@ rite = ">=0.2.4"
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.3.4"     # Framework for testing
 pytest-cov = "^6.1.1" # Code coverage for tests
+pytest-benchmark = "^5.2.0" # Benchmarking for tests
+coverage = "^7.13.1"  # Coverage measurement
 black = "^24.8.0"     # Code formatter
 flake8 = "^7.2.0"     # Linter for code quality
 mypy = "^1.15.0"      # Static type checker
@@ -39,6 +46,48 @@ sphinx = "^8.0.2"     # Documentation generator
 isort = "^5.10.1"     # Import sorter
 tox = "^4.4.6"        # Testing multiple environments
 pre-commit = "^4.0.1" # Pre-commit hooks for linting and formatting
+pylint = "^4.0.4"     # Linter for code quality
+bandit = { extras = ["toml"], version = "^1.7.5" } # Security linter
+
+
+# =============================================================================
+# Tooling Configuration
+# =============================================================================
+
+[tool.black]
+line-length = 79
+target-version = ["py312", "py313"]
+extend-exclude = '(\.eggs|\.git|\.hg|\.mypy_cache|\.tox|\.venv|_build|buck-out|build|dist|htmlcov|bup|wip)'
+
+[tool.bandit]
+targets = ["src"]
+exclude_dirs = ["/test", "*/test_*.py", "*/tst/*", "*/bup/*", "*/wip/*"]
+skips = ["B101","B301","B310","B311","B318","B324","B403","B404","B406","B408","B601","B603","B608"]
+
+[tool.tox]
+envlist = ["py310", "py311", "py312", "lint", "type-check"]
+[tool.tox.default]
+description = "Run all test environments."
+[tool.tox.env.py310]
+description = "Run tests with Python 3.10."
+deps = ["pytest", "pytest-cov"]
+commands = ["pytest --cov=bearing tst/"]
+[tool.tox.env.py311]
+description = "Run tests with Python 3.11."
+deps = ["pytest", "pytest-cov"]
+commands = ["pytest --cov=bearing tst/"]
+[tool.tox.env.py312]
+description = "Run tests with Python 3.12."
+deps = ["pytest", "pytest-cov"]
+commands = ["pytest --cov=bearing tst/"]
+[tool.tox.env.lint]
+description = "Run linting with flake8."
+deps = ["flake8"]
+commands = ["flake8 src/"]
+[tool.tox.env.type-check]
+description = "Run type-checking with mypy."
+deps = ["mypy"]
+commands = ["mypy src/"]
 
 
 # =============================================================================

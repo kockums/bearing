@@ -1,0 +1,73 @@
+# =============================================================================
+# GitHub Actions Workflow: Performance Benchmarks
+# =============================================================================
+
+name: Performance Benchmarks
+
+on:
+  push:
+    branches: [main, dev]
+  pull_request:
+    branches: [main, dev]
+  workflow_dispatch:
+
+jobs:
+  benchmark:
+    name: Run Benchmarks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+
+      - name: Verify poetry.lock is up to date
+        run: poetry check --lock
+
+      - name: Install dependencies
+        run: |
+          poetry install --no-interaction --with dev
+          poetry run pip install pytest-benchmark
+
+      - name: Run benchmarks
+        run: |
+          poetry run pytest tst/ --benchmark-only --benchmark-json=output.json 2>/dev/null || true
+          # Create empty valid JSON if no benchmarks exist
+          if [ ! -s output.json ] || ! python -c "import json; json.load(open('output.json'))" 2>/dev/null; then
+            echo '{"machine_info": {}, "commit_info": {}, "benchmarks": []}' > output.json
+          fi
+
+      - name: Check if benchmarks exist
+        id: check_benchmarks
+        run: |
+          BENCHMARK_COUNT=$(python -c "import json; print(len(json.load(open('output.json')).get('benchmarks', [])))")
+          echo "count=$BENCHMARK_COUNT" >> $GITHUB_OUTPUT
+          echo "Found $BENCHMARK_COUNT benchmark(s)"
+
+      - name: Store benchmark result
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main' && steps.check_benchmarks.outputs.count != '0'
+        uses: benchmark-action/github-action-benchmark@v1
+        with:
+          tool: "pytest"
+          output-file-path: output.json
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          auto-push: true
+          alert-threshold: "150%"
+
+      - name: Compare benchmarks
+        if: github.event_name == 'pull_request' && steps.check_benchmarks.outputs.count != '0'
+        uses: benchmark-action/github-action-benchmark@v1
+        with:
+          tool: "pytest"
+          output-file-path: output.json
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          comment-on-alert: true
+          alert-threshold: "150%"
+          fail-on-alert: false

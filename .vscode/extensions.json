@@ -1,55 +1,74 @@
 {
     "recommendations": [
+        // Python Development
+        "ms-python.python",                         // Python language support
+        "ms-python.vscode-pylance",                 // Fast Python language server
+        "ms-python.black-formatter",                // Black code formatter
+        "ms-python.isort",                          // Import sorting
+        "ms-python.flake8",                         // Flake8 linter
+        "ms-python.pylint",                         // Pylint static analyzer
 
-        // ────────────────────────────────────────────────────────────────────
-        // Docker & Containers
-        // ────────────────────────────────────────────────────────────────────
-        "ms-azuretools.vscode-docker",               // Docker support
-        "ms-vscode-remote.remote-containers",        // Dev container integration
+        // AI Assistants
+        "github.copilot",                           // GitHub Copilot
+        "github.copilot-chat",                      // GitHub Copilot Chat
 
+        // Testing
+        "littlefoxteam.vscode-python-test-adapter", // Python test adapter
+        "ryanluker.vscode-coverage-gutters",        // Coverage visualization
 
-        // ────────────────────────────────────────────────────────────────────
-        // GitHub & VCS
-        // ────────────────────────────────────────────────────────────────────
-        "github.vscode-pull-request-github",         // GitHub PR & issue management
+        // Git
+        "eamodio.gitlens",                          // GitLens for Git capabilities
+        "mhutchie.git-graph",                       // Git graph visualization
+        "github.vscode-pull-request-github",        // GitHub PR integration
 
+        // Documentation
+        "njpwerner.autodocstring",                  // Auto-generate docstrings
+        "lextudio.restructuredtext",                // reStructuredText support
+        "trond-snekvik.simple-rst",                 // Simple RST preview
 
-        // ────────────────────────────────────────────────────────────────────
-        // TypeScript / JavaScript
-        // ────────────────────────────────────────────────────────────────────
-        "esbenp.prettier-vscode",                    // Prettier code formatter
-        "ms-vscode.vscode-typescript-next",          // Enhanced TypeScript support
-        // "dbaeumer.vscode-eslint",                 // ESLint (optional)
+        // Code Quality
+        "streetsidesoftware.code-spell-checker",    // Spell checker
+        "editorconfig.editorconfig",                // EditorConfig support
+        "tamasfe.even-better-toml",                 // TOML language support
 
+        // Utilities
+        "gruntfuggly.todo-tree",                    // TODO tree
+        "wayou.vscode-todo-highlight",              // TODO highlighting
+        "usernamehw.errorlens",                     // Error lens
+        "ms-vsliveshare.vsliveshare",               // Live Share
 
-        // ────────────────────────────────────────────────────────────────────
-        // 🐍 Python
-        // ────────────────────────────────────────────────────────────────────
-        "ms-python.autopep8",                        // Autopep8 formatter
-        "ms-python.black-formatter",                 // Black formatter
-        "ms-python.debugpy",                         // Debugger
-        "ms-python.flake8",                          // Flake8 linter
-        "ms-python.isort",                           // Import sorter
-        "ms-python.pylint",                          // Pylint
-        "ms-python.python",                          // Python core extension
-        "ms-python.vscode-pylance",                  // Pylance language server
-        "zeshuaro.vscode-python-poetry",             // Poetry environment manager
+        // Markdown
+        "yzhang.markdown-all-in-one",               // Markdown all-in-one
+        "davidanson.vscode-markdownlint",           // Markdown linting
 
+        // Linting and Formatting (for non-Python files)
+        "dbaeumer.vscode-eslint",                   // ESLint for JavaScript/TypeScript linting
+        "esbenp.prettier-vscode",                   // Prettier for code formatting
+        "stylelint.vscode-stylelint",               // Stylelint for CSS/SCSS linting
 
-        // ────────────────────────────────────────────────────────────────────
-        // SCSS / CSS / Style
-        // ────────────────────────────────────────────────────────────────────
-        "sibiraj-s.vscode-scss-formatter",           // SCSS formatter
-        "stylelint.vscode-stylelint",                // Linter for CSS/SCSS
-        // "syler.sass-indented",                    // Optional: SCSS/SASS language support
+        // Language Support (non-Python)
+        "ms-vscode.vscode-typescript-next",         // Enhanced TypeScript support
+        "redhat.vscode-yaml",                       // YAML language support
+        "syler.sass-indented",                      // SCSS/SASS language support
 
-        
-        // ────────────────────────────────────────────────────────────────────
-        // Markup / Templates / Config
-        // ────────────────────────────────────────────────────────────────────
-        "samuelcolvin.jinjahtml",                    // Jinja2 template support
-        "tamasfe.even-better-toml",                  // Better TOML syntax highlighting
-        "redhat.vscode-yaml",                        // Optional: YAML support
+        // Development Tools
+        "ritwickdey.LiveServer",                    // Live Server for HTML/JS development
+        "ms-azuretools.vscode-docker",              // Docker support for containerized applications
 
+        // Theming and UI Enhancements
+        "PKief.material-icon-theme",                // Material icon theme
+        "vscode-icons-team.vscode-icons",           // VSCode Icons for better file icons
+
+        // Performance and Productivity
+        "shardulm94.trailing-spaces",               // Trailing spaces visualizer
+        "christian-kohler.path-intellisense",       // Path Intellisense for faster file path completion
+        "formulahendry.auto-rename-tag",            // Auto rename paired HTML/XML tags
+        "editorconfig.editorconfig"                 // EditorConfig support for maintaining consistent coding styles
+    ],
+    "unwantedRecommendations": [
+        // Unwanted Extensions (if any)
+        "hookyqr.beautify",                        // Beautify conflicts with Prettier
+        "coenraads.bracket-pair-colorizer",        // Can impact performance, prefer built-in bracket highlighting
+        "vscode.typescript-language-features"      // Built-in TypeScript support, but might conflict with custom setup
     ]
 }

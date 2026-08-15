@@ -1,7 +1,6 @@
 > By submitting this pull request, you agree to the [contribution guidelines](CONTRIBUTING.md)
 
-
-|        Q        |                    A                    |
+| Q               | A                                       |
 | --------------- | --------------------------------------- |
 | Bug fix?        | no - yes?                               |
 | New feature?    | no - yes?                               |
@@ -15,12 +14,11 @@
 > _(DELETE THIS PARAGRAPH AFTER READING)_
 
 ## Submitter Guidance (DELETE AFTER READING)
+
+> _Please update this PR information accordingly. We'll use this as part of our release notes in monthly communications._
 >
-> *Please update this PR information accordingly. We'll use this as part of our release notes in monthly communications.*
+> _Pull requests that do not follow this template will be automatically rejected._
 >
-> *Pull requests that do not follow this template will be automatically rejected.*
+> _Please target your PR to `main` branch._
 >
-> *Please target your PR to `main` branch.*
->
-> *Remember that this repository is maintained by community members who volunteer their time to help. Be courteous and patient.*
-> _(DELETE THIS SECTION AFTER READING)_
+> _Remember that this repository is maintained by community members who volunteer their time to help. Be courteous and patient._ > _(DELETE THIS SECTION AFTER READING)_

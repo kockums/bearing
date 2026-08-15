@@ -1,0 +1,102 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Install Dependencies",
+      "type": "shell",
+      "command": "poetry install --no-interaction --with dev",
+      "group": "none",
+      "problemMatcher": []
+    },
+    {
+      "label": "Format Code",
+      "type": "shell",
+      "command": "make -f Makefile.dev format",
+      "group": "none",
+      "problemMatcher": []
+    },
+    {
+      "label": "Run Tests",
+      "type": "shell",
+      "command": "poetry run pytest tst/",
+      "group": {
+        "kind": "test",
+        "isDefault": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Run Tests with Coverage",
+      "type": "shell",
+      "command": "poetry run pytest --cov=rite --cov-report=html --cov-report=term tst/",
+      "group": "test",
+      "problemMatcher": []
+    },
+    {
+      "label": "Type Check",
+      "type": "shell",
+      "command": "poetry run mypy src/",
+      "group": "none",
+      "problemMatcher": []
+    },
+    {
+      "label": "Lint with Flake8",
+      "type": "shell",
+      "command": "poetry run flake8 src/",
+      "group": "none",
+      "problemMatcher": []
+    },
+    {
+      "label": "Analyze with Pylint",
+      "type": "shell",
+      "command": "poetry run pylint src/",
+      "group": "none",
+      "problemMatcher": []
+    },
+    {
+      "label": "Security Scan",
+      "type": "shell",
+      "command": "poetry run bandit -r src/ -c pyproject.toml",
+      "group": "none",
+      "problemMatcher": []
+    },
+    {
+      "label": "Run All Checks",
+      "type": "shell",
+      "command": "make -f Makefile.dev check",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Build Documentation",
+      "type": "shell",
+      "command": "cd doc && poetry run sphinx-build -b html . _build/html",
+      "group": "none",
+      "problemMatcher": []
+    },
+    {
+      "label": "Clean Build Artifacts",
+      "type": "shell",
+      "command": "make -f Makefile.dev clean",
+      "group": "none",
+      "problemMatcher": []
+    },
+    {
+      "label": "Run Pre-commit",
+      "type": "shell",
+      "command": "poetry run pre-commit run --all-files",
+      "group": "none",
+      "problemMatcher": []
+    },
+    {
+      "label": "Update Dependencies",
+      "type": "shell",
+      "command": "poetry update",
+      "group": "none",
+      "problemMatcher": []
+    }
+  ]
+}

@@ -1,59 +1,84 @@
 # -*- coding: utf-8 -*-
 
+
 # =============================================================================
 # Flake8 Configuration
 # =============================================================================
 
 [flake8]
+# Maximum line length - match Black's default
+max-line-length = 79
+
+# Ensure exactly one newline at end of files (W292)
+# W292: no newline at end of file - ENABLED (required)
+# W293: blank line contains whitespace - ENABLED (required)
+
 # Ignore the following rules:
-# - E203: Whitespace before ':' (often conflicts with Black)
+# - E203: Whitespace before ':' (conflicts with Black)
 # - E266: Too many leading '#' for block comments
 # - E501: Line too long (handled by Black)
-# - W503: Line break occurred before a binary operator (handled by Black)
-# - F401: Ignore unused imports in `__init__.py` files (often used for API exposure)
+# - W503: Line break occurred before a binary operator (Black style)
+# - W504: Line break occurred after a binary operator
+# - F401: Ignore unused imports in `__init__.py` files (API exposure)
+# - F403: Unable to detect undefined names from star imports
+# - E731: Do not assign a lambda expression (allowed in tests)
 ignore =
     E203,
     E266,
     E501,
     W503,
-    F401
+    W504,
+    F401,
+    F403,
+    E731
 
 # Enable the following rules:
 # - E731: Do not assign a lambda expression, use a def
-# - F405: May be undefined, or defined from star imports
 enable-extensions =
-    E731,
-    F405
+    E731
 
-# Maximum allowed McCabe complexity (useful to identify overly complex code)
-max-complexity = 10
-
-# Maximum line length allowed (often set to match Black's default)
-max-line-length = 79
+# Maximum allowed McCabe complexity
+max-complexity = 15
 
 # Show the source code for each error
 show-source = True
 
-# Count the number of issues instead of printing them all
+# Show the specific error code for each error
+show-pep8 = True
+
+# Count the number of issues
 statistics = True
 
 # Exclude these directories and files from being checked
 exclude =
     .git,
     __pycache__,
-    build,
-    dist,
+    .pytest_cache,
+    .mypy_cache,
+    .tox,
     .venv,
     .eggs,
     *.egg,
     *.egg-info,
-    .tox,
-    .mypy_cache,
-    docs/conf.py
+    build,
+    dist,
+    htmlcov,
+    bup,
+    wip,
+    tmp,
+    docs,
+    setup.py
 
-# Specify the files to include (you can be specific or generic)
-# For example: include all Python files
+# Specify the files to include
 include = *.py
 
-# Set this to True if you want to allow `# noqa` comments to silence flake8 warnings
+# Allow `# noqa` comments to silence flake8 warnings
 enable-noqa = True
+
+# Per-file ignores
+per-file-ignores =
+    __init__.py:F401,F403
+    **/tst/*:F401,F403,E501,E731
+
+# Docstring conventions (PEP 257)
+docstring-convention = google

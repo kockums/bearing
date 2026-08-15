@@ -1,5 +1,97 @@
 {
 
+    // ========================================================================
+    // Python Configuration
+    // ========================================================================
+
+    // Python environment and interpreter
+    "python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python",
+    "python.terminal.activateEnvironment": true,
+    "python.terminal.activateEnvInCurrentTerminal": true,
+
+    // Formatting
+    "python.formatting.provider": "none",
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.black-formatter",
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": "explicit"
+        },
+        "editor.rulers": [88],
+        "editor.tabSize": 4,
+        "editor.insertSpaces": true
+    },
+
+    // Black formatter
+    "black-formatter.args": [
+        "--line-length=88",
+        "--target-version=py310"
+    ],
+
+    // isort
+    "isort.args": [
+        "--profile=black",
+        "--line-length=88"
+    ],
+    "isort.check": true,
+
+    // Linting
+    "python.linting.enabled": true,
+    "python.linting.lintOnSave": true,
+
+    // Flake8
+    "python.linting.flake8Enabled": true,
+    "python.linting.flake8Args": [
+        "--config=${workspaceFolder}/.flake8"
+    ],
+
+    // Pylint
+    "python.linting.pylintEnabled": true,
+    "python.linting.pylintArgs": [
+        "--rcfile=${workspaceFolder}/.pylintrc"
+    ],
+
+    // Mypy
+    "python.linting.mypyEnabled": true,
+    "python.linting.mypyArgs": [
+        "--config-file=${workspaceFolder}/mypy.ini",
+        "--show-column-numbers",
+        "--show-error-codes"
+    ],
+
+    // Python analysis
+    "python.analysis.typeCheckingMode": "basic",
+    "python.analysis.autoImportCompletions": true,
+    "python.analysis.autoSearchPaths": true,
+    "python.analysis.diagnosticMode": "workspace",
+    "python.analysis.extraPaths": [
+        "${workspaceFolder}/src"
+    ],
+    "python.analysis.fixAll": [
+        "source.unusedImports"
+    ],
+    "python.analysis.completeFunctionParens": true,
+    "python.analysis.importFormat": "absolute",
+    "python.analysis.inlayHints.functionReturnTypes": true,
+    "python.analysis.inlayHints.variableTypes": true,
+
+    // Testing
+    "python.testing.pytestEnabled": true,
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestArgs": [
+        "tst"
+    ],
+    "python.testing.autoTestDiscoverOnSaveEnabled": true,
+
+    // ========================================================================
+    // Editor - Code Actions on Save
+    // ========================================================================
+
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": "explicit",
+        "source.organizeImports": "explicit"
+    },
+
 
     // Eslint
     // ========================================================================
@@ -27,7 +119,7 @@
     // ========================================================================
 
 
-    "git.autofetch": true,                              
+    "git.autofetch": true,
 
     // Prettier
     // ========================================================================
@@ -60,13 +152,13 @@
     "editor.bracketPairColorization.enabled": true,
     "editor.bracketPairColorization.independentColorPoolPerBracketType": false,
     "editor.codeActions.triggerOnFocusChange": false,
+    // ========================================================================
+    // Editor - Code Actions on Save
+    // ========================================================================
+
     "editor.codeActionsOnSave": {
         "source.fixAll.eslint": "explicit",
         "source.organizeImports": "explicit"
-        // "source.fixAll.eslint": "always",
-        // "source.fixAll.stylelint": "always",
-        // "source.organizeImports": true,
-        // "source.fixAll": true
     },
     "editor.codeActionWidget.includeNearbyQuickFixes": true,
     "editor.codeActionWidget.showHeaders": true,
@@ -123,7 +215,7 @@
     "editor.hideCursorInOverviewRuler": false,
     "editor.hover.above": true,
     "editor.hover.delay": 300,
-    "editor.hover.enabled": true,
+    "editor.hover.enabled": "on",
     "editor.hover.hidingDelay": 300,
     "editor.hover.sticky": true,
     "editor.indentSize": "tabSize",
@@ -440,9 +532,9 @@
 
 
 
-    "workbench.editor.enablePreview": false,            
-    "workbench.colorTheme": "Default Dark Modern",            
-    "workbench.iconTheme": "vscode-icons",              
+    "workbench.editor.enablePreview": false,
+    "workbench.colorTheme": "Default Dark Modern",
+    "workbench.iconTheme": "vs-seti",
 
     // ...
 
@@ -648,6 +740,11 @@
     "python.analysis.generateWithTypeAnnotation": false,
     "python.analysis.gotoDefinitionInStringLiteral": true,
     // "python.analysis.ignore": [""],
+
+    "python.analysis.ignore": [
+    "bup",
+    "tmp"
+    ],
     "python.analysis.importFormat": "absolute",
     // "python.analysis.include": [""],
     "python.analysis.includeAliasesFromUserFiles": false,
@@ -765,19 +862,21 @@
         "W": "Warning"
     },
 
+
     // Pylint
     // ========================================================================
 
     "pylint.args": [
-        "--max-line-length=79",
-        "--ignore=E126,E221,E222,E251",
-        "--load-plugins",
-        "--load-plugins=pylint_django",
-        "pylint_django",
+        // "src"
+        // "--max-line-length=79",
+        // "--ignore=E126,E221,E222,E251",
+        // "--load-plugins",
+        // "--load-plugins=pylint_django",
+        // "pylint_django",
     ],
     "pylint.cwd": "${workspaceFolder}",
     "pylint.enabled": true,
-    // "pylint.ignorePatterns": [""],
+    "pylint.ignorePatterns": ["bup/*", "bup","tmp"],
     "pylint.importStrategy": "useBundled",
     // "pylint.interpreter": [""],
     // "pylint.path": [""],
@@ -791,7 +890,8 @@
     },
 
 
-
+    // Tinymist
+    // ========================================================================
 
     "tinymist.compileStatus": "enable",
     "tinymist.completion.postfix": true,
@@ -843,6 +943,20 @@
     // "tinymist.typstExtraArgs": [
     //     ""
     // ],
+
+
+    // Jinja
+    // ========================================================================
+
+
+    "[jinja]": {
+        "editor.formatOnSave": false,
+        "editor.defaultFormatter": null
+    },
+    "[jinja-html]": {
+        "editor.formatOnSave": false,
+        "editor.defaultFormatter": null
+    }
 
 
 }

@@ -1,19 +1,55 @@
-"""Helper classes to handle geometry data types.
+# -*- coding: utf-8 -*-
 
-This includes the CRS parsing, coordinate transforms and bounding box object.
-The bounding box can be calculated within Python, or read from a database result.
+
+# =============================================================================
+# Docstring
+# =============================================================================
+
 """
+Kockums Bearing - Coordinate Reference System
+=============================================
+
+A dependency-free :class:`CRS` — a Coordinate Reference System *identity*
+and parser. It recognises the OGC URN form
+(``urn:ogc:def:crs:EPSG::4326``), the legacy forms (``EPSG:4326``,
+``http://www.opengis.net/def/crs/EPSG/0/4326``), and a bare numeric SRID,
+and exposes the canonical ``srid`` / ``authority`` / ``urn`` / ``legacy``
+identity plus the CRS84-vs-EPSG:4326 axis-order distinction.
+
+What it deliberately does **not** do is *reproject* coordinates: arbitrary
+datum/projection transforms need a PROJ/EPSG database, which is not
+stdlib-doable. That work is delegated — Web Mercator lives in
+:mod:`bearing.projection`, geodesy in :mod:`bearing.geodesy`, and arbitrary
+EPSG transforms belong downstream in ``ortha`` (per the dependency
+doctrine). Merging the former Django/GDAL-backed ``CRS`` down to this pure
+identity is what lets ``import bearing`` stay dependency-free.
+
+References
+----------
+- OGC URN policy, http://www.opengeospatial.org/ogcUrnPolicy
+- CRS-parsing logic after wglas85/django-wfs (Apache-2.0), re-authored pure.
+
+"""
+
+
+# =============================================================================
+# Imports
+# =============================================================================
+
+# Import | Future
 from __future__ import annotations
 
+# Import | Standard Library
 import re
 from dataclasses import dataclass, field
-from decimal import Decimal
-from functools import lru_cache
 
-from django.contrib.gis.gdal import AxisOrder, CoordTransform, SpatialReference
-from django.contrib.gis.geos import GEOSGeometry, Polygon
+# Import | Local Modules
+from bearing.exceptions import ExternalValueError
 
-from gisserver.exceptions import ExternalParsingError, ExternalValueError
+
+# =============================================================================
+# Grammar
+# =============================================================================
 
 CRS_URN_REGEX = re.compile(
     r"^urn:(?P<domain>[a-z]+)"
@@ -24,140 +60,95 @@ CRS_URN_REGEX = re.compile(
     re.IGNORECASE,
 )
 
-__all__: list[str] = [
-    "CRS",
-]
+_LEGACY_HEADS = (
+    "epsg:",
+    "http://www.opengis.net/def/crs/epsg/0/",
+    "http://www.opengis.net/gml/srs/epsg.xml#",
+)
 
 
-@lru_cache(maxsize=200)
-def _get_spatial_reference(srs_input, srs_type="user", axis_order=None):
-    """Construct an GDAL object reference"""
-    # Using lru-cache to avoid repeated GDAL c-object construction
-    return SpatialReference(srs_input, srs_type=srs_type, axis_order=axis_order)
-
-
-@lru_cache(maxsize=100)
-def _get_coord_transform(
-    source: int | SpatialReference, target: int | SpatialReference
-) -> CoordTransform:
-    """Get an efficient coordinate transformation object.
-
-    The CoordTransform should be used when performing the same
-    coordinate transformation repeatedly on different geometries.
-
-    NOTE that the cache could be busted when CRS objects are
-    repeatedly created with a custom 'backend' object.
-    """
-    if isinstance(source, int):
-        source = _get_spatial_reference(source, srs_type="epsg")
-    if isinstance(target, int):
-        target = _get_spatial_reference(target, srs_type="epsg")
-
-    return CoordTransform(source, target)
-
+# =============================================================================
+# Class
+# =============================================================================
 
 @dataclass(frozen=True)
 class CRS:
     """
-    Represents a CRS (Coordinate Reference System), which preferably follows the URN format
-    as specified by `the OGC consortium <http://www.opengeospatial.org/ogcUrnPolicy>`_.
+    A Coordinate Reference System identity, preferably in OGC URN form.
+
+    Attributes
+    ----------
+    domain : str
+        ``"ogc"`` (recommended) or ``"opengis"``.
+    authority : str
+        ``"EPSG"`` or ``"OGC"``.
+    version : str
+        The authority registry version — usually empty (e.g. WFS 2.0).
+    crsid : str
+        The reference id: ``"CRS84"`` for OGC, else the numeric SRID string.
+    srid : int
+        The numeric spatial reference id (EPSG code).
+    origin : str
+        The original input string that produced this CRS.
     """
 
-    # CRS logic, based upon https://github.com/wglas85/django-wfs/blob/master/wfs/helpers.py
-    # Copyright (c) 2006 Wolfgang Glas - Apache 2.0 licensed
-    # Ported to Python 3.6 style.
-
-    #: Either "ogc" or "opengis", whereas "ogc" is highly recommended.
     domain: str
-
-    #: Either "OGC" or "EPSG".
     authority: str
-
-    #: The version of the authorities' SRS registry, which is empty or
-    #: contains two or three numeric components separated by dots like "6.9" or "6.11.9".
-    #: For WFS 2.0 this is typically empty.
     version: str
-
-    #: A string representation of the coordinate system reference ID.
-    #: For OGC, only "CRS84" is supported as crsid. For EPSG, this is the formatted CRSID.
     crsid: str
-
-    #: The integer representing the numeric spatial reference ID as
-    #: used by the EPSG and GIS database backends.
     srid: int
+    origin: str = field(default="", compare=False)
 
-    #: GDAL SpatialReference with PROJ.4 / WKT content to describe the exact transformation.
-    backend: SpatialReference | None = None
-
-    #: Original input
-    origin: str = field(init=False, default=None)
-
-    has_custom_backend: bool = field(init=False)
-
-    def __post_init__(self):
-        # Using __dict__ because of frozen=True
-        self.__dict__["has_custom_backend"] = self.backend is not None
+    # -- Constructors ------------------------------------------------------
 
     @classmethod
-    def from_string(
-        cls, uri: str | int, backend: SpatialReference | None = None
-    ) -> CRS:
+    def from_string(cls, uri: str | int) -> "CRS":
         """
-        Parse an CRS (Coordinate Reference System) URI, which preferably follows the URN format
-        as specified by `the OGC consortium <http://www.opengeospatial.org/ogcUrnPolicy>`_
-        and construct a new CRS instance.
+        Parse a CRS from a URN, a legacy URI (``EPSG:<srid>`` / OpenGIS URL),
+        or a bare numeric SRID.
 
-        The value can be 3 things:
-
-        * A URI in OGC URN format.
-        * A legacy CRS URI ("epsg:<SRID>", or "http://www.opengis.net/...").
-        * A numeric SRID (which calls `from_srid()`)
+        Raises
+        ------
+        ExternalValueError
+            If the URI is not a recognised CRS reference.
         """
-        if isinstance(uri, int) or uri.isdigit():
-            return cls.from_srid(int(uri), backend=backend)
-        elif uri.startswith("urn:"):
-            return cls._from_urn(uri, backend=backend)
-        else:
-            return cls._from_legacy(uri, backend=backend)
+        if isinstance(uri, int) or (isinstance(uri, str) and uri.isdigit()):
+            return cls.from_srid(int(uri))
+        text = str(uri)
+        if text.startswith("urn:"):
+            return cls._from_urn(text)
+        return cls._from_legacy(text)
 
     @classmethod
-    def from_srid(cls, srid: int, backend=None):
-        """Instantiate this class using an numeric spatial reference ID
-
-        This is logically identical to calling::
-
-            CRS.from_string("urn:ogc:def:crs:EPSG:6.9:<SRID>")
+    def from_srid(cls, srid: int) -> "CRS":
         """
-        crs = cls(
+        Build a CRS from a numeric EPSG SRID — equivalent to
+        ``from_string("urn:ogc:def:crs:EPSG::<srid>")``.
+        """
+        return cls(
             domain="ogc",
             authority="EPSG",
             version="",
-            crsid=str(srid),
+            crsid=str(int(srid)),
             srid=int(srid),
-            backend=backend,
+            origin=str(srid),
         )
-        crs.__dict__["origin"] = srid
-        return crs
 
     @classmethod
-    def _from_urn(cls, urn, backend=None):  # noqa: C901
-        """Instantiate this class using an URN format."""
-        urn_match = CRS_URN_REGEX.match(urn)
-        if not urn_match:
+    def _from_urn(cls, urn: str) -> "CRS":
+        match = CRS_URN_REGEX.match(urn)
+        if not match:
             raise ExternalValueError(
                 f"Unknown CRS URN [{urn}] specified: {CRS_URN_REGEX.pattern}"
             )
-
-        domain = urn_match.group("domain")
-        authority = urn_match.group("authority").upper()
-
+        domain = match.group("domain").lower()
+        authority = match.group("authority").upper()
         if domain not in ("ogc", "opengis"):
             raise ExternalValueError(
                 f"CRS URI [{urn}] contains unknown domain [{domain}]"
             )
-
         if authority == "EPSG":
-            crsid = urn_match.group("id")
+            crsid = match.group("id")
             try:
                 srid = int(crsid)
             except ValueError:
@@ -165,115 +156,88 @@ class CRS:
                     f"CRS URI [{urn}] should contain a numeric SRID value."
                 ) from None
         elif authority == "OGC":
-            crsid = urn_match.group("id").upper()
+            crsid = match.group("id").upper()
             if crsid != "CRS84":
                 raise ExternalValueError(
-                    f"OGC CRS URI from [{urn}] contains unknown id [{id}]"
+                    f"OGC CRS URI [{urn}] contains unknown id [{crsid}]"
                 )
             srid = 4326
         else:
             raise ExternalValueError(
                 f"CRS URI [{urn}] contains unknown authority [{authority}]"
             )
-
-        crs = cls(
+        return cls(
             domain=domain,
             authority=authority,
-            version=urn_match.group(3),
+            version=match.group("version") or "",
             crsid=crsid,
             srid=srid,
-            backend=backend,
+            origin=urn,
         )
-        crs.__dict__["origin"] = urn
-        return crs
 
     @classmethod
-    def _from_legacy(cls, uri, backend=None):
-        """Instantiate this class from a legacy URL"""
-        luri = uri.lower()
-        for head in (
-            "epsg:",
-            "http://www.opengis.net/def/crs/epsg/0/",
-            "http://www.opengis.net/gml/srs/epsg.xml#",
-        ):
-            if luri.startswith(head):
-                crsid = luri[len(head) :]
+    def _from_legacy(cls, uri: str) -> "CRS":
+        lowered = uri.lower()
+        for head in _LEGACY_HEADS:
+            if lowered.startswith(head):
+                crsid = lowered[len(head):]
                 try:
                     srid = int(crsid)
                 except ValueError:
                     raise ExternalValueError(
                         f"CRS URI [{uri}] should contain a numeric SRID value."
                     ) from None
-
-                crs = cls(
+                return cls(
                     domain="ogc",
                     authority="EPSG",
                     version="",
                     crsid=crsid,
                     srid=srid,
-                    backend=backend,
+                    origin=uri,
                 )
-                crs.__dict__["origin"] = uri
-                return crs
-
         raise ExternalValueError(f"Unknown CRS URI [{uri}] specified")
 
+    # -- Identity ----------------------------------------------------------
+
     @property
-    def legacy(self):
-        """Return a legacy string in the format "EPSG:<srid>"""
+    def legacy(self) -> str:
+        """The legacy ``"EPSG:<srid>"`` string."""
         return f"EPSG:{self.srid:d}"
 
     @property
-    def urn(self):
-        """Return The OGC URN corresponding to this CRS."""
-        return f"urn:{self.domain}:def:crs:{self.authority}:{self.version or ''}:{self.crsid}"
+    def urn(self) -> str:
+        """The canonical OGC URN for this CRS."""
+        return (
+            f"urn:{self.domain}:def:crs:{self.authority}"
+            f":{self.version or ''}:{self.crsid}"
+        )
 
-    def __str__(self):
+    @property
+    def is_geographic(self) -> bool:
+        """
+        Whether this is a geographic (lon/lat degrees) CRS — WGS84 in either
+        axis order (EPSG:4326 or OGC:CRS84).
+        """
+        return self.srid == 4326
+
+    @property
+    def is_yx_order(self) -> bool:
+        """
+        Whether the authority defines **lat, lon** (y, x) axis order.
+        EPSG:4326 is lat/long; OGC CRS84 is long/lat. This is the distinction
+        that makes ``EPSG:4326 != CRS84`` even though both are WGS84.
+        """
+        return self.authority == "EPSG" and self.srid == 4326
+
+    def __str__(self) -> str:
         return self.urn
 
-    def __eq__(self, other):
+    def __eq__(self, other: object) -> bool:
         if isinstance(other, CRS):
-            # CRS84 is NOT equivalent to EPSG:4326.
-            # EPSG:4326 specifies coordinates in lat/long order and CRS:84 in long/lat order.
+            # CRS84 is NOT equivalent to EPSG:4326: same datum, opposite axis
+            # order, so the authority must match too.
             return self.authority == other.authority and self.srid == other.srid
-        else:
-            return NotImplemented
+        return NotImplemented
 
-    def __hash__(self):
-        """Used to match objects in a set."""
+    def __hash__(self) -> int:
         return hash((self.authority, self.srid))
-
-    def _as_gdal(self) -> SpatialReference:
-        """
-        Generate the GDAL Spatial Reference object
-        """
-        if self.backend is None:
-            # Avoid repeated construction, reuse the object from cache if possible.
-            # Note that the original data is used, as it also defines axis orientation.
-            if self.origin:
-                self.__dict__["backend"] = _get_spatial_reference(self.origin)
-            else:
-                self.__dict__["backend"] = _get_spatial_reference(
-                    self.srid, srs_type="epsg"
-                )
-        return self.backend
-
-    def apply_to(self, geometry: GEOSGeometry, clone=False) -> GEOSGeometry | None:
-        """Transform the geometry using this coordinate reference.
-
-        This method caches the used CoordTransform object
-
-        Every transformation within this package happens through this method,
-        giving full control over coordinate transformations.
-        """
-        if self.srid == geometry.srid:
-            # Avoid changes if spatial reference system is identical.
-            if clone:
-                return geometry.clone()
-            else:
-                return
-        else:
-            # Convert using GDAL / proj
-            transform = _get_coord_transform(geometry.srid, self._as_gdal())
-            return geometry.transform(transform, clone=clone)
-

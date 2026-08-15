@@ -1,6 +1,4 @@
-
 ---
-
 # =============================================================================
 # Dependabot Configuration
 # =============================================================================
@@ -8,19 +6,17 @@
 version: 2
 
 updates:
-
   # Git Submodule dependencies
   # ===========================================================================
 
-  -
-    package-ecosystem: "gitsubmodule"
+  - package-ecosystem: "gitsubmodule"
     directory: "/"
     schedule:
       interval: "weekly"
-      day: "sunday"
-      time: "08:00"
+      day: "monday"
+      time: "09:00"
       timezone: "Europe/Amsterdam"
-    target-branch: "dev"
+    target-branch: "main"
     commit-message:
       prefix: "dependabot-gitsubmodule"
       include: "scope"
@@ -28,274 +24,133 @@ updates:
       - "dependencies"
       - "gitsubmodule"
 
-
   # GitHub Actions dependencies
   # ===========================================================================
 
-  -
-    package-ecosystem: "github-actions"
+  - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
       interval: "weekly"
-      day: "sunday"
-      time: "08:00"
+      day: "monday"
+      time: "09:00"
       timezone: "Europe/Amsterdam"
     target-branch: "dev"
     commit-message:
-      prefix: "dependabot-github-actions"
+      prefix: "ci(deps)"
       include: "scope"
     labels:
       - "dependencies"
       - "github-actions"
-
-
-  # Docker dependencies
-  # ===========================================================================
-
-  -
-    package-ecosystem: "docker"
-    directory: "/src/"
-    schedule:
-      interval: "weekly"
-      day: "sunday"
-      time: "08:00"
-      timezone: "Europe/Amsterdam"
-    target-branch: "dev"
-    commit-message:
-      prefix: "dependabot-docker"
-      include: "scope"
-    labels:
-      - "dependencies"
-      - "docker"
-
-
-  # devContainer dependencies
-  # ===========================================================================
-
-  -
-    package-ecosystem: "docker"
-    directory: "/.devcontainer"
-    schedule:
-      interval: "weekly"
-      day: "sunday"
-      time: "08:00"
-      timezone: "Europe/Amsterdam"
-    target-branch: "dev"
-    commit-message:
-      prefix: "dependabot-devcontainer"
-      include: "scope"
-    labels:
-      - "dependencies"
-      - "devcontainer"
-
-  -
-    package-ecosystem: "devcontainers"
-    directory: "/"
-    schedule:
-      interval: "weekly"
-      day: "sunday"
-      time: "08:00"
-      timezone: "Europe/Amsterdam"
-    target-branch: "dev"
-    commit-message:
-      prefix: "dependabot-devcontainer"
-      include: "scope"
-    labels:
-      - "dependencies"
-      - "devcontainer"
-
-
-  # PIP dependencies
-  # ===========================================================================
-
-  -
-    package-ecosystem: "pip"
-    directory: "/"
-    schedule:
-      interval: "weekly"
-      day: "sunday"
-      time: "08:00"
-      timezone: "Europe/Amsterdam"
-    target-branch: "dev"
-    commit-message:
-      prefix: "dependabot-pip"
-      include: "scope"
-    labels:
-      - "dependencies"
-      - "pip"
-
+      - "ci"
+    open-pull-requests-limit: 5
+    groups:
+      github-actions:
+        patterns:
+          - "*"
 
   # NPM dependencies
   # ===========================================================================
 
-  -
-    package-ecosystem: "npm"
+  - package-ecosystem: "npm"
     directory: "/"
     schedule:
       interval: "weekly"
-      day: "sunday"
-      time: "08:00"
+      day: "monday"
+      time: "09:00"
       timezone: "Europe/Amsterdam"
-    target-branch: "dev"
+    target-branch: "main"
     commit-message:
-      prefix: "dependabot-npm"
-      include: "scope"
+      prefix: "npm"
     labels:
       - "dependencies"
       - "npm"
 
-
-  # Rust dependencies
+  # Docker dependencies
   # ===========================================================================
 
-  -
-    package-ecosystem: "cargo"
-    directory: "/"
+  - package-ecosystem: "docker"
+    directory: "/src/"
     schedule:
       interval: "weekly"
-      day: "sunday"
-      time: "08:00"
+      day: "monday"
+      time: "09:00"
       timezone: "Europe/Amsterdam"
-    target-branch: "dev"
+    target-branch: "main"
     commit-message:
-      prefix: "dependabot-cargo"
-      include: "scope"
+      prefix: "dependabot-docker"
     labels:
       - "dependencies"
-      - "cargo"
+      - "docker"
 
-
-  # PHP dependencies
+  # devContainer dependencies
   # ===========================================================================
 
-  -
-    package-ecosystem: "composer"
+  - package-ecosystem: "docker"
+    directory: "/.devcontainer"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "Europe/Amsterdam"
+    target-branch: "main"
+    commit-message:
+      prefix: "dependabot-devcontainer"
+    labels:
+      - "dependencies"
+      - "devcontainer"
+
+  - package-ecosystem: "devcontainers"
     directory: "/"
     schedule:
       interval: "weekly"
-      day: "sunday"
-      time: "08:00"
+      day: "monday"
+      time: "09:00"
       timezone: "Europe/Amsterdam"
-    target-branch: "dev"
+    target-branch: "main"
     commit-message:
-      prefix: "dependabot-composer"
-      include: "scope"
+      prefix: "dependabot-devcontainer"
     labels:
       - "dependencies"
-      - "composer"
+      - "devcontainer"
 
-
-  # Go dependencies
+  # PIP dependencies
   # ===========================================================================
 
-  -
-    package-ecosystem: "gomod"
+  - package-ecosystem: "pip"
     directory: "/"
     schedule:
-      interval: "weekly"
-      day: "sunday"
-      time: "08:00"
+      interval: "daily"
+      time: "09:00"
       timezone: "Europe/Amsterdam"
     target-branch: "dev"
     commit-message:
-      prefix: "dependabot-gomod"
+      prefix: "build(deps)"
       include: "scope"
     labels:
       - "dependencies"
-      - "gomod"
-
-
-  # Terraform dependencies
-  # ===========================================================================
-
-  -
-    package-ecosystem: "terraform"
-    directory: "/"
-    schedule:
-      interval: "weekly"
-      day: "sunday"
-      time: "08:00"
-      timezone: "Europe/Amsterdam"
-    target-branch: "dev"
-    commit-message:
-      prefix: "dependabot-terraform"
-      include: "scope"
-    labels:
-      - "dependencies"
-      - "terraform"
-
-
-  # .NET dependencies
-  # ===========================================================================
-
-  -
-    package-ecosystem: "nuget"
-    directory: "/"
-    schedule:
-      interval: "weekly"
-      day: "sunday"
-      time: "08:00"
-      timezone: "Europe/Amsterdam"
-    target-branch: "dev"
-    commit-message:
-      prefix: "dependabot-nuget"
-      include: "scope"
-    labels:
-      - "dependencies"
-      - "nuget"
-
-  -
-    package-ecosystem: "dotnet-sdk"
-    directory: "/"
-    schedule:
-      interval: "weekly"
-      day: "sunday"
-      time: "08:00"
-      timezone: "Europe/Amsterdam"
-    target-branch: "dev"
-    commit-message:
-      prefix: "dependabot-dotnet-sdk"
-      include: "scope"
-    labels:
-      - "dependencies"
-      - "dotnet-sdk"
-
-
-  # Erlang dependencies
-  # ===========================================================================
-
-  -
-    package-ecosystem: "mix"
-    directory: "/"
-    schedule:
-      interval: "weekly"
-      day: "sunday"
-      time: "08:00"
-      timezone: "Europe/Amsterdam"
-    target-branch: "dev"
-    commit-message:
-      prefix: "dependabot-mix"
-      include: "scope"
-    labels:
-      - "dependencies"
-      - "mix"
-
-
-  # Java dependencies
-  # ===========================================================================
-
-  -
-    package-ecosystem: "maven"
-    directory: "/"
-    schedule:
-      interval: "weekly"
-      day: "sunday"
-      time: "08:00"
-      timezone: "Europe/Amsterdam"
-    target-branch: "dev"
-    commit-message:
-      prefix: "dependabot-maven"
-      include: "scope"
-    labels:
-      - "dependencies"
-      - "maven"
+      - "python"
+    open-pull-requests-limit: 10
+    assignees:
+      - "vanvianen"
+    versioning-strategy: increase
+    groups:
+      development-dependencies:
+        dependency-type: "development"
+        patterns:
+          - "pytest*"
+          - "black"
+          - "isort"
+          - "flake8*"
+          - "pylint"
+          - "mypy"
+          - "bandit*"
+          - "coverage"
+          - "sphinx*"
+          - "tox"
+          - "pre-commit"
+      security-dependencies:
+        dependency-type: "production"
+        update-types:
+          - "major"
+          - "minor"
+          - "patch"

@@ -1,0 +1,240 @@
+# =============================================================================
+# Makefile for Bearing Project
+# =============================================================================
+
+.PHONY: help install test coverage lint format type-check security clean all check dev verify
+
+# Default target
+help:
+	@echo "Bearing Development Makefile"
+	@echo "========================="
+	@echo ""
+	@echo "Available targets:"
+	@echo "  install      - Install dependencies using Poetry"
+	@echo "  dev          - Install development dependencies"
+	@echo "  verify       - Verify all tools are configured correctly"
+	@echo "  test         - Run tests with pytest"
+	@echo "  coverage     - Run tests with coverage report"
+	@echo "  format       - Format code with Black and isort"
+	@echo "  format-check - Check code formatting without changes"
+	@echo "  lint         - Run Flake8 and Pylint"
+	@echo "  type-check   - Run Mypy type checker"
+	@echo "  security     - Run Bandit security checker"
+	@echo "  check        - Run all checks (format, lint, type, security)"
+	@echo "  all          - Format, lint, type-check, security, and test"
+	@echo "  tox          - Run tests in multiple environments"
+	@echo "  pre-commit   - Run pre-commit hooks on all files"
+	@echo "  clean        - Remove cache and build artifacts"
+	@echo ""
+
+# Installation
+install:
+	poetry install
+
+dev:
+	poetry install --with dev
+	poetry run pre-commit install
+
+# Verification
+verify:
+	@echo "Verifying tool configuration..."
+	python verify_tools.py
+
+# Testing
+test:
+	poetry run pytest tst/
+
+coverage:
+	poetry run pytest --cov=bearing --cov-report=html --cov-report=xml --cov-report=term --cov-report=json tst/
+
+# Formatting
+format:
+	poetry run black src/ tst/
+	poetry run isort src/ tst/
+
+format-check:
+	poetry run black --check src/ tst/
+	poetry run isort --check-only src/ tst/
+
+# Linting
+lint:
+	poetry run flake8 src/
+	poetry run pylint src/
+
+# Type checking
+type-check:
+	poetry run mypy src/
+
+# Security
+security:
+	poetry run bandit -r src/ -c pyproject.toml
+
+# Combined checks
+check: format-check lint type-check security
+
+# Run everything
+all: format lint type-check security test
+
+# Tox multi-environment testing
+tox:
+	poetry run tox
+
+tox-lint:
+	poetry run tox -e lint
+
+tox-type:
+	poetry run tox -e type
+
+tox-security:
+	poetry run tox -e security
+
+# Pre-commit
+pre-commit:
+	poetry run pre-commit run --all-files
+
+pre-commit-update:
+	poetry run pre-commit autoupdate
+
+# Clean
+clean:
+	find . -type d -name "__pycache__" -exec rm -rf {} +
+	find . -type d -name ".pytest_cache" -exec rm -rf {} +
+	find . -type d -name ".mypy_cache" -exec rm -rf {} +
+	find . -type d -name "*.egg-info" -exec rm -rf {} +
+	find . -type f -name "*.pyc" -delete
+	find . -type f -name "*.pyo" -delete
+	rm -rf build/ dist/ htmlcov/ .coverage coverage.xml coverage.json .tox/
+
+# Quick development workflow
+quick: format lint
+	@echo "✓ Code formatted and linted"
+
+# Full CI workflow
+ci: check test coverage
+	@echo "✓ All CI checks passed"
+
+# Documentation
+# ==============================================================================
+
+.PHONY: docs
+docs:
+	@echo "📚 Building documentation..."
+	cd doc && poetry run sphinx-build -W -b html . _build/html
+	@echo "✅ Documentation built in doc/_build/html/"
+
+.PHONY: docs-serve
+docs-serve: docs
+	@echo "🌐 Serving documentation at http://localhost:8000"
+	cd doc/_build/html && python -m http.server 8000
+
+# Environment Management
+# ==============================================================================
+
+.PHONY: env-info
+env-info:
+	@echo "📋 Environment Information:"
+	@echo "Python: $$(poetry run python --version)"
+	@echo "Poetry: $$(poetry --version)"
+	@echo "Virtual env: $$(poetry env info --path)"
+	@poetry run python -m pip list
+
+.PHONY: update-deps
+update-deps:
+	@echo "⬆️  Updating dependencies..."
+	poetry update
+	poetry lock --no-update
+	@echo "✅ Dependencies updated"
+
+.PHONY: show-outdated
+show-outdated:
+	@echo "📦 Outdated packages:"
+	poetry show --outdated
+
+# Git Hooks
+# ==============================================================================
+
+.PHONY: hooks-install
+hooks-install:
+	@echo "🪝 Installing git hooks..."
+	poetry run pre-commit install --install-hooks
+	poetry run pre-commit install --hook-type commit-msg
+	@echo "✅ Git hooks installed"
+
+.PHONY: hooks-uninstall
+hooks-uninstall:
+	@echo "🗑️  Uninstalling git hooks..."
+	poetry run pre-commit uninstall
+	@echo "✅ Git hooks uninstalled"
+
+.PHONY: hooks-update
+hooks-update:
+	@echo "⬆️  Updating git hooks..."
+	poetry run pre-commit autoupdate
+	@echo "✅ Git hooks updated"
+
+# Release
+# ==============================================================================
+
+.PHONY: version
+version:
+	@echo "Current version: $$(cat VERSION)"
+
+.PHONY: bump-patch
+bump-patch:
+	@echo "⬆️  Bumping patch version..."
+	poetry version patch
+	poetry version -s > VERSION
+	@echo "✅ Version bumped to $$(cat VERSION)"
+
+.PHONY: bump-minor
+bump-minor:
+	@echo "⬆️  Bumping minor version..."
+	poetry version minor
+	poetry version -s > VERSION
+	@echo "✅ Version bumped to $$(cat VERSION)"
+
+.PHONY: bump-major
+bump-major:
+	@echo "⬆️  Bumping major version..."
+	poetry version major
+	poetry version -s > VERSION
+	@echo "✅ Version bumped to $$(cat VERSION)"
+
+# Docker
+# ==============================================================================
+
+.PHONY: docker-build
+docker-build:
+	@echo "🐳 Building Docker image..."
+	docker build -f .devcontainer/Dockerfile.production -t bearing:latest .
+	@echo "✅ Docker image built"
+
+.PHONY: docker-test
+docker-test: docker-build
+	@echo "🐳 Running tests in Docker..."
+	docker run --rm bearing:latest poetry run pytest
+	@echo "✅ Docker tests passed"
+
+.PHONY: docker-dev
+docker-dev:
+	@echo "🐳 Building dev container..."
+	cd .devcontainer && docker-compose build
+	@echo "✅ Dev container built"
+
+.PHONY: docker-dev-up
+docker-dev-up:
+	@echo "🐳 Starting dev container..."
+	cd .devcontainer && docker-compose up -d
+	@echo "✅ Dev container running"
+
+.PHONY: docker-dev-down
+docker-dev-down:
+	@echo "🐳 Stopping dev container..."
+	cd .devcontainer && docker-compose down
+	@echo "✅ Dev container stopped"
+
+.PHONY: docker-clean
+docker-clean:
+	@echo "🧹 Cleaning Docker resources..."
+	docker system prune -f
+	@echo "✅ Docker cleaned"

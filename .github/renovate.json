@@ -1,0 +1,84 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended"],
+  "baseBranches": ["dev"],
+  "labels": ["dependencies", "renovate"],
+  "assignees": ["vanvianen"],
+  "reviewers": ["vanvianen"],
+  "semanticCommits": "enabled",
+  "commitMessagePrefix": "build(deps):",
+  "dependencyDashboard": true,
+  "dependencyDashboardTitle": "🤖 Renovate Dependency Dashboard",
+  "prHourlyLimit": 2,
+  "prConcurrentLimit": 5,
+  "schedule": ["before 6am on monday"],
+  "timezone": "Europe/Amsterdam",
+  "python": {
+    "enabled": true
+  },
+  "packageRules": [
+    {
+      "description": "Group development dependencies",
+      "matchDepTypes": ["devDependencies"],
+      "matchPackagePatterns": [
+        "pytest",
+        "black",
+        "isort",
+        "flake8",
+        "pylint",
+        "mypy",
+        "bandit",
+        "coverage",
+        "sphinx",
+        "tox",
+        "pre-commit"
+      ],
+      "groupName": "development dependencies",
+      "automerge": true,
+      "automergeType": "pr",
+      "minimumReleaseAge": "3 days"
+    },
+    {
+      "description": "Auto-merge GitHub Actions updates",
+      "matchManagers": ["github-actions"],
+      "groupName": "github-actions",
+      "automerge": true,
+      "automergeType": "pr"
+    },
+    {
+      "description": "Separate major updates",
+      "matchUpdateTypes": ["major"],
+      "groupName": "major dependencies",
+      "automerge": false
+    },
+    {
+      "description": "Group patch and minor updates",
+      "matchUpdateTypes": ["minor", "patch"],
+      "groupName": "non-major dependencies",
+      "automerge": true,
+      "automergeType": "pr",
+      "minimumReleaseAge": "3 days"
+    },
+    {
+      "description": "Security updates priority",
+      "matchDatasources": ["pypi"],
+      "matchUpdateTypes": ["patch"],
+      "matchPackagePatterns": [".*"],
+      "vulnerabilityAlerts": {
+        "enabled": true,
+        "labels": ["security"],
+        "automerge": false,
+        "schedule": ["at any time"]
+      }
+    }
+  ],
+  "vulnerabilityAlerts": {
+    "enabled": true,
+    "labels": ["security", "dependencies"],
+    "automerge": false
+  },
+  "lockFileMaintenance": {
+    "enabled": true,
+    "schedule": ["before 6am on monday"]
+  }
+}

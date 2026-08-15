@@ -1,0 +1,79 @@
+# =============================================================================
+# Production Dockerfile for Rite
+# =============================================================================
+# This Dockerfile creates a minimal production image for running Rite
+
+# Build stage
+FROM python:3.12-slim-bookworm AS builder
+
+# Set environment variables
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PIP_NO_CACHE_DIR=1 \
+    PIP_DISABLE_PIP_VERSION_CHECK=1 \
+    POETRY_VERSION=1.8.0 \
+    POETRY_HOME=/opt/poetry \
+    POETRY_VIRTUALENVS_IN_PROJECT=true \
+    POETRY_NO_INTERACTION=1
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install Poetry
+RUN curl -sSL https://install.python-poetry.org | python3 -
+
+# Set working directory
+WORKDIR /app
+
+# Copy dependency files
+COPY pyproject.toml poetry.lock README.md ./
+COPY src/ ./src/
+
+# Install dependencies (production only)
+RUN /opt/poetry/bin/poetry install --no-interaction --no-dev --no-root
+
+# Install the package
+RUN /opt/poetry/bin/poetry build && \
+    /opt/poetry/bin/poetry run pip install dist/*.whl
+
+# Runtime stage
+FROM python:3.12-slim-bookworm
+
+# Metadata
+LABEL maintainer="Scape Agency"
+LABEL description="Rite Python Utility Library"
+LABEL version="1.0"
+
+# Set environment variables
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PYTHONPATH=/app/src
+
+# Create non-root user
+RUN groupadd -r rite && useradd -r -g rite rite
+
+# Set working directory
+WORKDIR /app
+
+# Copy installed packages from builder
+COPY --from=builder /app/.venv /app/.venv
+COPY --from=builder /app/src /app/src
+
+# Set ownership
+RUN chown -R rite:rite /app
+
+# Switch to non-root user
+USER rite
+
+# Add virtual environment to PATH
+ENV PATH="/app/.venv/bin:$PATH"
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+    CMD python -c "import rite; print(rite.__version__)" || exit 1
+
+# Default command (can be overridden)
+CMD ["python"]

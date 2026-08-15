@@ -1,12 +1,18 @@
-;
-; Global Editor Config for Adaptive Labbers
-;
-; This is an ini style configuration. See http://editorconfig.org/ for more information on this file.
-;
-; Top level editor config.
+# =============================================================================
+# EditorConfig
+# =============================================================================
+#
+# Global Editor Config for Bearing Project
+#
+# This is an ini style configuration. See http://editorconfig.org/ for more information.
+#
+# Top level editor config.
 root = true
 
-; Always use Unix style new lines with new line ending on every file and trim whitespace
+# =============================================================================
+# All Files
+# =============================================================================
+
 [*]
 charset = utf-8
 end_of_line = lf
@@ -14,13 +20,64 @@ indent_size = 4
 indent_style = space
 insert_final_newline = true
 trim_trailing_whitespace = true
+max_line_length = 88
 
-; Python: PEP8 defines 4 spaces for indentation
+# =============================================================================
+# Python Files
+# =============================================================================
+
+# Python: PEP8 defines 4 spaces for indentation
 [*.py]
 indent_style = space
 indent_size = 4
+max_line_length = 88
 
-; Salt state files, YAML format, 2 spaces
-[*.sls, *.yaml, *.yml]
+# =============================================================================
+# Configuration Files
+# =============================================================================
+
+# YAML, TOML, JSON - 2 spaces
+[*.{yaml,yml,toml,json}]
 indent_style = space
 indent_size = 2
+
+# Salt state files, YAML format, 2 spaces
+[*.sls]
+indent_style = space
+indent_size = 2
+
+# INI files
+[*.{ini,cfg}]
+indent_style = space
+indent_size = 4
+
+# =============================================================================
+# Documentation
+# =============================================================================
+
+[*.md]
+trim_trailing_whitespace = false
+max_line_length = 120
+
+[*.rst]
+indent_size = 3
+max_line_length = 120
+
+# =============================================================================
+# Shell Scripts
+# =============================================================================
+
+[*.{sh,bash}]
+indent_style = space
+indent_size = 2
+end_of_line = lf
+
+# =============================================================================
+# Makefiles
+# =============================================================================
+
+[Makefile]
+indent_style = tab
+
+[*.mk]
+indent_style = tab

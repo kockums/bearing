@@ -1,7 +1,76 @@
-version: '3.4'
+# =============================================================================
+# Docker Compose for Rite Dev Container
+# =============================================================================
+
+version: "3.8"
 
 services:
-
   devcontainer:
     build:
+      context: .
       dockerfile: Dockerfile
+      args:
+        USERNAME: vscode
+        USER_UID: 1000
+        USER_GID: 1000
+
+    image: rite-devcontainer:latest
+
+    container_name: rite-dev
+
+    volumes:
+      # Mount workspace
+      - ..:/workspace:cached
+      # Persist bash history
+      - devcontainer-bashhistory:/home/vscode/.bash_history
+      # Persist zsh history
+      - devcontainer-zshhistory:/home/vscode/.zsh_history
+      # Persist poetry cache
+      - devcontainer-poetry-cache:/home/vscode/.cache/pypoetry
+      # Persist vscode extensions
+      - devcontainer-vscode-extensions:/home/vscode/.vscode-server/extensions
+
+    working_dir: /workspace
+
+    # Keep container running
+    command: sleep infinity
+
+    # Environment variables
+    environment:
+      - PYTHONPATH=/workspace/src
+      - PYTHONDONTWRITEBYTECODE=1
+      - PYTHONUNBUFFERED=1
+      - RITE_ENV=development
+      - POETRY_VIRTUALENVS_IN_PROJECT=true
+
+    # Network configuration
+    ports:
+      - "8000:8000" # Documentation server
+      - "8080:8080" # Development server
+
+    # Capabilities
+    cap_add:
+      - SYS_PTRACE # For debugging
+
+    # Security options
+    security_opt:
+      - seccomp:unconfined
+
+    # User
+    user: vscode
+
+    # Resource limits (adjust as needed)
+    deploy:
+      resources:
+        limits:
+          cpus: "4"
+          memory: 8G
+        reservations:
+          cpus: "2"
+          memory: 4G
+
+volumes:
+  devcontainer-bashhistory:
+  devcontainer-zshhistory:
+  devcontainer-poetry-cache:
+  devcontainer-vscode-extensions:

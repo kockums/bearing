@@ -1,5 +1,48 @@
+# =============================================================================
+# Coverage Configuration
+# =============================================================================
+# Single point of truth for code coverage reporting
+# See: https://coverage.readthedocs.io/
+
 [run]
+source = src/bearing
+branch = True
 omit =
-    *tests*
-    *migrations*
-    */unit-test-settings.py
+    */tst/*
+    */tst/*
+    */__pycache__/*
+    */site-packages/*
+    */distutils/*
+    */bup/*
+    */wip/*
+    */tmp/*
+    setup.py
+    */setup.py
+
+[report]
+precision = 2
+exclude_lines =
+    pragma: no cover
+    def __repr__
+    def __str__
+    raise AssertionError
+    raise NotImplementedError
+    if __name__ == .__main__.:
+    if TYPE_CHECKING:
+    @abstractmethod
+    @abc.abstractmethod
+    pass
+    \.\.\.
+
+ignore_errors = True
+skip_empty = True
+show_missing = True
+
+[html]
+directory = htmlcov
+
+[xml]
+output = coverage.xml
+
+[json]
+output = coverage.json

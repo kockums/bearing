@@ -1,0 +1,50 @@
+# =============================================================================
+# Docker Compose for Production
+# =============================================================================
+
+version: "3.8"
+
+services:
+  rite:
+    build:
+      context: ..
+      dockerfile: .devcontainer/Dockerfile.production
+
+    image: rite:latest
+
+    container_name: rite-production
+
+    restart: unless-stopped
+
+    # Resource limits
+    deploy:
+      resources:
+        limits:
+          cpus: "2"
+          memory: 2G
+        reservations:
+          cpus: "1"
+          memory: 1G
+
+    # Security options
+    security_opt:
+      - no-new-privileges:true
+    read_only: true
+
+    # User
+    user: rite
+
+    # Health check
+    healthcheck:
+      test: ["CMD", "python", "-c", "import rite; print(rite.__version__)"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+
+    # Logging
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"

@@ -1,0 +1,40 @@
+# =============================================================================
+# GitHub Actions Labeler Configuration
+# =============================================================================
+
+# Documentation changes
+documentation:
+  - any: ["doc/**/*", "*.md", "mkdocs.yml"]
+
+# Tests
+tests:
+  - any: ["tst/**/*"]
+
+# CI/CD
+ci:
+  - any: [".github/**/*", ".pre-commit-config.yaml", "tox.ini"]
+
+# Dependencies
+dependencies:
+  - any: ["pyproject.toml", "poetry.lock", "requirements*.txt"]
+
+# Core modules
+crypto:
+  - any: ["src/rite/crypto/**/*"]
+
+filesystem:
+  - any: ["src/rite/filesystem/**/*"]
+
+text:
+  - any: ["src/rite/text/**/*"]
+
+collections:
+  - any: ["src/rite/collections/**/*"]
+
+# Configuration
+configuration:
+  - any: ["*.ini", "*.cfg", ".flake8", ".pylintrc", ".coveragerc", ".editorconfig"]
+
+# Type hints
+typing:
+  - any: ["**/*.pyi"]
